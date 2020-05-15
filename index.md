@@ -1,20 +1,5 @@
----
-layout: default
----
-<html>
-<head>
-<title>UCSF Francis Lab</title>
-</head>
-<body>
-<h1>UCSF Francis Lab</h1>
+#	UCSF Francis Lab
 
-<ul>Helpful links
-<li><a href="https://ucsf-ti.github.io/tipcc-web/index.html">TIPCC - a High-Performance Compute Environment at UCSF</a></li>
-<li></li>
-<li><a href="https://aws.amazon.com/research-credits/">AWS Cloud Credits for Research</a></li>
-</ul>
-
-test
-
-</body>
-</html>
+Helpful links
+* [TIPCC - a High-Performance Compute Environment at UCSF](https://ucsf-ti.github.io/tipcc-web/index.html)
+* [AWS Cloud Credits for Research](https://aws.amazon.com/research-credits/)
