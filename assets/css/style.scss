@@ -3,6 +3,8 @@
 
 @import "{{ site.theme }}";
 
+// div.wrapper is used by Modernist
+// .inner is more common
 body > div.wrapper , .inner {
   width: 85%;
 }
