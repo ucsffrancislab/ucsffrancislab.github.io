@@ -1,7 +1,9 @@
 #	UCSF Francis Lab
 
 Pseudo Pipeline Notes
-* [[REdiscoverTE]]
+* [REdiscoverTE](REdiscoverTE.md)
+* [REdiscoverTE](REdiscoverTE)
+
 
 
 
