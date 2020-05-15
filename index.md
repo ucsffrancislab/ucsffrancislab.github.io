@@ -1,11 +1,7 @@
-#	UCSF Francis Lab
+#	UCSF Francis Lab Header
 
 Pseudo Pipeline Notes
-* [REdiscoverTE](REdiscoverTE.html)
-* [REdiscoverTE](REdiscoverTE.md)
-* [REdiscoverTE](REdiscoverTE)
-
-
+* [REdiscoverTE](docs/REdiscoverTE)
 
 
 Helpful links
