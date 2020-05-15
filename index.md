@@ -1,6 +1,7 @@
 #	UCSF Francis Lab
 
 Pseudo Pipeline Notes
+* [REdiscoverTE](REdiscoverTE.html)
 * [REdiscoverTE](REdiscoverTE.md)
 * [REdiscoverTE](REdiscoverTE)
 
