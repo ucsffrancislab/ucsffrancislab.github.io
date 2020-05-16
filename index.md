@@ -1,7 +1,17 @@
 #	UCSF Francis Lab Header
 
-Pseudo Pipeline Notes
+Pseudo Pipeline and Topic Notes
 * [REdiscoverTE](docs/REdiscoverTE)
+* [Preprocessing](docs/Preprocessing)
+* [References](docs/References)
+* [MetaGO](docs/MetaGO)
+* [Features](docs/Features)
+* [Salmon](docs/Salmon)
+* [Masking](docs/Masking)
+* [Taxonomy](docs/Taxonomy)
+* [GWAS](docs/GWAS)
+* [Dark](docs/Dark)
+* [Chimera](docs/Chimera)
 
 
 Helpful links
