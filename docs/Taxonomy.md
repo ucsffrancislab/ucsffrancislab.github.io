@@ -1,14 +1,16 @@
 
-
+#	Taxonomy
 
 
 For some reason, taxadb does not include all of the data in taxdump?
 
+```
 wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz
 wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/accession2taxid/nucl_gb.accession2taxid.gz
 wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/accession2taxid/nucl_wgs.accession2taxid.gz
 wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/accession2taxid/prot.accession2taxid.gz
 wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/accession2taxid/pdb.accession2taxid.gz
+```
 
 Not sure why so many missing, so I will try to create my own csv files for direct import to database.
 Gotta merge nodes.dmp and names.dmp to make the "taxa" table.
@@ -18,6 +20,7 @@ The accessions tables is just all of the accession2taxid file.
 Found another cool tool. http://etetoolkit.org/
 
 
+```
 tar xfvz taxdump.tar.gz names.dmp
 names.dmp
 tar xfvz taxdump.tar.gz nodes.dmp
@@ -74,18 +77,22 @@ ncbi_taxid,parent_taxid,tax_name,lineage_level
 
 accession
 taxid_id,accession
+```
 
 
 Better choose columns. taxid,parent_taxid,tax_name,lineage_level and taxid,accession
 
 
+```
 zcat *.accession2taxid.gz | awk 'BEGIN{FS="\t";OFS=","}($1!="accession"){print $3,$1}' > accession.unsorted.csv
 zcat /francislab/data1/refs/taxadb/nr.aT.csv.gz | awk 'BEGIN{FS=OFS=","}{print $2,$1}' >> accession.unsorted.csv
 #sort -t , -k 2 accession.unsorted.csv > accession.sorted.csv
 #uniq -d accession.sorted.csv
+```
 
 Using tabs as separators for simplicity. Outputing pipes as separators as commas and quotes in data.
 
+```
 awk 'BEGIN{FS="\t";OFS="|"}(FNR==NR && $7=="scientific name"){taxid_names[$1]=$3}(FNR!=NR){print $1,$3,taxid_names[$1],$5}' names.dmp  nodes.dmp > taxa.csv
 
 
@@ -168,6 +175,7 @@ CREATE UNIQUE INDEX "accession_accession" ON "accession" ("accession");
 #	select count(1) from accession;
 #	
 
+```
 
 
 

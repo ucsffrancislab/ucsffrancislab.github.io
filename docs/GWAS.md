@@ -1,4 +1,6 @@
 
+#	GWAS
+
 
 Use plink 1.9???
 
@@ -10,7 +12,7 @@ Try Hail or other for GWAS?
 Using 1000genomes, for example
 
 
-
+```
 aws s3 sync s3://1000genomes/release/20130502/ /francislab/data1/raw/1000genomes/release/20130502/ --exclude "*supporting/*"
 
 
@@ -31,12 +33,13 @@ Description	Population Code
 East Asian	EAS
 South Asian	SAS
 African	AFR
-
+```
 
 Create own metadata with Sample, Gender, Population, Population Description, Super Population, Super Population Description
 by merging 20130606_sample_info\ -\ Sample\ Info.csv, 20131219.populations.tsv and 20131219.superpopulations.tsv
 
 
+```
 awk -F"\t" '( ARGIND == 1 ){FS="\t";s[$2]=$1} ( ARGIND == 2 ){FS="\t";p[$2]=$3; print($1,$2,$3,s[$3])}' 20131219.superpopulations.tsv 20131219.populations.tsv
 
 
@@ -60,6 +63,7 @@ awk 'BEGIN{FS=OFS="\t"}(NR>1){ s=($3=="male")?1:2; print $1,$1,s >> $6"_ids.txt"
 awk 'BEGIN{FS=OFS="\t"}(NR>1){ s=($3=="male")?1:2; print $1,$1,s >> $6"_"$4"_ids.txt" }' /francislab/data1/raw/1000genomes/metadata.tsv
 
 
+```
 
 
 
