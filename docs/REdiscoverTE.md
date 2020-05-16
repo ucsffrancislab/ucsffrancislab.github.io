@@ -197,7 +197,7 @@ ls -1 ${DIR}/trimmed/*REdiscoverTE/quant.sf \
 echo "/francislab/data1/refs/REdiscoverTE/rollup.R \
 		--metadata=${DIR}/REdiscoverTE.tsv \
 		--datadir=/francislab/data1/refs/REdiscoverTE/rollup_annotation/ \
-		--nozero --threads=8 --assembly=hg38 \
+		--nozero --threads=64 --assembly=hg38 \
 		--outdir=${DIR}/REdiscoverTE_rollup/" | \
 		qsub -l vmem=500gb -N rollup \
 		-l nodes=1:ppn=64 \
