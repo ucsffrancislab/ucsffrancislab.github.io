@@ -5,11 +5,13 @@
 
 // div.wrapper is used by Modernist
 // .inner is more common
-body > div.wrapper , .inner {
+//	body > div.wrapper , 
+.inner {
   width: 75%;
 }
 
 // Modernist
-pre {
-	margin: 5px;
-}
+//	pre {
+//		margin: 5px;
+//		border-radius: 0.3rem;
+//	}
