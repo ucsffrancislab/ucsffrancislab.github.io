@@ -1,6 +1,7 @@
 
 # REdiscoverTE
 
+https://www.nature.com/articles/s41467-019-13035-2
 
 http://research-pub.gene.com/REdiscoverTEpaper/software/
 
