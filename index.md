@@ -1,4 +1,4 @@
-#	UCSF Francis Lab Header
+#	UCSF Francis Lab
 
 Pseudo Pipeline and Topic Notes
 * [REdiscoverTE](docs/REdiscoverTE)
@@ -13,6 +13,11 @@ Pseudo Pipeline and Topic Notes
 * [Dark](docs/Dark)
 * [Chimera](docs/Chimera)
 
+General
+* [UCSF Github Repos](https://github.com/ucsffrancislab)
+* [UNR Github Repos](https://github.com/unreno)
+* [Cal Github Repos](https://github.com/ccls)
+* [Jake's Github Repos](https://github.com/jakewendt)
 
 Helpful links
 * [TIPCC - a High-Performance Compute Environment at UCSF](https://ucsf-ti.github.io/tipcc-web/index.html)
