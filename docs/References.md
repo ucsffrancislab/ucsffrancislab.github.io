@@ -12,7 +12,7 @@ By themselves, perhaps not a huge problem.
 Custom references for custom problems.
 
 However not all versions come with the additions files like a gtf/gff.
-Even the hg38 "package" downloaded from https://support.illumina.com/sequencing/sequencing_software/igenome.html contains different collections of chromosomes in the fasta sequence and annotation gtf file.
+Even the hg38 "package" downloaded from <https://support.illumina.com/sequencing/sequencing_software/igenome.html> contains different collections of chromosomes in the fasta sequence and annotation gtf file.
 
 
 Worthy of a concern?

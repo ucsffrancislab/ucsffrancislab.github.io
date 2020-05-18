@@ -4,13 +4,13 @@
 
 MetaGO kmer analysis processing.
 
-[Article](https://www.frontiersin.org/articles/10.3389/fmicb.2018.00872/full)
+<https://www.frontiersin.org/articles/10.3389/fmicb.2018.00872/full>
 
-[MetaGO original repository](https://github.com/VVsmileyx/MetaGO)
+<https://github.com/VVsmileyx/MetaGO>
 
 I have forked the original repository as I anticipate a number of modifications.
 
-[Our forked MetaGO repository](https://github.com/ucsffrancislab/MetaGO)
+<https://github.com/ucsffrancislab/MetaGO>
 
 
 

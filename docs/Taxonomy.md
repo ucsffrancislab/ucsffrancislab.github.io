@@ -17,7 +17,7 @@ Gotta merge nodes.dmp and names.dmp to make the "taxa" table.
 The accessions tables is just all of the accession2taxid file.
 
 
-Found another cool tool. http://etetoolkit.org/
+Found another cool tool. <http://etetoolkit.org/>
 
 
 ```

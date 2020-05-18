@@ -1,10 +1,10 @@
 
 # REdiscoverTE
 
-[Our RediscoverTE repository](https://github.com/ucsffrancislab/REdiscoverTE)
+<https://github.com/ucsffrancislab/REdiscoverTE>
 
 
-[Nature article](https://www.nature.com/articles/s41467-019-13035-2)
+<https://www.nature.com/articles/s41467-019-13035-2>
 
 <http://research-pub.gene.com/REdiscoverTEpaper/>
 
