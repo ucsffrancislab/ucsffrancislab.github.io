@@ -22,7 +22,7 @@ Should I keep our references "up-to-date" by applying all of these patches and f
 
 
 Patch hg38 reference?
-https://hgdownload.soe.ucsc.edu/gbdb/hg38/
+<https://hgdownload.soe.ucsc.edu/gbdb/hg38/>
 
 
 

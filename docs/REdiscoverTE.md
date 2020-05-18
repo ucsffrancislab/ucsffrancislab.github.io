@@ -1,13 +1,24 @@
 
 # REdiscoverTE
 
-https://www.nature.com/articles/s41467-019-13035-2
+[Our RediscoverTE repository](https://github.com/ucsffrancislab/REdiscoverTE)
 
-http://research-pub.gene.com/REdiscoverTEpaper/software/
 
-http://research-pub.gene.com/REdiscoverTEpaper/software/REdiscoverTE_README.html
+[Nature article](https://www.nature.com/articles/s41467-019-13035-2)
 
-http://research-pub.gene.com/REdiscoverTEpaper/software/REdiscoverTE_1.0.1.tar.gz
+<http://research-pub.gene.com/REdiscoverTEpaper/>
+
+<http://research-pub.gene.com/REdiscoverTEpaper/data/>
+
+<http://research-pub.gene.com/REdiscoverTEpaper/data/REdiscoverTEdata_README.html>
+
+<http://research-pub.gene.com/REdiscoverTEpaper/data/REdiscoverTEdata_1.0.1.tar.gz>
+
+<http://research-pub.gene.com/REdiscoverTEpaper/software/>
+
+<http://research-pub.gene.com/REdiscoverTEpaper/software/REdiscoverTE_README.html>
+
+<http://research-pub.gene.com/REdiscoverTEpaper/software/REdiscoverTE_1.0.1.tar.gz>
 
 
 

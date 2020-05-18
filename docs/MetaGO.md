@@ -4,9 +4,14 @@
 
 MetaGO kmer analysis processing.
 
-https://www.frontiersin.org/articles/10.3389/fmicb.2018.00872/full
+[Article](https://www.frontiersin.org/articles/10.3389/fmicb.2018.00872/full)
 
-https://github.com/VVsmileyx/MetaGO
+[MetaGO original repository](https://github.com/VVsmileyx/MetaGO)
+
+I have forked the original repository as I anticipate a number of modifications.
+
+[Our forked MetaGO repository](https://github.com/ucsffrancislab/MetaGO)
+
 
 
 WARNING: In its current state, MetaGO parses filenames with dots and assumes that the 3rd position flags as gzipped and the second position for filetype. If, as I normally do, have other dots in the filename, you will get no results. Just Filename_without_dots.fastq.gz
@@ -67,7 +72,7 @@ RUN mkdir ~/github/
 RUN mkdir -p ~/.local/bin
 
 RUN cd ~/github/; \
-	git clone https://github.com/VVsmileyx/MetaGO.git ; \
+	git clone https://github.com/ucsffrancislab/MetaGO.git ; \
 	cd MetaGO ; tar xfvz MetaGO_SourceCode.tar.gz
 
 RUN cd ~/github/; \
