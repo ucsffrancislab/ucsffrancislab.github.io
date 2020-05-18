@@ -23,7 +23,9 @@ I just created a separate directory and linked the files.
 Your call though.
 
 ```BASH
-tail -n +2 DATADIR/metadata.csv | awk -F, '{print "ln -s DATADIR/"$1".hg38.bowtie2-e2e.unmapped.fasta.gz ./"$2"-"$1"-unmapped.fasta.gz"}' | bash
+tail -n +2 DATADIR/metadata.csv | \
+	awk -F, '{print "ln -s DATADIR/"$1".hg38.bowtie2-e2e.unmapped.fasta.gz ./"$2"-"$1"-unmapped.fasta.gz"}' \
+	| bash
 
 ll Control-* | wc -l
 29
@@ -111,7 +113,8 @@ I use one of my scripts to start the latest Amazon Linux on a decent resource se
 
 
 ```BASH
-create_ec2_instance.bash --profile gwendt --image-id ami-0323c3dd2da7fb37d --instance-type i3.2xlarge --key-name ~/.aws/JakeHervUNR.pem --NOT-DRY-RUN
+create_ec2_instance.bash --profile gwendt --image-id ami-0323c3dd2da7fb37d \
+	--instance-type i3.2xlarge --key-name ~/.aws/JakeHervUNR.pem --NOT-DRY-RUN
 ```
 
 Then login and update the system and install docker.
@@ -150,7 +153,7 @@ Start docker and give its user some power, then logout and back in.
 ```BASH
 mkdir ~/ssd0/MetaGO_Result
 
-aws s3 sync s3://herv-unr/MetaGO_S3_20200407_Schizophrenia/ ~/ssd0/MetaGO_S3_20200407_Schizophrenia/ 
+aws s3 sync s3://herv-unr/MetaGO_S3_DATADIR/ ~/ssd0/MetaGO_S3_DATADIR/ 
 
 sudo bash -c 'echo { \"data-root\":\"/home/ec2-user/ssd0/\" } >> /etc/docker/daemon.json'
 
@@ -213,7 +216,12 @@ ls -1 /mnt/ssd0/MetaGO_S3_DATADIR/Case*   >> /root/fileList.txt
 ls -1 /mnt/ssd0/MetaGO_S3_DATADIR/Case* | wc -l
 30
 
-nohup bash /root/github/MetaGO/MetaGO_SourceCode/MetaGO.sh --inputData RAW --fileList /root/fileList.txt --n1 29 --n2 30 --kMer 21 --min 1 -P 16 --ASS 0.65 --WilcoxonTest 0.1 --LogicalRegress 0.5 --filterFuction ASS --outputPath /mnt/ssd0/MetaGO_Result --Union --sparse --cleanUp > /mnt/ssd0/MetaGO_Result/MetaGO.output.txt 2>&1 &
+nohup bash /root/github/MetaGO/MetaGO_SourceCode/MetaGO.sh --inputData RAW --fileList /root/fileList.txt \
+	--n1 $( ls -1 /mnt/ssd0/MetaGO_S3_DATADIR/Control* | wc -l ) \
+	--n2 $( ls -1 /mnt/ssd0/MetaGO_S3_DATADIR/Case* | wc -l ) \
+	--kMer 21 --min 1 -P 16 --ASS 0.65 --WilcoxonTest 0.1 --LogicalRegress 0.5 \
+	--filterFuction ASS --outputPath /mnt/ssd0/MetaGO_Result --Union --sparse --cleanUp \
+	> /mnt/ssd0/MetaGO_Result/MetaGO.output.txt 2>&1 &
 
 ```
 

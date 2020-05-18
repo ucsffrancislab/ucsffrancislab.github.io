@@ -97,7 +97,9 @@ I'll keep things simple. We don't know all of the other tags and certainly don't
 
 
 ```BASH
-bedToGenePred hg38_rmsk_LTR.bed.gz stdout | awk 'BEGIN{FS=OFS="\t"}{print $2,"source","feature",$4+1,$5,".",$3,".","feature_name \""$1"\""}' > hg38_rmsk_LTR.jake.gtf
+bedToGenePred hg38_rmsk_LTR.bed.gz stdout | \
+	awk 'BEGIN{FS=OFS="\t"}{print $2,"source","feature",$4+1,$5,".",$3,".","feature_name \""$1"\""}' \
+	> hg38_rmsk_LTR.jake.gtf
 
 head hg38_rmsk_LTR.jake.gtf
 chr1	source	feature	21949	22075	.	+	.	feature_name "MLT1K"
@@ -149,7 +151,9 @@ zcat hg38_rmsk_Retroposon.bed.gz | awk '{print $4}' | sort | uniq -c
     709 SVA_E
    1043 SVA_F
 
-bedToGenePred hg38_rmsk_Retroposon.bed.gz stdout | awk 'BEGIN{FS=OFS="\t"}{print $2,"source","feature",$4+1,$5,".",$3,".","feature_name \""$1"\""}' > hg38_rmsk_Retroposon.jake.gtf
+bedToGenePred hg38_rmsk_Retroposon.bed.gz stdout | \
+	awk 'BEGIN{FS=OFS="\t"}{print $2,"source","feature",$4+1,$5,".",$3,".","feature_name \""$1"\""}' \
+	> hg38_rmsk_Retroposon.jake.gtf
 ```
 
 

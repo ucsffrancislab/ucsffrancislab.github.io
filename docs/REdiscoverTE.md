@@ -33,12 +33,6 @@ for f in ${DIR}/???.fastq.gz ; do
 	base=${f%.fastq.gz}
 	echo $base
 
-#	$(SALMON_0.8.2_EXE)  quant  \
-#		--seqBias  --gcBias  \
-#		-i $(SALMON_INDEX_DIR)  \
-#		-l 'A'  $(FASTQ_INPUT_ARGS)  \
-#		-o $(SALMON_COUNTS_DIR)
-
 	echo "salmon quant --seqBias --gcBias \
 		--index ${SALMON}/REdiscoverTE \
 		--libType A --unmatedReads ${f} \

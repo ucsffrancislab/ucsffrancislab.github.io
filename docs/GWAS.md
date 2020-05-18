@@ -40,7 +40,8 @@ by merging 20130606_sample_info\ -\ Sample\ Info.csv, 20131219.populations.tsv a
 
 
 ```
-awk -F"\t" '( ARGIND == 1 ){FS="\t";s[$2]=$1} ( ARGIND == 2 ){FS="\t";p[$2]=$3; print($1,$2,$3,s[$3])}' 20131219.superpopulations.tsv 20131219.populations.tsv
+awk -F"\t" '( ARGIND == 1 ){FS="\t";s[$2]=$1} ( ARGIND == 2 ){FS="\t";p[$2]=$3; print($1,$2,$3,s[$3])}' \
+	20131219.superpopulations.tsv 20131219.populations.tsv
 
 
 echo -e "Sample\tFamily\tGender\tPopulation\tPopulation Description\tSuper Population\tSuper Population Description" > metadata.tsv
@@ -58,9 +59,11 @@ awk '( ARGIND == 1 ){FS="\t";s[$2]=$1} ( ARGIND == 2 ){FS="\t";p[$2]=$3} ( ARGIN
 #
 #	Use sample id as family id
 
-awk 'BEGIN{FS=OFS="\t"}(NR>1){ s=($3=="male")?1:2; print $1,$1,s >> $6"_ids.txt" }' /francislab/data1/raw/1000genomes/metadata.tsv
+awk 'BEGIN{FS=OFS="\t"}(NR>1){ s=($3=="male")?1:2; print $1,$1,s >> $6"_ids.txt" }' \
+	/francislab/data1/raw/1000genomes/metadata.tsv
 
-awk 'BEGIN{FS=OFS="\t"}(NR>1){ s=($3=="male")?1:2; print $1,$1,s >> $6"_"$4"_ids.txt" }' /francislab/data1/raw/1000genomes/metadata.tsv
+awk 'BEGIN{FS=OFS="\t"}(NR>1){ s=($3=="male")?1:2; print $1,$1,s >> $6"_"$4"_ids.txt" }' \
+	/francislab/data1/raw/1000genomes/metadata.tsv
 
 
 ```
