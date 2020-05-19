@@ -28,9 +28,9 @@ for s in 50 25 ; do
 	b=$( basename $f .fasta )
 ```
 
-	Split the fasta file into pieces.
-	We chose 50bp with an extra 50bp overlap into a single file.
-	And renamed the output file.
+Split the fasta file into pieces.
+We chose 50bp with an extra 50bp overlap into a single file.
+And renamed the output file.
 
 ```BASH
 	faSplit -oneFile -extra=${s} size ${f} ${s} split
@@ -38,9 +38,9 @@ for s in 50 25 ; do
 ```
 
 
-	In this particular case, we needed a human reference that did not include EBV.
-	Aligning locally performed best.
-	We attempted a number of settings but stuck with --very-sensitive-local
+In this particular case, we needed a human reference that did not include EBV.
+Aligning locally performed best.
+We attempted a number of settings but stuck with --very-sensitive-local
 
 
 
