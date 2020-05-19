@@ -4,7 +4,16 @@
 
 Basic preprocessing ...
 
+Prior to this, could / would do demultiplexing and umi tagging and consolidation with 
+Demultiplexing
+https://github.com/grenaud/deML
+https://github.com/ucsffrancislab/umi
+UMI Tagging / Consolidation
+https://github.com/ucsffrancislab/umi
 
+
+
+Setup
 
 ```BASH
 REFS=/francislab/data1/refs
@@ -20,7 +29,13 @@ echo $base
 mkdir -p ${OUT}/trimmed/length/unpaired
 
 outbase="${OUT}/trimmed/${base}"
+```
 
+Trim off adapters and filter on read quality.
+
+Could also use cutadapt
+
+```BASH
 bbduk.bash \
 	-Xmx16g \
 	in1=${R1} \

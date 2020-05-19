@@ -6,7 +6,6 @@ Use plink 1.9???
 
 Newer versions produce different output.
 
-Try Hail or other for GWAS?
 
 
 Using 1000genomes, for example
@@ -276,5 +275,17 @@ else
 
 fi
 ```
+
+
+
+
+
+
+Learn GWAS / Manhattan plots
+https://en.wikipedia.org/wiki/Genome-wide_association_study
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6001694/
+https://elifesciences.org/articles/32920
+http://bioinformatics.org.au/ws09/presentations/Day3_JStankovich.pdf
+Try Hail or other for GWAS?
 
 

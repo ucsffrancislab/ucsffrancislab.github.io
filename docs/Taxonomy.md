@@ -3,6 +3,9 @@
 
 
 For some reason, taxadb does not include all of the data in taxdump?
+Many accessions have 0 as the ncbi taxid.
+Others have a valid taxid, but the branch is incomplete with no species, genus, etc.
+
 
 ```
 wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz
@@ -178,6 +181,11 @@ CREATE UNIQUE INDEX "accession_accession" ON "accession" ("accession");
 ```
 
 
+
+
+
+
+I've found the fastest way to extract this taxonomy is to create a temporary table, load the query and then select and join appropriately.
 
 
 

@@ -12,6 +12,18 @@ Pseudo Pipeline and Topic Notes
 * [GWAS](docs/GWAS)
 * [Dark](docs/Dark)
 * [Chimera](docs/Chimera)
+* [APOBEC](docs/APOBEC)
+* [DNASeq](docs/DNASeq)
+* [DiscordRetro](docs/DiscordRetro)
+* [ERVCaller](docs/ERVCaller)
+* [GuideSeq](docs/GuideSeq)
+* [HAWK](docs/HAWK)
+* [RNASeq](docs/RNASeq)
+* [Strelka](docs/Strelka)
+* [TIPCC](docs/TIPCC)
+* [TelSeq](docs/TelSeq)
+* [hervQuant](docs/hervQuant)
+* [miRNA](docs/miRNA)
 
 General
 * [UCSF Github Repos](https://github.com/ucsffrancislab)
@@ -23,4 +35,3 @@ Helpful links
 * [TIPCC - a High-Performance Compute Environment at UCSF](https://ucsf-ti.github.io/tipcc-web/index.html)
 * [AWS Cloud Credits for Research](https://aws.amazon.com/research-credits/)
 * [Github Pages](https://help.github.com/en/github/working-with-github-pages)
-
