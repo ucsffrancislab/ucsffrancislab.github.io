@@ -1,7 +1,12 @@
 
 #	APOBEC
 
-VCF analysis
+
+[A collection of perl and R scripts to format COSMIC mutational datasets and extract mutational signature information.](https://github.com/jakewendt/Mutation-Signatures)
+
+
+
+VCF filtering
 
 
 SNPs:
