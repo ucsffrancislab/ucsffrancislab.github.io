@@ -23,10 +23,11 @@
 
 
 ```BASH
+zcat REdiscoverTE/rollup_annotation/REdiscoverTE_whole_transcriptome_hg38.fa.gz > REdiscoverTE.fa
 salmon index \
-	-t /home/gwendt/REdiscoverTE/rollup_annotation/genome.fasta \
+	-t REdiscoverTE.fa \
 	--threads 64 \
-	-i /francislab/data1/refs/salmon/REdiscoverTE
+	-i REdiscoverTE
 ```
 
 
@@ -34,9 +35,6 @@ salmon index \
 
 
 ```BASH
-SALMON="/francislab/data1/refs/salmon"
-DIR="/francislab/data1/working/20200320_Raleigh_Meningioma_RNA/20200320-viral_expression/trimmed"
-
 for f in ${DIR}/???.fastq.gz ; do
 
 	echo $f
@@ -45,7 +43,7 @@ for f in ${DIR}/???.fastq.gz ; do
 	echo $base
 
 	echo "salmon quant --seqBias --gcBias \
-		--index ${SALMON}/REdiscoverTE \
+		--index REdiscoverTE \
 		--libType A --unmatedReads ${f} \
 		--validateMappings \
 		-o ${base}.salmon.REdiscoverTE \
@@ -192,16 +190,14 @@ Options:
 
 
 ```BASH
-
-DIR="/francislab/data1/working/20200320_Raleigh_Meningioma_RNA/20200320-viral_expression"
 echo -e "sample\tquant_sf_path" > ${DIR}/REdiscoverTE.tsv
 ls -1 ${DIR}/trimmed/*REdiscoverTE/quant.sf \
 		| awk -F/ '{split($8,a,".");print a[1]"\t"$0}' \
 		>> ${DIR}/REdiscoverTE.tsv
 
-echo "/francislab/data1/refs/REdiscoverTE/rollup.R \
+echo "rollup.R \
 		--metadata=${DIR}/REdiscoverTE.tsv \
-		--datadir=/francislab/data1/refs/REdiscoverTE/rollup_annotation/ \
+		--datadir=REdiscoverTE/rollup_annotation/ \
 		--nozero --threads=64 --assembly=hg38 \
 		--outdir=${DIR}/REdiscoverTE_rollup/" | \
 		qsub -l vmem=500gb -N rollup \
