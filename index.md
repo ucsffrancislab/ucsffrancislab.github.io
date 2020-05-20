@@ -24,6 +24,7 @@ Pseudo Pipeline and Topic Notes
 * [TelSeq](docs/TelSeq)
 * [hervQuant](docs/hervQuant)
 * [miRNA](docs/miRNA)
+* [Aligners](docs/Aligners)
 
 General
 * [UCSF Github Repos](https://github.com/ucsffrancislab)

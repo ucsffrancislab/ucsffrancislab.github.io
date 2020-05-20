@@ -47,6 +47,25 @@ tipcc node n38
 ```
 
 
+Modules that I load
+
+```BASH
+module load CBC
+module load htop
+module load openssl/1.1.1a
+module load python/2.7.15
+module load gcc/4.9.2
+module load r/3.6.1
+module load jdk/8
+module load gatk/4.0.2.1
+module load coreutils/8.6
+module load sqlite
+module load cufflinks
+module load cmake
+module load gawk
+module load bedtools2
+module load git git-lfs
+```
 
 
 

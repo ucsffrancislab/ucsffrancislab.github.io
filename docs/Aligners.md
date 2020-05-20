@@ -17,4 +17,6 @@ kallisto
 
 salmon
 
+kraken
+
 
