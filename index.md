@@ -1,6 +1,7 @@
 #	UCSF Francis Lab
 
 Pseudo Pipeline and Topic Notes
+* [Imputation](docs/Imputation)
 * [REdiscoverTE](docs/REdiscoverTE)
 * [Preprocessing](docs/Preprocessing)
 * [References](docs/References)

@@ -95,4 +95,9 @@ MetaGO requires dsk 1.6066 (and parse_results) which won't run
 ./parse_results: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by ./parse_results)
 
 
+from gotcloud
+ftp://share.sph.umich.edu/gotcloud/1.16/gotcloud-bin_1.16.tar.gz
+[gwendt@cclc01 ~/gotcloud/bin]$ ./vcfCooker 
+./vcfCooker: /lib64/libc.so.6: version `GLIBC_2.15' not found (required by ./vcfCooker)
+./vcfCooker: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by ./vcfCooker)
 ```
