@@ -148,6 +148,34 @@ This was 1.7TB if I remember correctly.
 Some other types come with multiple ssd drives that each need prepared separately if desired.
 Perhaps use ssd0 as data in, ssd1 as data out and ssd2 as docker storage, or something like that.
 Only 1 on this type so let's do everything there.
+
+
+
+On larger instance types, there are multiple 1.7TB drives.
+And some data sets will require more space.
+Perhaps do this by creating a raid drive across them all with something like.
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/raid-config.html
+```BASH
+sudo yum -y install mdadm
+lsblk
+sudo mdadm --create --verbose /dev/md0 --level=0 --name=MY_RAID --raid-devices=4 /dev/nvme0n1 /dev/nvme1n1 /dev/nvme2n1 /dev/nvme3n1
+# wait until complete, but seemed immediate
+sudo cat /proc/mdstat
+# wait until complete, but seemed immediate
+sudo mdadm --detail /dev/md0
+sudo mkfs.ext4 -L MY_RAID /dev/md0
+sudo mdadm --detail --scan | sudo tee -a /etc/mdadm.conf
+sudo dracut -H -f /boot/initramfs-$(uname -r).img $(uname -r)
+sudo mkdir -p /mnt/raid
+sudo mount LABEL=MY_RAID /mnt/raid
+sudo chown ec2-user /mnt/raid/
+mkdir -p /mnt/raid/MetaGO_Result
+mkdir -p /mnt/raid/docker
+```
+
+
+
+
 Prepare the output directory.
 Download the data.
 Tell docker to put its stuff there too.
