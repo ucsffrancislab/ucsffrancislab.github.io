@@ -7,7 +7,7 @@ Using Repeat Masker to block non-specific regions from a reference to minimize f
 
 Aligning raw reads to a viral reference can result in small regions with extremely deep coverage and no coverage anywhere else.
 
-We were find a BeAnn virus quite often.
+We were find a BeAn_58058 virus quite often.
 
 Many times simply running RepeatMasker on the viral fasta before creating the reference does a good job.
 
