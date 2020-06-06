@@ -1,6 +1,7 @@
 #	UCSF Francis Lab
 
 Pseudo Pipeline and Topic Notes
+* [Manta/Strelka](docs/Manta_Strelka)
 * [Imputation](docs/Imputation)
 * [REdiscoverTE](docs/REdiscoverTE)
 * [Preprocessing](docs/Preprocessing)
@@ -20,7 +21,6 @@ Pseudo Pipeline and Topic Notes
 * [GuideSeq](docs/GuideSeq)
 * [HAWK](docs/HAWK)
 * [RNASeq](docs/RNASeq)
-* [Strelka](docs/Strelka)
 * [TIPCC](docs/TIPCC)
 * [TelSeq](docs/TelSeq)
 * [hervQuant](docs/hervQuant)
