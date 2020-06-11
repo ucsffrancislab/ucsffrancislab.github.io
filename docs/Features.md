@@ -24,6 +24,12 @@ Once loaded, hovering over the gene track will show a URL to download the bed fi
 
 Or we could look directly in the [IGV github repo](https://github.com/igvteam/igv/blob/master/genomes/db/hg38/hg38_annotations.xml)
 
+We could download them all from their S3 bucket
+```BASH
+aws s3 sync s3://igv.org.genomes/hg38/rmsk/ local_rmsk/
+```
+
+
 
 ```BASH
 wget https://s3.amazonaws.com/igv.org.genomes/hg38/rmsk/hg38_rmsk_LTR.bed.gz
