@@ -1,22 +1,26 @@
 
 #	Aligners
 
-bowtie2
+[bowtie2](https://github.com/BenLangmead/bowtie2)
 
-STAR (good for RNASeq if index created with gtf)
+[STAR](https://github.com/alexdobin/STAR) (good for RNASeq if index created with gtf)
 
-blastn
+[bwa](https://github.com/lh3/bwa)
 
-blastx
 
-diamond
+[kraken2](https://github.com/DerrickWood/kraken2)
 
-blat
 
-kallisto
+[kallisto](https://github.com/pachterlab/kallisto)
 
-salmon
+[salmon](https://github.com/COMBINE-lab/salmon)
 
-kraken
 
+[plast](https://github.com/PLAST-software)
+
+[blastn/blastx](https://blast.ncbi.nlm.nih.gov/Blast.cgi)
+
+[diamond](https://github.com/bbuchfink/diamond)
+
+[blat](https://genome-test.gi.ucsc.edu/~kent/src/)
 
