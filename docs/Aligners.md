@@ -8,10 +8,10 @@
 [bwa](https://github.com/lh3/bwa)
 
 
-[kraken2](https://github.com/DerrickWood/kraken2)
+[kraken2](https://github.com/DerrickWood/kraken2) - [bracken](https://github.com/jenniferlu717/Bracken/)
 
 
-[kallisto](https://github.com/pachterlab/kallisto)
+[kallisto](https://pachterlab.github.io/kallisto/) - [sleuth](https://pachterlab.github.io/sleuth/)
 
 [salmon](https://github.com/COMBINE-lab/salmon)
 
