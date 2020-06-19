@@ -2,6 +2,8 @@
 #	TIPCC
 
 
+##	Basic Usage
+
 ```
 #	put jobs on hold ( qhold )
 
@@ -47,13 +49,20 @@ tipcc node n38
 ```
 
 
+
+
+
+##	Modules
+
+
 Modules that I load
 
 ```BASH
 module load CBC
 module load htop
 module load openssl/1.1.1a
-module load python/2.7.15
+module load zlib
+module load python/2.7.10	#	2.7.10 for gdc-client
 module load gcc/4.9.2
 module load r/3.6.1
 module load jdk/8
@@ -68,6 +77,30 @@ module load git git-lfs
 ```
 
 
+
+
+
+
+##	Best Practices
+
+
+TIPCC has been described as a "fragile flower".
+It has many limitations and I've managed to overuse it.
+
+* Don't "stuff" the queue.
+* Use fewer, long jobs rather than more, short jobs.
+* Use scratch as much as possible.
+
+
+
+
+
+
+
+
+
+
+##	Missing
 
 
 Big items missing from the cluster, all mostly due to the very old OS.
