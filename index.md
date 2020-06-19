@@ -1,6 +1,8 @@
 #	UCSF Francis Lab
 
 Pseudo Pipeline and Topic Notes
+* [Assemblers](docs/Assemblers)
+* [Aligners](docs/Aligners)
 * [Manta/Strelka](docs/Manta_Strelka)
 * [Imputation](docs/Imputation)
 * [REdiscoverTE](docs/REdiscoverTE)
@@ -25,7 +27,6 @@ Pseudo Pipeline and Topic Notes
 * [TelSeq](docs/TelSeq)
 * [hervQuant](docs/hervQuant)
 * [miRNA](docs/miRNA)
-* [Aligners](docs/Aligners)
 
 General
 * [UCSF Github Repos](https://github.com/ucsffrancislab)
