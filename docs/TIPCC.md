@@ -96,7 +96,12 @@ It has many limitations and I've managed to overuse it.
 ##	Local Scratch
 
 
-Use `/scratch/$USER/job/$PBS_JOBID` in your scripts.
+Use 
+```BASH
+SCRATCH_JOB=/scratch/$USER/job/$PBS_JOBID
+mkdir -p $SCRATCH_JOB
+``` 
+in your scripts.
 
 In some of my jobs this seems like a rather extreme response.
 Copying input files and references is hundreds of gigabytes.
@@ -119,6 +124,32 @@ set -o pipefail
 ```
 
 so I'm not sure exactly what circumstances result in not cleaning up.
+
+
+
+
+
+
+##	New local scratch usage
+
+
+https://ucsf-ti.github.io/tipcc-web/good-practices/using-local-scratch.html
+
+New scratch setup does not need to be cleaned up as it should be done automatically.
+
+Existing scripts could simply have the current few lines regarding SCRATCH_JOB setup 
+```BASH
+SCRATCH_JOB=/scratch/$USER/job/$PBS_JOBID
+mkdir -p $SCRATCH_JOB
+trap "{ cd /scratch/; chmod -R +w $SCRATCH_JOB/; \rm -rf $SCRATCH_JOB/ ; }" EXIT
+```
+replaced with 
+```BASH
+SCRATCH_JOB=$TMPDIR
+```
+Still testing though.
+
+
 
 
 
