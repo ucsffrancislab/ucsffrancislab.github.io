@@ -27,6 +27,25 @@ kraken2-build --db standard-20200615 --download-library UniVec_Core
 #	Repeat Masker on the 4 library.fna files
 
 kraken2-build --db standard-20200615 --build --threads 32
+
+
+#	Prepare Bracken reference for each anticipated read length
+#	Run multiple, but not at the same time.
+#	They both create the file `database.kraken` if it doesn't exist.
+
+bracken-build -d abv -t 32 -l 150
+
+#	Then
+
+bracken-build -d abv -t 32 -l 100
+
+
+
+#	Then align with kraken with the report option and analyze the report file with bracken.
+
+kraken2 --db ${KRAKEN_DB} --threads ${threads} --output ${f} --paired --use-names ${r1} ${r2}
+
+bracken -d ${KRAKEN_DB} -i ${SAMPLE}.kreport -o ${SAMPLE}.bracken -r ${READ_LEN} -l ${LEVEL} -t ${THRESHOLD}
 ```
 
 
