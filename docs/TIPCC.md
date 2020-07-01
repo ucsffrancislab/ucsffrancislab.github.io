@@ -93,7 +93,7 @@ It has many limitations and I've managed to overuse it.
 
 
 
-##	Local Scratch
+##	Old Local Scratch
 
 
 Use 
@@ -130,7 +130,7 @@ so I'm not sure exactly what circumstances result in not cleaning up.
 
 
 
-##	New local scratch usage
+##	New Local Scratch
 
 
 https://ucsf-ti.github.io/tipcc-web/good-practices/using-local-scratch.html
@@ -205,6 +205,8 @@ $ cat array-9
 Big items missing from the cluster, all mostly due to the very old OS.
 
 ```BASH
+
+Some issues with Jupyter Notebook command line execution and conversion
 
 Python3
 
