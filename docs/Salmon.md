@@ -1,6 +1,7 @@
 
 #	Salmon
 
+[salmon](https://github.com/COMBINE-lab/salmon)
 
 Using Salmon for analysis
 
