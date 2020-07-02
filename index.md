@@ -8,6 +8,7 @@ Pseudo Pipeline and Topic Notes
 * [APOBEC](docs/APOBEC)
 * [Aligners](docs/Aligners)
 * [Assemblers](docs/Assemblers)
+* [Blat](docs/Blat)
 * [BWA](docs/BWA)
 * [Bowtie](docs/Bowtie)
 * [Chimera](docs/Chimera)
