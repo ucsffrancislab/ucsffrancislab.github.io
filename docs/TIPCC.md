@@ -218,6 +218,7 @@ MySQL / MariaDB
 
 Megan and Megan Tools
 
+spark
 
 
 MetaGO requires dsk 1.6066 (and parse_results) which won't run
@@ -235,3 +236,4 @@ ftp://share.sph.umich.edu/gotcloud/1.16/gotcloud-bin_1.16.tar.gz
 ./vcfCooker: /lib64/libc.so.6: version `GLIBC_2.15' not found (required by ./vcfCooker)
 ./vcfCooker: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by ./vcfCooker)
 ```
+
