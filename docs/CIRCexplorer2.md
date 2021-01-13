@@ -1,5 +1,5 @@
 
-#	CIRCExplorer2
+#	CIRCexplorer2
 
 
 This seems to require a very particular set of dependencies in a particular order.
