@@ -19,7 +19,7 @@ Pseudo Pipeline and Topic Notes
   * [Salmon](docs/Salmon)
 * [Assemblers](docs/Assemblers)
 * [Chimera](docs/Chimera)
-* [CIRCExplorer2](docs/CIRCExplorer2)
+* [CIRCexplorer2](docs/CIRCexplorer2)
 * [Dark](docs/Dark)
 * [DiscordRetro](docs/DiscordRetro)
 * [ERVCaller](docs/ERVCaller)
