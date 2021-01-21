@@ -1,6 +1,11 @@
 
 #	ImputationPrep_AGS_GWAS
 
+
+Adult Glioma Study GWAS : Imputed on Top Med 
+
+
+
 Pipeline based on https://imputationserver.readthedocs.io/en/latest/prepare-your-data/
 
 Update https://www.well.ox.ac.uk/~wrayner/tools/HRC-1000G-check-bim-v4.3.0.zip
