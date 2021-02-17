@@ -44,7 +44,6 @@ for fastq in /francislab/data1/raw/20210205-EV_CATS/*.fastq.gz ; do
 			${PWD}/copy_umi.bash --threads 10 --umi-length 12 -i ${fastq} -o ${f} )
 	fi
 
-	depend=""
 	cutadapt_id=""
 	f=${PWD}/output/${basename}_w_umi.trimmed.fastq.gz
 	if [ -f $f ] && [ ! -w $f ] ; then
@@ -63,7 +62,6 @@ for fastq in /francislab/data1/raw/20210205-EV_CATS/*.fastq.gz ; do
 				-o ${f} ${PWD}/output/${basename}_w_umi.fastq.gz
 	fi
 
-	depend=""
 	f=${PWD}/output/${basename}_w_umi.trimmed.STAR.Aligned.sortedByCoord.out.bam
 	if [ -f $f ] && [ ! -w $f ] ; then
 		echo "Write-protected $f exists. Skipping."
@@ -87,7 +85,6 @@ for fastq in /francislab/data1/raw/20210205-EV_CATS/*.fastq.gz ; do
 				--outFileNamePrefix ${PWD}/output/${basename}_w_umi.trimmed.STAR.
 	fi
 
-	depend=""
 	f=${PWD}/output/${basename}_w_umi.trimmed.bowtie2phiX.bam
 	if [ -f $f ] && [ ! -w $f ] ; then
 		echo "Write-protected $f exists. Skipping."
@@ -103,7 +100,6 @@ for fastq in /francislab/data1/raw/20210205-EV_CATS/*.fastq.gz ; do
 			--very-sensitive-local -U ${PWD}/output/${basename}_w_umi.trimmed.fastq.gz -o ${f}
 	fi
 
-	depend=""
 	f=${PWD}/output/${basename}_w_umi.trimmed.STAR.mirna.Aligned.sortedByCoord.out.bam
 	if [ -f $f ] && [ ! -w $f ] ; then
 		echo "Write-protected $f exists. Skipping."
@@ -123,7 +119,6 @@ for fastq in /francislab/data1/raw/20210205-EV_CATS/*.fastq.gz ; do
 				--outFileNamePrefix ${PWD}/output/${basename}_w_umi.trimmed.STAR.mirna.
 	fi
 
-	depend=""
 	f=${PWD}/output/${basename}_w_umi.trimmed.bowtie2.mirna.bam
 	if [ -f $f ] && [ ! -w $f ] ; then
 		echo "Write-protected $f exists. Skipping."
@@ -139,7 +134,6 @@ for fastq in /francislab/data1/raw/20210205-EV_CATS/*.fastq.gz ; do
 			--very-sensitive-local -U ${PWD}/output/${basename}_w_umi.trimmed.fastq.gz -o ${f}
 	fi
 
-	depend=""
 	f=${PWD}/output/${basename}_w_umi.trimmed.bowtie2.mirna.all.bam
 	if [ -f $f ] && [ ! -w $f ] ; then
 		echo "Write-protected $f exists. Skipping."
@@ -155,7 +149,6 @@ for fastq in /francislab/data1/raw/20210205-EV_CATS/*.fastq.gz ; do
 			--very-sensitive-local -U ${PWD}/output/${basename}_w_umi.trimmed.fastq.gz -o ${f}
 	fi
 
-	depend=""
 	f=${PWD}/output/${basename}_w_umi.trimmed.bowtie2.hg38.bam
 	if [ -f $f ] && [ ! -w $f ] ; then
 		echo "Write-protected $f exists. Skipping."
@@ -166,7 +159,6 @@ for fastq in /francislab/data1/raw/20210205-EV_CATS/*.fastq.gz ; do
 			--very-sensitive-local -U ${PWD}/output/${basename}_w_umi.trimmed.fastq.gz -o ${f}
 	fi
 
-	depend=""
 	base=${PWD}/output/${basename}_w_umi.trimmed.bowtie2.hg38.all
 	f=${base}.bam
 	if [ -f $f ] && [ ! -w $f ] ; then
