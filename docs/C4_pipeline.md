@@ -6,7 +6,7 @@
 
 For example, a preprocessing script (still in progress)
 
-Note: use --parsable so that sbatch returns only the job id to use as a dependency
+Note: use \-\-parsable so that sbatch returns only the job id to use as a dependency
 
 
 
