@@ -199,3 +199,6 @@ for fastq in /francislab/data1/raw/20210205-EV_CATS/*.fastq.gz ; do
 done
 ```
 
+[C4_scratch](/docs/C4_scratch)
+
+
