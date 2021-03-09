@@ -1,6 +1,9 @@
 #	UCSF Francis Lab
 
 Pseudo Pipeline and Topic Notes
+* [AWS](docs/AWS)
+* [C4](docs/C4)
+*
 * [Demultiplex](docs/Demultiplex)
 * [Preprocessing](docs/Preprocessing)
 * [DNASeq](docs/DNASeq)
@@ -18,7 +21,6 @@ Pseudo Pipeline and Topic Notes
   * [Kallisto](docs/Kallisto)
   * [Salmon](docs/Salmon)
 * [Assemblers](docs/Assemblers)
-* [C4](docs/C4)
 * [Catchitt](docs/Catchitt)
 * [Chimera](docs/Chimera)
 * [CIRCexplorer2](docs/CIRCexplorer2)
@@ -57,3 +59,4 @@ Helpful links
 * [Wynton	HPC](https://wynton.ucsf.edu/hpc/index.html)
 * [AWS Cloud Credits for Research](https://aws.amazon.com/research-credits/)
 * [Github Pages](https://help.github.com/en/github/working-with-github-pages)
+
