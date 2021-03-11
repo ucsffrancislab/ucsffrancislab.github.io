@@ -3,7 +3,7 @@
 Pseudo Pipeline and Topic Notes
 * [AWS](docs/AWS)
 * [C4](docs/C4)
-*
+* ---
 * [Demultiplex](docs/Demultiplex)
 * [Preprocessing](docs/Preprocessing)
 * [DNASeq](docs/DNASeq)

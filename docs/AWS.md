@@ -3,93 +3,23 @@
 
 Command line access and usage of UCSF managed AWS resources.
 
+Must be connected to UCSF VPN.
+
 
 ##	From UCSF SEC
 
 https://ucsfonline.sharepoint.com/sites/SecureEnterpriseCloud
 
-```
-pip install aws-adfs 
-```
-
 Ensure SSM Session manager Extension is installed 
 No linux version to use from cluster. Needed?
 
-```
-aws-adfs login --adfs-host=adfs.ucsf.edu --profile=<aws-profile> 
-```
 
 
-Username: UCSF Email 
-
-Password: UCSF Password 
+Once approved, select the account and role you want the profile to be associated with. Enter the number corresponding to the account and role:  ????
 
  
-
-Approve the Duo Request sent to your device 
-
-
-Once approved, select the account and role you want the profile to be associated with. Enter the number corresponding to the account and role: 
-
- 
-
-Your ~/.aws/config and ~/.aws/creds files will be updated with the appropriate credentials to login to the selected account 
-
 
 Set the AWS_PROFILE environment variable  to the desired AWS Profile to authenticate with your account: “export AWS_PROFILE=<aws-profile-name>” 	#	Why?
-
- 
- 
-Common AWS CLI Login Issues 
-UCSF VPN 
-If you are connected to UCSF VPN, ADFS Authentication will fail with the error pictured below.  
-To resolve, disconnect from VPN and complete the steps listed in AWS CLI Access 
-Once authenticated, you may re-connect to VPN and use the credentials to use the AWS CLI 
-
-Duo Push 
-During authentication Duo cannot authenticate with following error: Error: Cannot begin authentication process. The error response: {"message": "Unknown authentication method.", "stat": "FAIL"} 
-This is caused because Duo requires preferred authentication method to be set 
-To resolve this, authenticate with ADFS in your browser https://adfs.ucsf.edu/adfs/ls/IdpInitiatedSignon.aspx 
-Setup preferred authentication method in duo-security settings (settings' -> 'My Settings & Devices'). 
-
-Uploading Files to S3 
-
-In order to upload files to S3 from the CLI they must be explicitly encrypted with a KMS key.  
-
-Pre-Requisites 
-
-Must be connected to UCSF VPN 
-
-Instructions 
-
-Authenticate with UCSF ADFS using aws-adfs 
-
-```
-aws s3 cp /local/path/file s3://bucket-name/file --sse aws:kms --sse-kms-key-id alias/managed-s3-key  
-```
-
- 
-
-Login to an EC2 Instance 
-
-Pre-Requisites 
-
-Must be connected to UCSF VPN 
-
-Instructions 
-
-Authenticate with UCSF ADFS using aws-adfs 
-
-```
-aws ssm start-session --target instance-id –-profile=<aws-profile> 
-```
-
- 
-
-https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-sessions-start.html 
-
- 
-
 
  
 
@@ -100,10 +30,20 @@ https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-wor
 
 ##	General CLI setup
 
+Be sure to use the `awscli` package and not the `aws` package.
+
 ```
-pip install aws-adfs
+pip uninstall aws
 ```
 
+
+```
+pip install aws-adfs
+
+#	or
+
+python3 -m pip install --user --upgrade aws-adfs awscli
+```
 
 
 Using a session manager is meant to make things easier to control the ssh session.
@@ -118,8 +58,49 @@ https://cloudonaut.io/goodbye-ssh-use-aws-session-manager-instead/
 We shall see.
 
 
+##	CLI Login
 
 
+
+I called my profile "ucsf" but it can be anything really. Even "default".
+You can even not include the `--profile` option which is essentially the same as using "default".
+
+This will ask for you UCSF email and password.
+
+It should then do a Duo Push to your phone.
+
+```
+aws-adfs login --adfs-host=adfs.ucsf.edu --profile=ucsf
+2021-03-10 14:08:19,355 [authenticator authenticator.py:authenticate] [7846-MainProcess] [4669504960-MainThread] - ERROR: Cannot extract saml assertion. Re-authentication needed?
+Username: George.Wendt@ucsf.edu
+Password: 
+Sending request for authentication
+Waiting for additional authentication
+Triggering authentication method: 'Duo Push'
+Going for aws roles
+
+        Prepared ADFS configuration as follows:
+            * AWS CLI profile                   : 'ucsf'
+            * AWS region                        : 'us-east-1'
+            * Output format                     : 'json'
+            * SSL verification of ADFS Server   : 'ENABLED'
+            * Selected role_arn                 : 'arn:aws:iam::755550924152:role/managed-saml-projectuser'
+            * ADFS Server                       : 'adfs.ucsf.edu'
+            * ADFS Session Duration in seconds  : '28800'
+            * Provider ID                       : 'urn:amazon:webservices'
+            * S3 Signature Version              : 'None'
+            * STS Session Duration in seconds   : '3600'
+            * SSPI:                             : 'False'
+            * U2F and default method            : 'True'
+
+```
+
+This will set (and overwrite) values in `~/.aws/creds` and `~/.aws/config` for this profile.
+
+You do not need to login before every command, but it does eventually expire.
+
+I'm a bit surprised that 'us-east-1' is the default region as I've been told to use 'us-west-2'.
+I'm going to edit my `~/.aws/config` to reflect this.
 
 
 
@@ -129,6 +110,25 @@ We shall see.
 How to start, access and terminate EC2 instances...
 
 
+
+
+
+
+
+
+Login to an EC2 Instance 
+
+Authenticate with UCSF ADFS using aws-adfs 
+
+```
+aws ssm start-session --target instance-id –-profile=<aws-profile> 
+```
+
+ 
+
+https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-sessions-start.html 
+
+ 
 
 
 
@@ -168,13 +168,46 @@ I will update this with the actual name as part of it isn't clear.
 ###	Read to and write from bucket
 
 
+I called my profile "ucsf" but it can be anything really.
+
+```
+aws-adfs login --adfs-host=adfs.ucsf.edu --profile=ucsf
+...
+
+aws --profile=ucsf s3 ls
+
+2021-03-10 13:26:44 fransislab-backup-73-3-r-us-west-2.sec.ucsf.edu
+2021-02-19 16:24:41 managed-755550924152-server-access-logs
 
 ```
 
-aws s3 ls ...
+This will set (and overwrite) values in `~/.aws/creds` and `~/.aws/config` for this profile.
+
+If you choose to use "default" as your profile, you may never need to specify it at all.
+You can even not include the `--profile` option which is essentially the same as using "default".
 
 ```
+aws-adfs login --adfs-host=adfs.ucsf.edu
+...
 
+aws s3 ls
+
+2021-03-10 13:26:44 fransislab-backup-73-3-r-us-west-2.sec.ucsf.edu
+2021-02-19 16:24:41 managed-755550924152-server-access-logs
+```
+
+
+
+
+
+
+Uploading Files to S3 
+
+In order to upload files to S3 from the CLI they must be explicitly encrypted with a KMS key.  
+
+```
+aws s3 cp /local/path/file s3://bucket-name/file --sse aws:kms --sse-kms-key-id alias/managed-s3-key  
+```
 
 
 
