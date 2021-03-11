@@ -15,18 +15,12 @@ Note: use \-\-parsable so that sbatch returns only the job id to use as a depend
 
 ```BASH
 #!/usr/bin/env bash
-##SBATCH --export=NONE		#	required if using module
-
-#module load CBI
-#module load star/2.7.7a
 
 
 #/francislab/data1/raw/20210205-EV_CATS/SFHH001A_S1_L001_R1_001.fastq.gz
 #/francislab/data1/raw/20210205-EV_CATS/SFHH001B_S2_L001_R1_001.fastq.gz
 #/francislab/data1/raw/20210205-EV_CATS/Undetermined_S0_L001_R1_001.fastq.gz
 
-
-#	uses python3 so need to run on C4
 
 mkdir -p ${PWD}/output
 
