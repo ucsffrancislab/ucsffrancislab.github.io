@@ -110,6 +110,17 @@ I'm going to edit my `~/.aws/config` to reflect this.
 How to start, access and terminate EC2 instances...
 
 
+```BASH
+aws ec2 describe-images --owners 013463732445
+
+subnet_id=$( aws ec2 describe-subnets | jq '.Subnets | sort_by(.AvailableIpAddressCount) | reverse[0].SubnetId' | tr -d '"' )
+echo ${subnet_id}
+
+aws ec2 run-instances --dry-run --image-id ami-02932400de2c9d16f --instance-type t2.micro --subnet-id ${subnet_id}
+
+
+```
+
 
 
 
