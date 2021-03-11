@@ -15,10 +15,10 @@ Note: use \-\-parsable so that sbatch returns only the job id to use as a depend
 
 ```BASH
 #!/usr/bin/env bash
-#SBATCH --export=NONE		#	required if using module
+##SBATCH --export=NONE		#	required if using module
 
-module load CBI
-module load star/2.7.7a
+#module load CBI
+#module load star/2.7.7a
 
 
 #/francislab/data1/raw/20210205-EV_CATS/SFHH001A_S1_L001_R1_001.fastq.gz
@@ -39,8 +39,8 @@ for fastq in /francislab/data1/raw/20210205-EV_CATS/*.fastq.gz ; do
 	if [ -f $f ] && [ ! -w $f ] ; then
 		echo "Write-protected $f exists. Skipping."
 	else
-		copy_umi_id=$( sbatch --parseable --job-name=copy_umi_${basename} --time=60 --ntasks=2 --mem=15G \
-			--output=${PWD}/output/${basename}.copy_umi.output.txt \
+		copy_umi_id=$( sbatch --parsable --job-name=copy_umi_${basename} --time=60 --ntasks=2 --mem=15G \
+			--output=${PWD}/output/${basename}.copy_umi.txt \
 			${PWD}/copy_umi.bash --threads 10 --umi-length 12 -i ${fastq} -o ${f} )
 	fi
 
@@ -50,13 +50,13 @@ for fastq in /francislab/data1/raw/20210205-EV_CATS/*.fastq.gz ; do
 		echo "Write-protected $f exists. Skipping."
 	else
 		if [ ! -z ${cutadapt_id} ] ; then
-			depend="-W depend=afterok:${cutadapt_id}"
+			depend="--dependency=afterok:${cutadapt_id}"
 		else
 			depend=""
 		fi
 		#	gres=scratch should be about total needed divided by num threads
-		cutadapt_id=$( sbatch ${depend} --parseable --job-name=cutadapt_${basename} --time=60 --ntasks=2 --mem=15G \
-			--output=${PWD}/output/${basename}.cutadapt.output.txt \
+		cutadapt_id=$( sbatch ${depend} --parsable --job-name=cutadapt_${basename} --time=60 --ntasks=2 --mem=15G \
+			--output=${PWD}/output/${basename}.cutadapt.txt \
 			${PWD}/cutadapt.bash --trim-n --match-read-wildcards -u 16 -n 3 \
 				-a AGATCGGAAGAGCACACGTCTG -a AAAAAAAA -m 15 \
 				-o ${f} ${PWD}/output/${basename}_w_umi.fastq.gz
@@ -67,12 +67,12 @@ for fastq in /francislab/data1/raw/20210205-EV_CATS/*.fastq.gz ; do
 		echo "Write-protected $f exists. Skipping."
 	else
 		if [ ! -z ${cutadapt_id} ] ; then
-			depend="-W depend=afterok:${cutadapt_id}"
+			depend="--dependency=afterok:${cutadapt_id}"
 		else
 			depend=""
 		fi
 		sbatch ${depend} --job-name=${basename} --time=480 --ntasks=8 --mem=32G \
-			--output=${PWD}/output/${basename}.sbatch.STAR.output.txt \
+			--output=${PWD}/output/${basename}.STAR.txt \
 			~/.local/bin/STAR.bash --runThreadN 8 --readFilesCommand zcat \
 				--genomeDir /francislab/data1/refs/STAR/hg38-golden-ncbiRefSeq-2.7.7a-49/ \
 				--sjdbGTFfile /francislab/data1/refs/fasta/hg38.ncbiRefSeq.gtf \
@@ -90,12 +90,12 @@ for fastq in /francislab/data1/raw/20210205-EV_CATS/*.fastq.gz ; do
 		echo "Write-protected $f exists. Skipping."
 	else
 		if [ ! -z ${cutadapt_id} ] ; then
-			depend="-W depend=afterok:${cutadapt_id}"
+			depend="--dependency=afterok:${cutadapt_id}"
 		else
 			depend=""
 		fi
 		sbatch ${depend} --job-name=${basename} --time=480 --ntasks=8 --mem=32G \
-			--output=${PWD}/output/${basename}.bowtie2phiX.output.txt \
+			--output=${PWD}/output/${basename}.bowtie2phiX.txt \
 			~/.local/bin/bowtie2.bash --threads 8 -x /francislab/data1/refs/bowtie2/phiX \
 			--very-sensitive-local -U ${PWD}/output/${basename}_w_umi.trimmed.fastq.gz -o ${f}
 	fi
@@ -105,12 +105,12 @@ for fastq in /francislab/data1/raw/20210205-EV_CATS/*.fastq.gz ; do
 		echo "Write-protected $f exists. Skipping."
 	else
 		if [ ! -z ${cutadapt_id} ] ; then
-			depend="-W depend=afterok:${cutadapt_id}"
+			depend="--dependency=afterok:${cutadapt_id}"
 		else
 			depend=""
 		fi
 		sbatch ${depend} --job-name=${basename} --time=480 --ntasks=8 --mem=32G \
-			--output=${PWD}/output/${basename}_w_umi.trimmed.STAR.mirna.output.txt \
+			--output=${PWD}/output/${basename}_w_umi.trimmed.STAR.mirna.txt \
 			~/.local/bin/STAR.bash --runThreadN 8 --readFilesCommand zcat \
 				--genomeDir /francislab/data1/refs/STAR/human_mirna \
 				--readFilesIn ${PWD}/output/${basename}_w_umi.trimmed.fastq.gz \
@@ -124,12 +124,12 @@ for fastq in /francislab/data1/raw/20210205-EV_CATS/*.fastq.gz ; do
 		echo "Write-protected $f exists. Skipping."
 	else
 		if [ ! -z ${cutadapt_id} ] ; then
-			depend="-W depend=afterok:${cutadapt_id}"
+			depend="--dependency=afterok:${cutadapt_id}"
 		else
 			depend=""
 		fi
 		sbatch ${depend} --job-name=${basename} --time=480 --ntasks=8 --mem=32G \
-			--output=${PWD}/output/${basename}.bowtie2.mirna.output.txt \
+			--output=${PWD}/output/${basename}.bowtie2.mirna.txt \
 			~/.local/bin/bowtie2.bash --threads 8 -x /francislab/data1/refs/bowtie2/human_mirna \
 			--very-sensitive-local -U ${PWD}/output/${basename}_w_umi.trimmed.fastq.gz -o ${f}
 	fi
@@ -139,12 +139,12 @@ for fastq in /francislab/data1/raw/20210205-EV_CATS/*.fastq.gz ; do
 		echo "Write-protected $f exists. Skipping."
 	else
 		if [ ! -z ${cutadapt_id} ] ; then
-			depend="-W depend=afterok:${cutadapt_id}"
+			depend="--dependency=afterok:${cutadapt_id}"
 		else
 			depend=""
 		fi
 		sbatch ${depend} --job-name=${basename} --time=480 --ntasks=8 --mem=32G \
-			--output=${PWD}/output/${basename}.bowtie2.mirna.all.output.txt \
+			--output=${PWD}/output/${basename}.bowtie2.mirna.all.txt \
 			~/.local/bin/bowtie2.bash --all --threads 8 -x /francislab/data1/refs/bowtie2/human_mirna \
 			--very-sensitive-local -U ${PWD}/output/${basename}_w_umi.trimmed.fastq.gz -o ${f}
 	fi
@@ -154,7 +154,7 @@ for fastq in /francislab/data1/raw/20210205-EV_CATS/*.fastq.gz ; do
 		echo "Write-protected $f exists. Skipping."
 	else
 		sbatch ${depend} --job-name=${basename} --time=480 --ntasks=8 --mem=32G \
-			--output=${PWD}/output/${basename}.bowtie2.hg38.output.txt \
+			--output=${PWD}/output/${basename}.bowtie2.hg38.txt \
 			~/.local/bin/bowtie2.bash --threads 8 -x /francislab/data1/refs/bowtie2/hg38 \
 			--very-sensitive-local -U ${PWD}/output/${basename}_w_umi.trimmed.fastq.gz -o ${f}
 	fi
@@ -165,7 +165,7 @@ for fastq in /francislab/data1/raw/20210205-EV_CATS/*.fastq.gz ; do
 		echo "Write-protected $f exists. Skipping."
 	else
 		if [ ! -z ${cutadapt_id} ] ; then
-			depend="-W depend=afterok:${cutadapt_id}"
+			depend="--dependency=afterok:${cutadapt_id}"
 		else
 			depend=""
 		fi
@@ -182,8 +182,8 @@ for fastq in /francislab/data1/raw/20210205-EV_CATS/*.fastq.gz ; do
 
 		echo "Using scratch:${scratch}"
 
-		sbatch ${depend} --job-namee${basename} --time=1920 --ntasks=${threads} --mem=250G \
-			--gres=scratch:${scratch}G --output=${base}.output.txt \
+		sbatch ${depend} --job-name=${basename} --time=1920 --ntasks=${threads} --mem=250G \
+			--gres=scratch:${scratch}G --output=${base}.txt \
 			~/.local/bin/bowtie2_scratch.bash --all --threads ${threads} -x /francislab/data1/refs/bowtie2/hg38 \
 			--very-sensitive-local -U ${PWD}/output/${basename}_w_umi.trimmed.fastq.gz -o ${f}
 	fi
