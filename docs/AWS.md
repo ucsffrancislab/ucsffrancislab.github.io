@@ -1,9 +1,13 @@
 
-#	AWS
+#	AWS (Amazon Web Services)
 
 Command line access and usage of UCSF managed AWS resources.
 
 Must be connected to UCSF VPN.
+
+
+To login to the web console, https://adfs.ucsf.edu/adfs/ls/idpinitiatedSignon.aspx
+
 
 
 ##	From UCSF SEC
@@ -95,12 +99,14 @@ Going for aws roles
 
 ```
 
-This will set (and overwrite) values in `~/.aws/creds` and `~/.aws/config` for this profile.
+This will set (and overwrite) values in `~/.aws/credentials` and `~/.aws/config` for this profile.
 
-You do not need to login before every command, but it does eventually expire.
+You do not need to login before every command, but it does need refreshing and will eventually expire.
 
 I'm a bit surprised that 'us-east-1' is the default region as I've been told to use 'us-west-2'.
 I'm going to edit my `~/.aws/config` to reflect this.
+
+`~/.aws/credentials` are private. Do not share them.
 
 
 
@@ -192,7 +198,7 @@ aws --profile=ucsf s3 ls
 
 ```
 
-This will set (and overwrite) values in `~/.aws/creds` and `~/.aws/config` for this profile.
+This will set (and overwrite) values in `~/.aws/credentials` and `~/.aws/config` for this profile.
 
 If you choose to use "default" as your profile, you may never need to specify it at all.
 You can even not include the `--profile` option which is essentially the same as using "default".
