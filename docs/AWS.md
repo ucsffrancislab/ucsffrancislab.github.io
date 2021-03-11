@@ -197,16 +197,17 @@ aws s3 ls
 ```
 
 
-
-
-
-
-Uploading Files to S3 
+###	Uploading Files to S3 
 
 In order to upload files to S3 from the CLI they must be explicitly encrypted with a KMS key.  
 
+The kms key is apparently part of the account so just add the `--sse aws:kms --sse-kms-key-id alias/managed-s3-key` options to the `cp` command.
+
+
 ```
-aws s3 cp /local/path/file s3://bucket-name/file --sse aws:kms --sse-kms-key-id alias/managed-s3-key  
+aws s3 cp test.sh s3://fransislab-backup-73-3-r-us-west-2.sec.ucsf.edu/ --sse aws:kms --sse-kms-key-id alias/managed-s3-key 
+
+aws s3 rm s3://fransislab-backup-73-3-r-us-west-2.sec.ucsf.edu/test.sh
 ```
 
 
