@@ -27,7 +27,7 @@ Be sure to use the `awscli` package and not the `aws` package.
 pip uninstall aws
 ```
 
-`aws` is quite old and busted. `awscli` is the new hotness.
+`aws` is old and busted. `awscli` is the new hotness.
 
 ```
 pip install aws-adfs
@@ -36,18 +36,6 @@ pip install aws-adfs
 
 python3 -m pip install --user --upgrade aws-adfs awscli
 ```
-
-
-Using a session manager is meant to make things easier to control the ssh session.
-
-https://medium.com/@dnorth98/hello-aws-session-manager-farewell-ssh-7fdfa4134696
-
-https://www.nclouds.com/blog/ssh-session-manager/
-
-https://cloudonaut.io/goodbye-ssh-use-aws-session-manager-instead/
-
-
-We shall see.
 
 
 ##	CLI Login
@@ -139,6 +127,16 @@ sudo yum erase session-manager-plugin -y
 ```
 
 
+Using a session manager is meant to make things easier to control the ssh session.
+
+https://medium.com/@dnorth98/hello-aws-session-manager-farewell-ssh-7fdfa4134696
+
+https://www.nclouds.com/blog/ssh-session-manager/
+
+https://cloudonaut.io/goodbye-ssh-use-aws-session-manager-instead/
+
+
+
 ###	Start, Access, Use and Terminate an instance
 
 
@@ -194,12 +192,12 @@ instance_id=$( aws ec2 describe-instances | jq -r '.Reservations[].Instances | m
 echo ${instance_id}
 
 
-#	... WAIT A MINUTE OR TWO ...
+#	... WAIT A MINUTE TO LET THE INSTANCE SPIN UP ...
 
 
 aws ssm start-session --target ${instance_id}
 
-Starting session with SessionId: George.Wendt@ucsf.edu-0033bfcb90977e788
+Starting session with SessionId: George.Wendt@ucsf.edu-.......
 This session is encrypted using AWS KMS.
 
 
@@ -252,6 +250,9 @@ which should eventually result in the creation of a bucket named `backup-1-3-r-u
 
 I will update this with the actual name as part of it isn't clear.
 
+Our shiny new bucket is `francislab-backup-73-3-r-us-west-2.sec.ucsf.edu`.
+
+Apparently we are project 73, which we all know is the perfect number.
 
 
 
@@ -299,6 +300,47 @@ aws s3 cp test.sh s3://francislab-backup-73-3-r-us-west-2.sec.ucsf.edu/ --sse aw
 
 aws s3 rm s3://francislab-backup-73-3-r-us-west-2.sec.ucsf.edu/test.sh
 ```
+
+
+I attempted a backup of large, individual files. Sadly, the token expires in an hour and this only is able to upload about 6 files.
+Perhaps I can get longer tokens?
+
+```BASH
+aws-adfs login
+
+for f in GM* ; do echo $f ; aws s3 cp $f s3://francislab-backup-73-3-r-us-west-2.sec.ucsf.edu/raw/CCLS/bam/ --sse aws:kms --sse-kms-key-id alias/managed-s3-key  ; done
+```
+
+Testing sync to do this backup of roughly 1TB.
+
+
+```BASH
+aws-adfs login
+
+aws s3 sync --sse aws:kms --sse-kms-key-id alias/managed-s3-key --exclude \* --include \*/GM_\* /francislab/data1/raw/CCLS/ s3://francislab-backup-73-3-r-us-west-2.sec.ucsf.edu/raw/CCLS/
+```
+
+Failed.
+
+```BASH
+...
+upload failed: francislab/data1/raw/CCLS/bam/GM_63185.recaled.bam to s3://francislab-backup-73-3-r-us-west-2.sec.ucsf.edu/raw/CCLS/bam/GM_63185.recaled.bam An error occurred (ExpiredToken) when calling the UploadPart operation: The provided token has expired.
+upload failed: francislab/data1/raw/CCLS/bam/GM_439338.recaled.bam to s3://francislab-backup-73-3-r-us-west-2.sec.ucsf.edu/raw/CCLS/bam/GM_439338.recaled.bam An error occurred (ExpiredToken) when calling the UploadPart operation: The provided token has expired.
+upload failed: francislab/data1/raw/CCLS/bam/GM_634370.recaled.bam to s3://francislab-backup-73-3-r-us-west-2.sec.ucsf.edu/raw/CCLS/bam/GM_634370.recaled.bam An error occurred (ExpiredToken) when calling the UploadPart operation: The provided token has expired.
+upload failed: francislab/data1/raw/CCLS/bam/GM_983899.recaled.bam to s3://francislab-backup-73-3-r-us-west-2.sec.ucsf.edu/raw/CCLS/bam/GM_983899.recaled.bam An error occurred (ExpiredToken) when calling the UploadPart operation: The provided token has expired.
+```
+
+But sync is rerunnable.
+I reran and refreshed my token in a different window several times.
+Still failed.
+
+The initial loop copy could have included a `aws-adfs login` command before each file to refresh the session?
+
+Gonna try rerunning a couple times to see if it eventually finishes?
+Nope. Sync seems to be uploading multiple files at the same time.
+Neither finish within an hour so it dies.
+Refreshing connection and uploading each individually.
+I'm probably gonna need to hunt down and delete these partial uploads.
 
 
 
