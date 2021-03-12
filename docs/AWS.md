@@ -14,21 +14,8 @@ To login to the web console, https://adfs.ucsf.edu/adfs/ls/idpinitiatedSignon.as
 
 https://ucsfonline.sharepoint.com/sites/SecureEnterpriseCloud
 
-Ensure SSM Session manager Extension is installed 
-No linux version to use from cluster. Needed?
-
-
-
-Once approved, select the account and role you want the profile to be associated with. Enter the number corresponding to the account and role:  ????
 
  
-
-Set the AWS_PROFILE environment variable  to the desired AWS Profile to authenticate with your account: “export AWS_PROFILE=<aws-profile-name>” 	#	Why?
-
- 
-
-
-
 
 
 
@@ -40,6 +27,7 @@ Be sure to use the `awscli` package and not the `aws` package.
 pip uninstall aws
 ```
 
+`aws` is quite old and busted. `awscli` is the new hotness.
 
 ```
 pip install aws-adfs
@@ -113,35 +101,120 @@ I'm going to edit my `~/.aws/config` to reflect this.
 
 ##	EC2
 
+
+###	SSM Plugin
+
+Ensure SSM Session manager Extension is installed. Without it, you will be unable to start a session.
+
+https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html
+
+I install it locally.
+
+####	Mac
+
+```BASH
+curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/mac/sessionmanager-bundle.zip" -o "sessionmanager-bundle.zip"
+unzip sessionmanager-bundle.zip
+./sessionmanager-bundle/install -i ~/.local/sessionmanagerplugin -b ~/.local/bin/session-manager-plugin
+```
+
+
+####	Linux
+
+Not sure how to do without sudo yet
+
+```BASH
+curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/linux_64bit/session-manager-plugin.rpm" -o "session-manager-plugin.rpm"
+sudo yum install -y session-manager-plugin.rpm
+```
+
+
+####	Uninstall
+
+```BASH
+sudo rm -rf /usr/local/sessionmanagerplugin /usr/local/bin/session-manager-plugin
+/bin/rm -rf .local/sessionmanagerplugin/ .local/bin/session-manager-plugin 
+
+sudo yum erase session-manager-plugin -y
+```
+
+
+###	Start, Access, Use and Terminate an instance
+
+
 How to start, access and terminate EC2 instances...
+
+I believe that you can only use UCSF blessed AMI's.
+
+Their id is `013463732445`.
 
 
 ```BASH
 aws ec2 describe-images --owners 013463732445
 
-subnet_id=$( aws ec2 describe-subnets | jq '.Subnets | sort_by(.AvailableIpAddressCount) | reverse[0].SubnetId' | tr -d '"' )
+ami_id=$( aws ec2 describe-images --owners 013463732445  | jq -r '.Images | map(select(.Name | test("^base-ubuntu-18"))) | sort_by(.CreationDate)[].ImageId' | tail -1 )
+echo $ami_id
+
+subnet_id=$( aws ec2 describe-subnets | jq -r '.Subnets | sort_by(.AvailableIpAddressCount) | reverse[0].SubnetId' )
 echo ${subnet_id}
 
-aws ec2 run-instances --dry-run --image-id ami-02932400de2c9d16f --instance-type t2.micro --subnet-id ${subnet_id}
+security_group_id=$( aws ec2 describe-security-groups | jq -r '.SecurityGroups | map(select( .GroupName == "managed-ssm" ))[].GroupId' )
+echo $security_group_id
 
 
+
+aws ec2 run-instances --image-id ${ami_id} --instance-type t3.small --subnet-id ${subnet_id} --security-group-ids=${security_group_id} --iam-instance-profile Name='managed-service-ec2-standard'
+
+
+
+#	metadata version - v2
+#	possibly
+#	--metadata-options HttpTokens=required
+#	Seems starts out optional then is set to required after a few seconds.
+#            "MetadataOptions": {
+#                "State": "pending",
+#                "HttpTokens": "optional",
+#                "HttpPutResponseHopLimit": 1,
+#                "HttpEndpoint": "enabled"
+#            },
+#
+#
+#                    "MetadataOptions": {
+#                        "State": "applied",
+#                        "HttpTokens": "required",
+#                        "HttpPutResponseHopLimit": 1,
+#                        "HttpEndpoint": "enabled"
+#                    },
+
+
+
+
+
+instance_id=$( aws ec2 describe-instances | jq -r '.Reservations[].Instances | map(select( .State.Name == "running"))[].InstanceId' )
+echo ${instance_id}
+
+
+#	... WAIT A MINUTE OR TWO ...
+
+
+aws ssm start-session --target ${instance_id}
+
+Starting session with SessionId: George.Wendt@ucsf.edu-0033bfcb90977e788
+This session is encrypted using AWS KMS.
+
+
+
+
+#	What user am I?
+#	Do I have sudo access?
+
+
+
+
+aws ec2 terminate-instances --instance-ids ${instance_id}
+
+aws ec2 describe-instances | jq -r '.Reservations[].Instances[].State.Name'
 ```
-
-
-
-
-
-
-
-Login to an EC2 Instance 
-
-Authenticate with UCSF ADFS using aws-adfs 
-
-```
-aws ssm start-session --target instance-id –-profile=<aws-profile> 
-```
-
- 
 
 https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-sessions-start.html 
 
@@ -193,7 +266,7 @@ aws-adfs login --adfs-host=adfs.ucsf.edu --profile=ucsf
 
 aws --profile=ucsf s3 ls
 
-2021-03-10 13:26:44 fransislab-backup-73-3-r-us-west-2.sec.ucsf.edu
+2021-03-11 09:01:47 francislab-backup-73-3-r-us-west-2.sec.ucsf.edu
 2021-02-19 16:24:41 managed-755550924152-server-access-logs
 
 ```
@@ -209,7 +282,7 @@ aws-adfs login --adfs-host=adfs.ucsf.edu
 
 aws s3 ls
 
-2021-03-10 13:26:44 fransislab-backup-73-3-r-us-west-2.sec.ucsf.edu
+2021-03-11 09:01:47 francislab-backup-73-3-r-us-west-2.sec.ucsf.edu
 2021-02-19 16:24:41 managed-755550924152-server-access-logs
 ```
 
@@ -222,9 +295,9 @@ The kms key is apparently part of the account so just add the `--sse aws:kms --s
 
 
 ```
-aws s3 cp test.sh s3://fransislab-backup-73-3-r-us-west-2.sec.ucsf.edu/ --sse aws:kms --sse-kms-key-id alias/managed-s3-key 
+aws s3 cp test.sh s3://francislab-backup-73-3-r-us-west-2.sec.ucsf.edu/ --sse aws:kms --sse-kms-key-id alias/managed-s3-key 
 
-aws s3 rm s3://fransislab-backup-73-3-r-us-west-2.sec.ucsf.edu/test.sh
+aws s3 rm s3://francislab-backup-73-3-r-us-west-2.sec.ucsf.edu/test.sh
 ```
 
 
