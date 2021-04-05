@@ -19,12 +19,12 @@ Scroll down to the "Authentication" section. It should say something like "Becau
 
 Add your username and new password to your `~/.netrc`
 
-```BASH
+```
 machine dav.box.com login George.Wendt@ucsf.edu password XXXXXXXX
 ```
 
 You may also want to change its permissions ...
-```BASH
+```
 chmod 600 ~/.netrc
 ```
 
@@ -34,7 +34,7 @@ chmod 600 ~/.netrc
 
 Because the box "path" includes a space it MUST by parenthesed or perhaps escaped.
 
-```BASH
+```
 BOX="https://dav.box.com/dav/Francis _Lab_Share/CLI_TEST"
 
 curl -netrc -X MKCOL "${BOX}/"
@@ -57,7 +57,7 @@ multiple URLs to transfer on the command line, it similarly needs multiple optio
 them.
 
 
-```BASH
+```
 BOX="https://dav.box.com/dav/Francis _Lab_Share/CLI_TEST"
 
 curl -netrc "${BOX}/test_file.txt" --output ./test_file.txt.download
