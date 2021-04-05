@@ -21,6 +21,7 @@ Pseudo Pipeline and Topic Notes
   * [Kallisto](docs/Kallisto)
   * [Salmon](docs/Salmon)
 * [Assemblers](docs/Assemblers)
+* [Box](docs/Box)
 * [Catchitt](docs/Catchitt)
 * [Chimera](docs/Chimera)
 * [CIRCexplorer2](docs/CIRCexplorer2)
