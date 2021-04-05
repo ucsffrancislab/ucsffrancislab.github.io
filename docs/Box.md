@@ -35,6 +35,7 @@ chmod 600 ~/.netrc
 Because the box "path" includes a space it MUST by parenthesed or perhaps escaped.
 
 ```
+
 BOX="https://dav.box.com/dav/Francis _Lab_Share/CLI_TEST"
 
 curl -netrc -X MKCOL "${BOX}/"
@@ -58,6 +59,7 @@ them.
 
 
 ```
+
 BOX="https://dav.box.com/dav/Francis _Lab_Share/CLI_TEST"
 
 curl -netrc "${BOX}/test_file.txt" --output ./test_file.txt.download
