@@ -10,7 +10,7 @@ Accessing box via the command line will require getting special credentials from
 
 Log in to box using your UCSF credentials.
 
-Click on the icon in the upper right, mine is a "GW, then click on "Account Settings".
+Click on the icon in the upper right, mine is a "GW", then click on "Account Settings".
 
 Scroll down to the "Authentication" section. It should say something like "Because you are using Single Sign On (SSO), you will need to create a unique password to use external applications that do not support SSO." Follow the directions to create a password.
 
