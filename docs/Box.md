@@ -17,7 +17,9 @@ Scroll down to the "Authentication" section. It should say something like "Becau
 
 ##	Password in `~/.netrc`
 
-Add your username and new password to your `~/.netrc`
+Add your username and new password to your `~/.netrc`.
+
+This file may or may not exist already.
 
 ```
 machine dav.box.com login George.Wendt@ucsf.edu password XXXXXXXX
