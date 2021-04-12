@@ -69,3 +69,32 @@ Testing
 ```
 
 
+
+Also see ...
+
+https://ucsf-cbi.github.io/c4/transfers/ucsf-box.html
+
+Their tutorial is a bit different.
+
+
+
+To download say a whole directory ...
+
+Use wget / ftp
+
+Add this slightly different line to your `.netrc`
+
+```
+machine ftp.box.com login George.Wendt@ucsf.edu password XXXXXXXX
+```
+
+Note that the path is a bit different here.
+
+```
+BOX="ftps://ftp.box.com/Francis _Lab_Share/Mayo-FrancisLab/Mayo/Observed"
+wget --recursive "${BOX}"
+```
+
+
+
+
