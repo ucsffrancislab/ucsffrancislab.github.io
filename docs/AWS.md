@@ -79,6 +79,8 @@ This will set (and overwrite) values in `~/.aws/credentials` and `~/.aws/config`
 
 You do not need to login before every command, but it does need refreshing and will eventually expire.
 
+I advise extending `adfs_config.session_duration` from 3600 to 28800.
+
 I'm a bit surprised that 'us-east-1' is the default region as I've been told to use 'us-west-2'.
 I'm going to edit my `~/.aws/config` to reflect this.
 
@@ -100,7 +102,7 @@ I install it locally.
 
 ####	Mac
 
-```BASH
+```
 curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/mac/sessionmanager-bundle.zip" -o "sessionmanager-bundle.zip"
 unzip sessionmanager-bundle.zip
 ./sessionmanager-bundle/install -i ~/.local/sessionmanagerplugin -b ~/.local/bin/session-manager-plugin
@@ -111,7 +113,7 @@ unzip sessionmanager-bundle.zip
 
 Not sure how to do without sudo yet
 
-```BASH
+```
 curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/linux_64bit/session-manager-plugin.rpm" -o "session-manager-plugin.rpm"
 sudo yum install -y session-manager-plugin.rpm
 ```
@@ -119,7 +121,7 @@ sudo yum install -y session-manager-plugin.rpm
 
 ####	Uninstall
 
-```BASH
+```
 sudo rm -rf /usr/local/sessionmanagerplugin /usr/local/bin/session-manager-plugin
 /bin/rm -rf .local/sessionmanagerplugin/ .local/bin/session-manager-plugin 
 
@@ -147,7 +149,9 @@ I believe that you can only use UCSF blessed AMI's.
 Their id is `013463732445`.
 
 
-```BASH
+```
+aws-adfs login
+
 aws ec2 describe-images --owners 013463732445
 
 ami_id=$( aws ec2 describe-images --owners 013463732445  | jq -r '.Images | map(select(.Name | test("^base-ubuntu-18"))) | sort_by(.CreationDate)[].ImageId' | tail -1 )
@@ -162,30 +166,6 @@ echo $security_group_id
 
 
 aws ec2 run-instances --image-id ${ami_id} --instance-type t3.small --subnet-id ${subnet_id} --security-group-ids=${security_group_id} --iam-instance-profile Name='managed-service-ec2-standard'
-
-
-
-#	metadata version - v2
-#	possibly
-#	--metadata-options HttpTokens=required
-#	Seems starts out optional then is set to required after a few seconds.
-#            "MetadataOptions": {
-#                "State": "pending",
-#                "HttpTokens": "optional",
-#                "HttpPutResponseHopLimit": 1,
-#                "HttpEndpoint": "enabled"
-#            },
-#
-#
-#                    "MetadataOptions": {
-#                        "State": "applied",
-#                        "HttpTokens": "required",
-#                        "HttpPutResponseHopLimit": 1,
-#                        "HttpEndpoint": "enabled"
-#                    },
-
-
-
 
 
 instance_id=$( aws ec2 describe-instances | jq -r '.Reservations[].Instances | map(select( .State.Name == "running"))[].InstanceId' )
@@ -246,13 +226,14 @@ Control Point = R
 Description = General secure offsite storage and backup
 ```
 
-which should eventually result in the creation of a bucket named `backup-1-3-r-us-west-2.sec.ucsf.edu`.
+which should eventually result in the creation of a bucket named like `backup-1-3-r-us-west-2.sec.ucsf.edu`.
 
 I will update this with the actual name as part of it isn't clear.
 
 Our shiny new bucket is `francislab-backup-73-3-r-us-west-2.sec.ucsf.edu`.
 
 Apparently we are project 73, which we all know is the perfect number.
+
 
 
 
@@ -276,6 +257,8 @@ This will set (and overwrite) values in `~/.aws/credentials` and `~/.aws/config`
 
 If you choose to use "default" as your profile, you may never need to specify it at all.
 You can even not include the `--profile` option which is essentially the same as using "default".
+
+And it looks like you don't even need to specify the adfs host as it is in your config files.
 
 ```
 aws-adfs login --adfs-host=adfs.ucsf.edu
@@ -305,7 +288,7 @@ aws s3 rm s3://francislab-backup-73-3-r-us-west-2.sec.ucsf.edu/test.sh
 I attempted a backup of large, individual files. Sadly, the token expires in an hour and this only is able to upload about 6 files.
 Perhaps I can get longer tokens?
 
-```BASH
+```
 aws-adfs login
 
 for f in GM* ; do echo $f ; aws s3 cp $f s3://francislab-backup-73-3-r-us-west-2.sec.ucsf.edu/raw/CCLS/bam/ --sse aws:kms --sse-kms-key-id alias/managed-s3-key  ; done
@@ -314,7 +297,7 @@ for f in GM* ; do echo $f ; aws s3 cp $f s3://francislab-backup-73-3-r-us-west-2
 Testing sync to do this backup of roughly 1TB.
 
 
-```BASH
+```
 aws-adfs login
 
 aws s3 sync --sse aws:kms --sse-kms-key-id alias/managed-s3-key --exclude \* --include \*/GM_\* /francislab/data1/raw/CCLS/ s3://francislab-backup-73-3-r-us-west-2.sec.ucsf.edu/raw/CCLS/
@@ -322,7 +305,7 @@ aws s3 sync --sse aws:kms --sse-kms-key-id alias/managed-s3-key --exclude \* --i
 
 Failed.
 
-```BASH
+```
 ...
 upload failed: francislab/data1/raw/CCLS/bam/GM_63185.recaled.bam to s3://francislab-backup-73-3-r-us-west-2.sec.ucsf.edu/raw/CCLS/bam/GM_63185.recaled.bam An error occurred (ExpiredToken) when calling the UploadPart operation: The provided token has expired.
 upload failed: francislab/data1/raw/CCLS/bam/GM_439338.recaled.bam to s3://francislab-backup-73-3-r-us-west-2.sec.ucsf.edu/raw/CCLS/bam/GM_439338.recaled.bam An error occurred (ExpiredToken) when calling the UploadPart operation: The provided token has expired.
@@ -334,13 +317,18 @@ But sync is rerunnable.
 I reran and refreshed my token in a different window several times.
 Still failed.
 
+
 The initial loop copy could have included a `aws-adfs login` command before each file to refresh the session?
 
 Gonna try rerunning a couple times to see if it eventually finishes?
 Nope. Sync seems to be uploading multiple files at the same time.
 Neither finish within an hour so it dies.
 Refreshing connection and uploading each individually.
-I'm probably gonna need to hunt down and delete these partial uploads.
+
+I'm probably gonna need to hunt down and delete these partial uploads with my script `~/github/jakewendt/awstools/scripts/abort_all_multipart_uploads.bash`. Yep.
+
+
+Increase `adfs_config.session_duration` in `~/.aws/config`
 
 
 
