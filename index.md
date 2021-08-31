@@ -27,6 +27,7 @@ Pseudo Pipeline and Topic Notes
   * [MetaGO](docs/MetaGO)
   * [REdiscoverTE](docs/REdiscoverTE)
 * [Assemblers](docs/Assemblers)
+* [Box](docs/Box)
 * [Catchitt](docs/Catchitt)
 * [Chimera](docs/Chimera)
 * [CIRCexplorer2](docs/CIRCexplorer2)
