@@ -20,6 +20,12 @@ Pseudo Pipeline and Topic Notes
   * [Kraken](docs/Kraken)
   * [Kallisto](docs/Kallisto)
   * [Salmon](docs/Salmon)
+* K-mer Analysis
+  * [iMOKA](docs/iMOKA)
+  * [GECKO](docs/GECKO)
+  * [HAWK](docs/HAWK)
+  * [MetaGO](docs/MetaGO)
+  * [REdiscoverTE](docs/REdiscoverTE)
 * [Assemblers](docs/Assemblers)
 * [Catchitt](docs/Catchitt)
 * [Chimera](docs/Chimera)
@@ -28,24 +34,23 @@ Pseudo Pipeline and Topic Notes
 * [DiscordRetro](docs/DiscordRetro)
 * [ERVCaller](docs/ERVCaller)
 * [Features](docs/Features)
-* [GECKO](docs/GECKO)
 * [GWAS](docs/GWAS)
 * [GuideSeq](docs/GuideSeq)
-* [HAWK](docs/HAWK)
 * [HLA](docs/HLA)
 * [Imputation](docs/Imputation)
 * [Manta_Strelka](docs/Manta_Strelka)
 * [Masking](docs/Masking)
-* [MetaGO](docs/MetaGO)
-* [REdiscoverTE](docs/REdiscoverTE)
 * [References](docs/References)
 * [SNP2HLA](docs/SNP2HLA)
-* [TIPCC](docs/TIPCC)
 * [Taxonomy](docs/Taxonomy)
 * [TelSeq](docs/TelSeq)
 * [hervQuant](docs/hervQuant)
 * [Sleuth](docs/Sleuth)
 * [DESeq](docs/DESeq)
+* HPC
+  * [C4](docs/C4)
+  * [TIPCC](docs/TIPCC)
+  * [AWS](docs/AWS)
 
 General
 * [UCSF Github Repos](https://github.com/ucsffrancislab)
@@ -59,4 +64,5 @@ Helpful links
 * [Wynton	HPC](https://wynton.ucsf.edu/hpc/index.html)
 * [AWS Cloud Credits for Research](https://aws.amazon.com/research-credits/)
 * [Github Pages](https://help.github.com/en/github/working-with-github-pages)
+
 
