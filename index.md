@@ -52,6 +52,9 @@ Pseudo Pipeline and Topic Notes
   * [C4](docs/C4)
   * [TIPCC](docs/TIPCC)
   * [AWS](docs/AWS)
+* Notebooks
+  * [Jupyter](docs/Jupyter)
+  * [Rmarkdown](docs/Rmarkdown)
 
 General
 * [UCSF Github Repos](https://github.com/ucsffrancislab)
