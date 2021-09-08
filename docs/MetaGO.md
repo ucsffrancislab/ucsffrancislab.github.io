@@ -27,7 +27,7 @@ I would recommend renaming all files with Case/Control prefixes, removing any do
 I just created a separate directory and linked the files.
 Your call though.
 
-```BASH
+```
 tail -n +2 DATADIR/metadata.csv | \
 	awk -F, '{print "ln -s DATADIR/"$1".hg38.bowtie2-e2e.unmapped.fasta.gz ./"$2"-"$1"-unmapped.fasta.gz"}' \
 	| bash
@@ -97,13 +97,13 @@ WORKDIR /root/github/MetaGO/MetaGO_SourceCode/
 
 build it and see.
 
-```BASH
+```
 docker build -t metago --file MetaGO_demo.Dockerfile ./
 ```
 
 Then run it and look around.
 
-```BASH
+```
 docker run -it metago
 
 
@@ -117,14 +117,14 @@ Once the data is uploaded and I'm satisfied with my docker image, I start an ins
 I use one of my scripts to start the latest Amazon Linux on a decent resource set.
 
 
-```BASH
+```
 create_ec2_instance.bash --profile gwendt --image-id ami-0323c3dd2da7fb37d \
 	--instance-type i3.2xlarge --key-name ~/.aws/JakeHervUNR.pem --NOT-DRY-RUN
 ```
 
 Then login and update the system and install docker.
 
-```BASH
+```
 ssh ...
 sudo yum update
 sudo yum install docker htop
@@ -135,7 +135,7 @@ Its fast and local, which is one reason why I chose this instance type.
 It is not mounted though, which is stupid.
 So we look around and then mount it.
 
-```BASH
+```
 df -h
 lsblk
 sudo mkfs -t xfs /dev/nvme0n1
@@ -155,7 +155,7 @@ On larger instance types, there are multiple 1.7TB drives.
 And some data sets will require more space.
 Perhaps do this by creating a raid drive across them all with something like.
 https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/raid-config.html
-```BASH
+```
 sudo yum -y install mdadm
 lsblk
 sudo mdadm --create --verbose /dev/md0 --level=0 --name=MY_RAID --raid-devices=4 /dev/nvme0n1 /dev/nvme1n1 /dev/nvme2n1 /dev/nvme3n1
@@ -183,7 +183,7 @@ Most instances only come with 8GB of main storage with isn't enough for anything
 Start docker and give its user some power, then logout and back in.
 
 
-```BASH
+```
 mkdir ~/ssd0/MetaGO_Result
 
 aws s3 sync s3://herv-unr/MetaGO_S3_DATADIR/ ~/ssd0/MetaGO_S3_DATADIR/ 
@@ -202,7 +202,7 @@ You may get yours on the instance however you need to.
 Then we need to build it.
 
 
-```BASH
+```
 mkdir ~/tmp/
 cd ~/tmp/
 wget https://raw.githubusercontent.com/ucsffrancislab/genomics/master/docker/MetaGO_demo.Dockerfile
@@ -216,20 +216,20 @@ Start docker container with -itd options.
 The -d will kick us out initially. Hopefully, I can find a better way.
 We also want to mount the local directory with it so that the input and output are available to both.
 
-```BASH
+```
 docker run -v /home/ec2-user/:/mnt -itd metago
 ```
 
 This will have printed the container id and kicked us out.
 We could see it if needed. It should show a status of running or something like that.
 
-```BASH
+```
 docker ps -a
 ```
 
 Now we need to connect to container.
 
-```BASH
+```
 docker exec -it $( docker ps -aq ) bash
 ```
 
@@ -241,7 +241,7 @@ Each line is the complete path of raw data, such as the first line is '/home/use
 -M	--n2	The number of samples belong to group 2.
 
 
-```BASH
+```
 ls -1 /mnt/ssd0/MetaGO_S3_DATADIR/Control* > /root/fileList.txt
 ls -1 /mnt/ssd0/MetaGO_S3_DATADIR/Control* | wc -l
 29
@@ -266,14 +266,14 @@ Perhaps this is adjustable.
 Keep an eye on things with `htop` or `tail -f ~/ssd0/MetaGO_Result/MetaGO.output.txt`
 Eventually, upload your data.
 
-```BASH
+```
 aws s3 sync --delete ~/ssd0/MetaGO_Result/ s3://herv-unr/MetaGO_S3_DATADIR_Results/
 ```
 
 
 When you are finished, shut down the instance and everything will be gone.
 
-```BASH
+```
 sudo shutdown now
 ```
 

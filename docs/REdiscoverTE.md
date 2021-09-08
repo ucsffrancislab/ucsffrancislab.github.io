@@ -22,7 +22,7 @@
 
 
 
-```BASH
+```
 zcat REdiscoverTE/rollup_annotation/REdiscoverTE_whole_transcriptome_hg38.fa.gz > REdiscoverTE.fa
 salmon index \
 	-t REdiscoverTE.fa \
@@ -34,7 +34,7 @@ salmon index \
 
 
 
-```BASH
+```
 for f in ${DIR}/???.fastq.gz ; do
 
 	echo $f
@@ -133,7 +133,7 @@ done
 BiocManager::install(c("tibble","readr","dplyr","edgeR","Biobase"),update = TRUE, ask = FALSE)
 ```
 
-```BASH
+```
 ./rollup.R -h
 Usage: Rscript rollup.R [options]
 Rollup takes 1-5 minutes per quant.sf file on a 2018 laptop for a quant.sf with 5+ million lines.
@@ -189,7 +189,7 @@ Options:
 
 
 
-```BASH
+```
 echo -e "sample\tquant_sf_path" > ${DIR}/REdiscoverTE.tsv
 ls -1 ${DIR}/trimmed/*REdiscoverTE/quant.sf \
 		| awk -F/ '{split($8,a,".");print a[1]"\t"$0}' \

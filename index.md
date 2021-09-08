@@ -26,6 +26,12 @@ Pseudo Pipeline and Topic Notes
   * [HAWK](docs/HAWK)
   * [MetaGO](docs/MetaGO)
   * [REdiscoverTE](docs/REdiscoverTE)
+* Cloud Services
+  * [SGDP](docs/SGDP)
+  * [CGC](docs/CGC)
+  * [St Jude](docs/StJude)
+  * [LatchBio](docs/LatchBio)
+  * [Use Galaxy](docs/Galaxy)
 * [Assemblers](docs/Assemblers)
 * [Box](docs/Box)
 * [Catchitt](docs/Catchitt)
