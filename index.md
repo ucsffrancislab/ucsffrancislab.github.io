@@ -28,6 +28,7 @@ Pseudo Pipeline and Topic Notes
   * [MetaGO](docs/MetaGO)
   * [REdiscoverTE](docs/REdiscoverTE)
 * Cloud Services
+  * [UK Biobank RAP](docs/UKBiobankRAP)
   * [SGDP](docs/SGDP)
   * [CGC](docs/CGC)
   * [St Jude](docs/StJude)

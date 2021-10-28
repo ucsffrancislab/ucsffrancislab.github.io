@@ -10,3 +10,18 @@ K-mer counters
   * kmc2 or kmc3?
 
 
+
+
+##	Tumor / Normal Comparisons
+
+
+[RNA DE-kupl](https://github.com/Transipedia/dekupl)
+
+
+[DNA 2-kupl](https://github.com/yunfengwang0317/2-kupl)
+
+
+
+
+
+
