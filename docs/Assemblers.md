@@ -3,7 +3,7 @@
 
 ##	Short Read / Illumina
 
-[ABySS](https://github.com/bcgsc/abyss) - de novo assembler for short, paired end reads and large genome
+[ABySS](docs/Abyss) https://github.com/bcgsc/abyss - de novo assembler for short, paired end reads and large genome
 
 Velvet - old and less supported
 
