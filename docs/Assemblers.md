@@ -5,15 +5,15 @@
 
 [ABySS](docs/Abyss) https://github.com/bcgsc/abyss - de novo assembler for short, paired end reads and large genome
 
-Velvet - old and less supported
+[Velvet](https://github.com/dzerbino/velvet) - old and less supported
 
 Trinity
 
-SOAP
+[SOAPdenovo2](https://github.com/aquaskyline/SOAPdenovo2) - 
 
 Meraculous
 
-PERGA
+[PERGA](https://github.com/hitbio/PERGA) - 
 
 PE-Assembler
 
