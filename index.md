@@ -63,6 +63,8 @@ Pseudo Pipeline and Topic Notes
 * Notebooks
   * [Jupyter](docs/Jupyter)
   * [Rmarkdown](docs/Rmarkdown)
+* Tools
+  * [Singularity](docs/Singularity)
 
 General
 * [UCSF Github Repos](https://github.com/ucsffrancislab)
