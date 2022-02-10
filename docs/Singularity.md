@@ -6,7 +6,7 @@ If you have a singularity image, it is pretty straight forward. iMOKA is run sol
 
 Passing files into and out of the image is usually done via a bound path.
 This can be done with a parameter or an environment variable.
-For some reason, I remember having an issue using iMOKA and it needed the environment variable.
+iMOKA needed the environment variable.
 Perhaps the code explicitly uses the environment variable.
 
 ```
@@ -17,8 +17,9 @@ singularity exec ${img} iMOKA_core reduce \
 	--output ${TMPDIR}/reduced.matrix
 ```
 
-Singularity does not natively run on Mac so building on my Mac is not a viable solution.
+iMOKA uses Dockerfiles, but singularity to build the container. Not sure why.
 
+Singularity does not natively run on Mac so building on my Mac is not a viable solution.
 
 Building on C4 is tricky. Normally, you need root / sudo permission to build.
 
@@ -40,18 +41,93 @@ I created a user with my Google login.
 Clicked on my username, then Access Tokens, Create New Access Token, Download Token.
 
 
-
 ```
 singularity remote login --tokenfile ~/sylabs-token 
 
-singularity build --remote  TEfinder.simg TEfinder
+singularity build --remote TEfinder.img TEfinder
+```
 
-singularity exec TEfinder.simg ls /
+This worked.
+
+
+Building on a remote server leaves builds and running instances on said server.
+There seems to be a limit after which build will silently hang.
+You'll need to login to the remote build server and cleanup.
+
+C4 is developing a singularity build server.
+
+```
+singularity exec TEfinder.img ls /
 bin  boot  c4  data  dev  environment  etc  home  lib  lib64  media  mnt  opt  proc  root  run	sbin  singularity  srv	sys  tmp  usr  var
 
-singularity exec TEfinder.simg whoami
+singularity exec TEfinder.img whoami
 gwendt
 ```
 
-Worked.
+
+The C4 environment makes bash scripts to error but still run?
+```
+singularity exec TEfinder.img TEfinder
+
+/bin/bash: BASH_FUNC_ml(): line 0: syntax error near unexpected token `)'
+/bin/bash: BASH_FUNC_ml(): line 0: `BASH_FUNC_ml() () {  eval $($LMOD_DIR/ml_cmd "$@")'
+/bin/bash: error importing function definition for `BASH_FUNC_ml'
+/bin/bash: BASH_FUNC_module(): line 0: syntax error near unexpected token `)'
+/bin/bash: BASH_FUNC_module(): line 0: `BASH_FUNC_module() () {  eval $($LMOD_CMD bash "$@") && eval $(${LMOD_SETTARG_CMD:-:} -s sh)'
+/bin/bash: error importing function definition for `BASH_FUNC_module'
+One or more required parameters are missing.
+example: TEfinder -alignment sample.bam -fa reference.fa -gtf TEs.gtf -te List_of_TEs.txt
+```
+
+There are a number of environment variables that could be the issue.
+```
+singularity exec TEfinder.img env
+```
+
+Call with --cleanenv until I figure out exactly what the issue is.
+```
+singularity exec --cleanenv TEfinder.img TEfinder
+
+singularity exec --cleanenv TEfinder.img env
+```
+
+
+Not sure why iMOKA's preprocess.sh doesn't complain.
+Perhaps cause its a Dockerfile build?
+Or simply a different linux core?
+bash is 5.0.17
+
+Using 
+```
+Bootstrap: docker
+From: ubuntu:bionic
+```
+instead of 
+```
+Bootstrap: shub
+From: singularityhub/ubuntu
+```
+increase the bash version from 4.3.8 to 4.4.20
+and the bash function errors go away. 
+Not sure if there are other differences.
+
+Even better
+```
+Bootstrap: library
+From: ubuntu:20.04
+```
+bash 5.0
+
+No errors or --cleanenv needed.
+Looks cleaner, more generic and more current.
+
+
+Building on this remote server, at least using the free version, there appears to be a size limit.
+The account has a limit of 10GB. Apparently there can be a lot of remnants left that take up space.
+There was 7GB of stuff hidden somewhere in my account.
+
+
+
+
+
 
