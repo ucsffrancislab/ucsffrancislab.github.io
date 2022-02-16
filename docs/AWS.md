@@ -45,6 +45,8 @@ python3 -m pip install --user --upgrade aws-adfs awscli
 I called my profile "ucsf" but it can be anything really. Even "default".
 You can even not include the `--profile` option which is essentially the same as using "default".
 
+If you don't use other AWS accounts on this system, don't bother specifying profile at all.
+
 This will ask for you UCSF email and password.
 
 It should then do a Duo Push to your phone.
@@ -85,122 +87,6 @@ I'm a bit surprised that 'us-east-1' is the default region as I've been told to 
 I'm going to edit my `~/.aws/config` to reflect this.
 
 `~/.aws/credentials` are private. Do not share them.
-
-
-
-
-##	EC2
-
-
-###	SSM Plugin
-
-Ensure SSM Session manager Extension is installed. Without it, you will be unable to start a session.
-
-https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html
-
-I install it locally.
-
-####	Mac
-
-```
-curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/mac/sessionmanager-bundle.zip" -o "sessionmanager-bundle.zip"
-unzip sessionmanager-bundle.zip
-./sessionmanager-bundle/install -i ~/.local/sessionmanagerplugin -b ~/.local/bin/session-manager-plugin
-```
-
-
-####	Linux
-
-Not sure how to do without sudo yet
-
-```
-curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/linux_64bit/session-manager-plugin.rpm" -o "session-manager-plugin.rpm"
-sudo yum install -y session-manager-plugin.rpm
-```
-
-
-####	Uninstall
-
-```
-sudo rm -rf /usr/local/sessionmanagerplugin /usr/local/bin/session-manager-plugin
-/bin/rm -rf .local/sessionmanagerplugin/ .local/bin/session-manager-plugin 
-
-sudo yum erase session-manager-plugin -y
-```
-
-
-Using a session manager is meant to make things easier to control the ssh session.
-
-https://medium.com/@dnorth98/hello-aws-session-manager-farewell-ssh-7fdfa4134696
-
-https://www.nclouds.com/blog/ssh-session-manager/
-
-https://cloudonaut.io/goodbye-ssh-use-aws-session-manager-instead/
-
-
-
-###	Start, Access, Use and Terminate an instance
-
-
-How to start, access and terminate EC2 instances...
-
-I believe that you can only use UCSF blessed AMI's.
-
-Their id is `013463732445`.
-
-
-```
-aws-adfs login
-
-aws ec2 describe-images --owners 013463732445
-
-ami_id=$( aws ec2 describe-images --owners 013463732445  | jq -r '.Images | map(select(.Name | test("^base-ubuntu-18"))) | sort_by(.CreationDate)[].ImageId' | tail -1 )
-echo $ami_id
-
-subnet_id=$( aws ec2 describe-subnets | jq -r '.Subnets | sort_by(.AvailableIpAddressCount) | reverse[0].SubnetId' )
-echo ${subnet_id}
-
-security_group_id=$( aws ec2 describe-security-groups | jq -r '.SecurityGroups | map(select( .GroupName == "managed-ssm" ))[].GroupId' )
-echo $security_group_id
-
-
-
-aws ec2 run-instances --image-id ${ami_id} --instance-type t3.small --subnet-id ${subnet_id} --security-group-ids=${security_group_id} --iam-instance-profile Name='managed-service-ec2-standard'
-
-
-instance_id=$( aws ec2 describe-instances | jq -r '.Reservations[].Instances | map(select( .State.Name == "running"))[].InstanceId' )
-echo ${instance_id}
-
-
-#	... WAIT A MINUTE TO LET THE INSTANCE SPIN UP ...
-
-
-aws ssm start-session --target ${instance_id}
-
-Starting session with SessionId: George.Wendt@ucsf.edu-.......
-This session is encrypted using AWS KMS.
-
-
-
-
-#	What user am I?
-#	Do I have sudo access?
-
-
-
-
-aws ec2 terminate-instances --instance-ids ${instance_id}
-
-aws ec2 describe-instances | jq -r '.Reservations[].Instances[].State.Name'
-```
-
-https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-sessions-start.html 
-
- 
-
-
-
-
 
 
 
@@ -331,5 +217,213 @@ I'm probably gonna need to hunt down and delete these partial uploads with my sc
 Increase `adfs_config.session_duration` in `~/.aws/config`
 
 
+
+
+##	EC2
+
+
+###	SSM Plugin
+
+Ensure SSM Session manager Extension is installed. Without it, you will be unable to start a session.
+
+https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html
+
+https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-sessions-start.html 
+
+I install it locally.
+
+####	Mac
+
+```
+curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/mac/sessionmanager-bundle.zip" -o "sessionmanager-bundle.zip"
+unzip sessionmanager-bundle.zip
+./sessionmanager-bundle/install -i ~/.local/sessionmanagerplugin -b ~/.local/bin/session-manager-plugin
+```
+
+
+####	Linux
+
+Not sure how to do without sudo yet
+
+```
+curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/linux_64bit/session-manager-plugin.rpm" -o "session-manager-plugin.rpm"
+sudo yum install -y session-manager-plugin.rpm
+```
+
+
+####	Uninstall
+
+```
+sudo rm -rf /usr/local/sessionmanagerplugin /usr/local/bin/session-manager-plugin
+/bin/rm -rf .local/sessionmanagerplugin/ .local/bin/session-manager-plugin 
+
+sudo yum erase session-manager-plugin -y
+```
+
+
+Using a session manager is meant to make things easier to control the ssh session.
+
+https://medium.com/@dnorth98/hello-aws-session-manager-farewell-ssh-7fdfa4134696
+
+https://www.nclouds.com/blog/ssh-session-manager/
+
+https://cloudonaut.io/goodbye-ssh-use-aws-session-manager-instead/
+
+
+
+###	Start, Access, Use and Terminate an instance
+
+
+How to start, access and terminate EC2 instances...
+
+I believe that you can only use UCSF blessed AMI's.
+
+Their id is `013463732445`.
+
+Some image names include "_dl_" which I think is for "Deep Learning".
+
+
+```
+aws-adfs login --adfs-host=adfs.ucsf.edu --profile=ucsf
+```
+
+As I only use this one account on C4, profile is unnecessary.
+
+Specifying the adfs host is require the first time as it adds to your `~/.aws/config` and `~/.aws/credentials`.
+```
+aws-adfs login --adfs-host=adfs.ucsf.edu
+```
+
+You will likely need to edit your `~/.aws/config` however.
+
+For some reason, the region set varies. I think that it needs to be `us-west-2`. 
+Mine was set to `eu-central-1`. I'm gonna leave it and see.
+If you don't change the region to `us-west-2` you'll get a lot of errors like ...
+
+```
+An error occurred (UnauthorizedOperation) when calling the DescribeImages operation: You are not authorized to perform this operation.
+
+An error occurred (UnauthorizedOperation) when calling the DescribeSubnets operation: You are not authorized to perform this operation.
+
+An error occurred (UnauthorizedOperation) when calling the DescribeSecurityGroups operation: You are not authorized to perform this operation.
+```
+
+You will also want to up the session duration to 28800.
+
+
+```
+aws-adfs login
+
+ami_id=$( aws ec2 describe-images --owners 013463732445  | jq -r '.Images | map(select(.Name | test("^base-ubuntu-18-ami"))) | sort_by(.CreationDate)[].ImageId' | tail -1 )
+echo $ami_id
+
+subnet_id=$( aws ec2 describe-subnets | jq -r '.Subnets | sort_by(.AvailableIpAddressCount) | reverse[0].SubnetId' )
+echo ${subnet_id}
+
+ssm_security_group_id=$( aws ec2 describe-security-groups | jq -r '.SecurityGroups | map(select( .GroupName == "managed-ssm" ))[].GroupId' )
+echo $ssm_security_group_id
+
+mns_security_group_id=$( aws ec2 describe-security-groups | jq -r '.SecurityGroups | map(select( .GroupName == "managed-network-services" ))[].GroupId' )
+echo $mns_security_group_id
+
+security_ids=${ssm_security_group_id} ${mns_security_group_id}
+echo $security_ids
+
+aws ec2 run-instances --image-id ${ami_id} --instance-type t3.micro --subnet-id ${subnet_id} --security-group-ids ${security_ids} --iam-instance-profile Name=managed-service-ec2-standard 
+
+#--tag-specifications 'ResourceType=instance,Tags=[{Key="Patch Group",Value="ubuntu-prod"}]' --metadata-options 'HttpTokens=required,HttpEndpoint=enabled' --dry-run
+
+#	These two things actually happen automatically on creation.
+
+#Metadata version 
+#V2 (token required)
+#For V2 requests, you must include a session token in all instance metadata requests. Applications or agents that use V1 for instance metadata access will break.
+#	This may be the default setting.
+#	HttpTokens
+#	aws ec2 modify-instance-metadata-options  --http-endpoint enabled --http-token required
+#	 --metadata-options 'HttpTokens=required,HttpEndpoint=enabled'
+#	aws ec2 modify-instance-metadata-options --instance-id <INSTANCE-ID> --profile <AWS_PROFILE> --http-endpoint enabled --http-token required
+#
+#Click “Next: Add Tags” to proceed with resource tagging14.IMPORTANT: Add a tag with key = “Patch Group” andvalue =<os>-proda.For Windows instances: value = “windows-prod”b.For Ubuntu instances: value = “ubuntu-prod”c.For Centos instances: value = “centos-prod”d.Note:Clientsareresponsibleforensuringthe“PatchGroup”tagisappliedtoallinstanceslaunchedwithintheiraccount.Thistagisofcriticalimportance,andtriggersSECautomatedpatchingandmanagement.Failuretoapply an appropriate Patch Group tag may result in the termination of your instance!
+#
+#	this my be the default as well
+
+
+
+
+#	... WAIT A MINUTE OR TWO ...
+
+
+instance_id=$( aws ec2 describe-instances | jq -r '.Reservations[].Instances | map(select( .State.Name == "running"))[].InstanceId' )
+echo ${instance_id}
+
+
+#	... WAIT ANOTHER MINUTE OR TWO ...
+
+
+aws ssm start-session --target ${instance_id}
+
+Starting session with SessionId: George.Wendt@ucsf.edu-.......
+This session is encrypted using AWS KMS.
+
+
+
+
+
+
+#	So connected, but I quickly found that there is still much to do.
+
+#	These images aren't really set up well.
+#	Home dir isn't even owned by my user.
+
+whoami
+# ssm-user
+
+sudo chown ssm-user $HOME
+cd
+
+#	Looks like apt update runs automatically and can't run 2 at the same time.
+#	There may be collisions. Try rerunning.
+#	Or maybe I'm not supposed to run it at all?
+#	The user guide does use it to install a couple things.
+
+sudo apt-get clean all
+sudo apt-get -y update
+sudo apt-get -y upgrade
+sudo apt-get -y autoremove
+
+
+aws s3 ls
+2021-03-11 08:01:44 francislab-backup-73-3-r-us-west-2.sec.ucsf.edu
+2021-02-19 15:24:38 managed-755550924152-server-access-logs
+
+aws s3 ls s3://francislab-backup-73-3-r-us-west-2.sec.ucsf.edu
+An error occurred (AccessDenied) when calling the ListObjectsV2 operation: Access Denied
+#
+#	ERRRR. WHY?????
+#	Apparently our role needed updated.
+#
+
+
+
+#sudo apt-get -y install python3-setuptools bash python3 git wget gcc g++ make bzip2 libbz2-dev zlib1g-dev libncurses5-dev libncursesw5-dev liblzma-dev libcurl4-openssl-dev 
+
+#python3 -m pip install --upgrade --user pip
+
+#python3 -m pip install --upgrade --user aws-adfs
+
+
+
+#	Do stuff
+
+
+
+
+exit
+
+aws ec2 terminate-instances --instance-ids ${instance_id}
+
+aws ec2 describe-instances | jq -r '.Reservations[].Instances[].State.Name'
+```
 
 
