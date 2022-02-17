@@ -15,6 +15,11 @@ To login to the web console, https://adfs.ucsf.edu/adfs/ls/idpinitiatedSignon.as
 https://ucsfonline.sharepoint.com/sites/SecureEnterpriseCloud
 
 
+
+[Secure Enterprise Cloud User Guide](https://ucsf.app.box.com/s/9sy28v2v0fgqe3xygsj2j9szxq431bdl)
+
+If you ask support for help and the answers in this guide, they're gonna point that out.
+
  
 
 
