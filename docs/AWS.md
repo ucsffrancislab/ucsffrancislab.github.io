@@ -331,7 +331,7 @@ echo $ssm_security_group_id
 mns_security_group_id=$( aws ec2 describe-security-groups | jq -r '.SecurityGroups | map(select( .GroupName == "managed-network-services" ))[].GroupId' )
 echo $mns_security_group_id
 
-security_ids=${ssm_security_group_id} ${mns_security_group_id}
+security_ids="${ssm_security_group_id} ${mns_security_group_id}"
 echo $security_ids
 
 aws ec2 run-instances --image-id ${ami_id} --instance-type t3.micro --subnet-id ${subnet_id} --security-group-ids ${security_ids} --iam-instance-profile Name=managed-service-ec2-standard 
