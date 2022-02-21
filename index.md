@@ -27,6 +27,11 @@ Pseudo Pipeline and Topic Notes
   * [HAWK](docs/HAWK)
   * [MetaGO](docs/MetaGO)
   * [REdiscoverTE](docs/REdiscoverTE)
+* Transposable Elements
+  * [REdiscoverTE](docs/REdiscoverTE)
+  * [TEfinder](docs/TEfinder)
+  * [xTea](docs/xTea)
+  * [GeneTEFlow](docs/GeneTEFlow)
 * Cloud Services
   * [UK Biobank RAP](docs/UKBiobankRAP)
   * [SGDP](docs/SGDP)
