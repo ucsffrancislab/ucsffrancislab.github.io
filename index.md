@@ -12,6 +12,7 @@ Pseudo Pipeline and Topic Notes
 * [miRNA](docs/miRNA)
 * [APOBEC](docs/APOBEC)
 * [Aligners](docs/Aligners)
+  * [Bowtie2](docs/Bowtie2)
   * [Bowtie](docs/Bowtie)
   * [BWA](docs/BWA)
   * [STAR](docs/STAR)
