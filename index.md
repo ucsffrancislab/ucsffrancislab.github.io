@@ -32,6 +32,11 @@ Pseudo Pipeline and Topic Notes
   * [TEfinder](docs/TEfinder)
   * [xTea](docs/xTea)
   * [GeneTEFlow](docs/GeneTEFlow)
+  * [SQuIRE](docs/SQuIRE)
+  * [RepEnrich2](docs/RepEnrich2)
+  * [TEtools](docs/TEtools)
+  * [McClintock](docs/McClintock)
+  * [TEtranscripts](docs/TEtranscripts)
 * Cloud Services
   * [UK Biobank RAP](docs/UKBiobankRAP)
   * [SGDP](docs/SGDP)
