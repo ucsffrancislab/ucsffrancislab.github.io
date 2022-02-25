@@ -126,6 +126,10 @@ Building on this remote server, at least using the free version, there appears t
 The account has a limit of 10GB. Apparently there can be a lot of remnants left that take up space.
 There was 7GB of stuff hidden somewhere in my account.
 
+Also, a limit on build time. Not sure what the denominator is. Per week? Month?
+
+cumulative build time (17h21m12.795s) larger than allowed (16h40m0s)Build 6218141f4a28720818657ba7 cancelled: cumulative build time (17h21m12.795s) larger than allowed (16h40m0s)
+
 
 
 
