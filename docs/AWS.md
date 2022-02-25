@@ -334,7 +334,17 @@ echo $mns_security_group_id
 security_ids="${ssm_security_group_id} ${mns_security_group_id}"
 echo $security_ids
 
-aws ec2 run-instances --image-id ${ami_id} --instance-type t3.micro --subnet-id ${subnet_id} --security-group-ids ${security_ids} --iam-instance-profile Name=managed-service-ec2-standard 
+instance_id=$( aws ec2 run-instances --image-id ${ami_id} --instance-type t3.micro --subnet-id ${subnet_id} --security-group-ids ${security_ids} --iam-instance-profile Name=managed-service-ec2-standard  | jq -r '.Instances[].InstanceId' )
+echo ${instance_id}
+
+#	> tmp_run_instances ???
+# Really should catch an identifier here as the next command is not specific to this command.
+#	then pipe through jq to grab the instance id or equivalent
+#	instance id is in there
+
+
+
+
 
 #--tag-specifications 'ResourceType=instance,Tags=[{Key="Patch Group",Value="ubuntu-prod"}]' --metadata-options 'HttpTokens=required,HttpEndpoint=enabled' --dry-run
 
@@ -358,9 +368,9 @@ aws ec2 run-instances --image-id ${ami_id} --instance-type t3.micro --subnet-id 
 
 #	... WAIT A MINUTE OR TWO ...
 
-
-instance_id=$( aws ec2 describe-instances | jq -r '.Reservations[].Instances | map(select( .State.Name == "running"))[].InstanceId' )
-echo ${instance_id}
+#	if you didn't catch the instance id, you can search for it ...
+#instance_id=$( aws ec2 describe-instances | jq -r '.Reservations[].Instances | map(select( .State.Name == "running"))[].InstanceId' )
+#echo ${instance_id}
 
 
 #	... WAIT ANOTHER MINUTE OR TWO ...
