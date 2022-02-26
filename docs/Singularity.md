@@ -135,3 +135,41 @@ cumulative build time (17h21m12.795s) larger than allowed (16h40m0s)Build 621814
 
 
 
+##	Installing Singularity on a Mac
+
+https://sylabs.io/guides/3.0/user-guide/installation.html#install-on-windows-or-mac
+
+
+```
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+brew install --cask virtualbox && brew install --cask vagrant && brew install --cask vagrant-manager && brew install --cask vagrant-vmware-utility
+
+#	REBOOT
+
+mkdir ~/vm-singularity && cd ~/vm-singularity
+
+vagrant init sylabs/singularity-3.0-ubuntu-bionic64 
+
+vagrant up
+
+vagrant ssh
+
+
+singularity version
+
+```
+
+
+OK. That seems to work now.
+
+Now need to learn how to share a folder with the virtual box so that I can build an image from a definition.
+
+
+
+
+
+
+
+
+
