@@ -413,11 +413,8 @@ aws s3 ls
 2021-02-19 15:24:38 managed-755550924152-server-access-logs
 
 aws s3 ls s3://francislab-backup-73-3-r-us-west-2.sec.ucsf.edu
-An error occurred (AccessDenied) when calling the ListObjectsV2 operation: Access Denied
-#
-#	ERRRR. WHY?????
-#	Apparently our role needed updated.
-#
+
+#	working now
 
 
 
