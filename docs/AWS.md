@@ -334,8 +334,30 @@ echo $mns_security_group_id
 security_ids="${ssm_security_group_id} ${mns_security_group_id}"
 echo $security_ids
 
-instance_id=$( aws ec2 run-instances --image-id ${ami_id} --instance-type t3.micro --subnet-id ${subnet_id} --security-group-ids ${security_ids} --iam-instance-profile Name=managed-service-ec2-standard  | jq -r '.Instances[].InstanceId' )
+instance_id=$( aws ec2 run-instances --image-id ${ami_id} --instance-type c5.large --subnet-id ${subnet_id} --security-group-ids ${security_ids} --iam-instance-profile Name=managed-service-ec2-standard  | jq -r '.Instances[].InstanceId' )
 echo ${instance_id}
+
+
+#	instance_id=$( aws ec2 run-instances --image-id ${ami_id} --instance-type c5.large --subnet-id ${subnet_id} --security-group-ids ${security_ids} --iam-instance-profile Name=managed-service-ec2-standard --block-device-mappings "DeviceName=/dev/nvme,Ebs={VolumeSize=2000,VolumeType=gp2}" | jq -r '.Instances[].InstanceId' )
+
+#		"--block-device-mappings DeviceName=/dev/xvda,Ebs={VolumeSize=2000,VolumeType=gp2}"
+#	64TB maximum?
+#	https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/volume_constraints.html
+
+#	pass xvda by it uses nvme1n1 anyway.
+
+#	Tried my name, no name. Name is required, but then ignored by NVMe?
+
+#	seems to use its own naming convention. 
+#	$ lsblk
+#	NAME        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+#	loop1         7:1    0 55.5M  1 loop /snap/core18/2284
+#	loop2         7:2    0 25.1M  1 loop /snap/amazon-ssm-agent/5429
+#	loop3         7:3    0 43.6M  1 loop /snap/snapd/14978
+#	loop4         7:4    0 25.1M  1 loop /snap/amazon-ssm-agent/5521
+#	nvme1n1     259:0    0  1.5T  0 disk                             <---
+#	nvme0n1     259:1    0   40G  0 disk 
+#	└─nvme0n1p1 259:2    0   40G  0 part /
 
 #	> tmp_run_instances ???
 # Really should catch an identifier here as the next command is not specific to this command.
@@ -396,6 +418,25 @@ whoami
 
 sudo chown ssm-user $HOME
 cd
+bash
+
+alias ll="ls -l"
+
+#	Mount unmounted drives
+
+#	If added a volume ... (perhaps use xfs instead of ext4)
+lsblk
+sudo file -s /dev/nvme1n1
+sudo mkfs -t ext4 /dev/nvme1n1
+sudo file -s /dev/nvme1n1
+sudo mkdir /data
+sudo mount /dev/nvme1n1 /data
+sudo chmod 777 /data
+
+
+
+
+
 
 #	Looks like apt update runs automatically and can't run 2 at the same time.
 #	There may be collisions. Try rerunning.
