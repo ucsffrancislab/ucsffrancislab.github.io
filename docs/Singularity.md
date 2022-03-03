@@ -128,7 +128,9 @@ There was 7GB of stuff hidden somewhere in my account.
 
 Also, a limit on build time. Not sure what the denominator is. Per week? Month?
 
+```
 cumulative build time (17h21m12.795s) larger than allowed (16h40m0s)Build 6218141f4a28720818657ba7 cancelled: cumulative build time (17h21m12.795s) larger than allowed (16h40m0s)
+```
 
 
 
@@ -144,32 +146,110 @@ https://sylabs.io/guides/3.0/user-guide/installation.html#install-on-windows-or-
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
 brew install --cask virtualbox && brew install --cask vagrant && brew install --cask vagrant-manager && brew install --cask vagrant-vmware-utility
+```
 
-#	REBOOT
+REBOOT your main machine.
 
-mkdir ~/vm-singularity && cd ~/vm-singularity
+The current dir is shared with the virtual machine as /vagrant.
 
-vagrant init sylabs/singularity-3.0-ubuntu-bionic64 
+```
+cd ~/github/ucsffrancislab/genomics/singularity
+
+#vagrant init sylabs/singularity-3.0-ubuntu-bionic64 
+#vagrant init sylabs/singularity-3.7-ubuntu-bionic64 
+vagrant init sylabs/singularity-ce-3.9-ubuntu-bionic64 
 
 vagrant up
 
 vagrant ssh
 
-
 singularity version
 
+cd /vagrant/
+
+sudo singularity build McClintock.img McClintock | tee McClintock.out
+sudo singularity build RepEnrich2.img RepEnrich2 | tee RepEnrich2.out
+sudo singularity build SQuIRE.img SQuIRE | tee SQuIRE.out
+sudo singularity build TEfinder.img TEfinder | tee TEfinder.out
+sudo singularity build TEtools.img TEtools | tee TEtools.out
+sudo singularity build TEtranscripts.img TEtranscripts | tee TEtranscripts.out
+sudo singularity build xTea.img xTea | tee xTea.out
+
+vagrant destroy
 ```
 
 
-OK. That seems to work now.
-
-Now need to learn how to share a folder with the virtual box so that I can build an image from a definition.
-
-
-
+Old or failed
+```
+sudo singularity build GeneTEFlow.img GeneTEFlow | tee GeneTEFlow.out
+```
 
 
+So the current working dir is shared with vagrant, so 
+
+
+```
+https://vagrantcloud.com/search
+
+2.24	Ubuntu 16.04 LTS (Xenial Xerus)
+2.25	Ubuntu 16.10 (Yakkety Yak)
+2.26	Ubuntu 17.04 (Zesty Zapus)
+2.27	Ubuntu 17.10 (Artful Aardvark)
+2.28	Ubuntu 18.04 LTS (Bionic Beaver)  <------ Nothing newer?
+2.29	Ubuntu 18.10 (Cosmic Cuttlefish)
+2.30	Ubuntu 19.04 (Disco Dingo)
+2.31	Ubuntu 19.10 (Eoan Ermine)
+2.32	Ubuntu 20.04 LTS (Focal Fossa)
+2.33	Ubuntu 20.10 (Groovy Gorilla)
+2.34	Ubuntu 21.04 (Hirsute Hippo)
+2.35	Ubuntu 21.10 (Impish Indri)
+2.36	Ubuntu 22.04 LTS (Jammy Jellyfish)
+```
 
 
 
 
+##	Singularity on AWS Instance
+
+
+https://raw.githubusercontent.com/ucsffrancislab/genomics/master/aws/ec2_install_singularity.bash
+
+
+https://github.com/apptainer/singularity/blob/master/INSTALL.md
+
+```
+sudo apt-get update
+
+sudo apt-get install -y \
+    build-essential \
+    libseccomp-dev \
+    pkg-config \
+    squashfs-tools \
+    cryptsetup \
+    curl wget git 
+
+sudo apt-get -y autoremove
+
+export GOVERSION=1.17.3 OS=linux ARCH=amd64  # change this as you need
+
+wget -O /tmp/go${GOVERSION}.${OS}-${ARCH}.tar.gz \
+  https://dl.google.com/go/go${GOVERSION}.${OS}-${ARCH}.tar.gz
+sudo tar -C /usr/local -xzf /tmp/go${GOVERSION}.${OS}-${ARCH}.tar.gz
+
+echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.bashrc
+source ~/.bashrc
+
+git clone https://github.com/hpcng/singularity.git
+cd singularity
+
+git checkout v3.8.4
+
+./mconfig
+cd ./builddir
+make
+sudo make install
+
+sudo chmod o+r /usr/local/etc/singularity/capability.json
+
+singularity --version
+```
