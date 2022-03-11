@@ -480,3 +480,25 @@ aws ec2 describe-instances | jq -r '.Reservations[].Instances[].State.Name'
 ```
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+```
+
+aws s3 sync --exclude server-access-logging/* --sse aws:kms --sse-kms-key-id alias/managed-s3-key s3://francislab-nih-temp-73-3-r-us-west-2/ s3://francislab-backup-73-3-r-us-west-2.sec.ucsf.edu/nih-20220303-sync/
+
+aws s3 ls s3://francislab-backup-73-3-r-us-west-2.sec.ucsf.edu/nih-20220303-sync/  --recursive --human-readable --summarize
+
+```
+
+
