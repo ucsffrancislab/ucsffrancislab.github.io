@@ -20,7 +20,7 @@ https://ucsfonline.sharepoint.com/sites/SecureEnterpriseCloud
 
 If you ask support for help and the answers in this guide, they're gonna point that out.
 
- 
+
 
 
 
@@ -60,7 +60,7 @@ It should then do a Duo Push to your phone.
 aws-adfs login --adfs-host=adfs.ucsf.edu --profile=ucsf
 2021-03-10 14:08:19,355 [authenticator authenticator.py:authenticate] [7846-MainProcess] [4669504960-MainThread] - ERROR: Cannot extract saml assertion. Re-authentication needed?
 Username: George.Wendt@ucsf.edu
-Password: 
+Password:
 Sending request for authentication
 Waiting for additional authentication
 Triggering authentication method: 'Duo Push'
@@ -105,15 +105,15 @@ Creating a new S3 bucket requires an email to Cloud.Support@ucsf.edu containing 
 
 ```
 Please create an S3 bucket for our new AWS account.
- 
+
 Account ID = ....
- 
+
 Tag = Backup
- 
+
 Data Classification = P3
- 
+
 Control Point = R
- 
+
 Description = General secure offsite storage and backup
 ```
 
@@ -162,15 +162,15 @@ aws s3 ls
 ```
 
 
-###	Uploading Files to S3 
+###	Uploading Files to S3
 
-In order to upload files to S3 from the CLI they must be explicitly encrypted with a KMS key.  
+In order to upload files to S3 from the CLI they must be explicitly encrypted with a KMS key.
 
 The kms key is apparently part of the account so just add the `--sse aws:kms --sse-kms-key-id alias/managed-s3-key` options to the `cp` command.
 
 
 ```
-aws s3 cp test.sh s3://francislab-backup-73-3-r-us-west-2.sec.ucsf.edu/ --sse aws:kms --sse-kms-key-id alias/managed-s3-key 
+aws s3 cp test.sh s3://francislab-backup-73-3-r-us-west-2.sec.ucsf.edu/ --sse aws:kms --sse-kms-key-id alias/managed-s3-key
 
 aws s3 rm s3://francislab-backup-73-3-r-us-west-2.sec.ucsf.edu/test.sh
 ```
@@ -224,6 +224,24 @@ Increase `adfs_config.session_duration` in `~/.aws/config`
 
 
 
+
+
+
+
+
+Sync buckets
+```
+aws s3 sync --exclude server-access-logging/* --sse aws:kms --sse-kms-key-id alias/managed-s3-key s3://francislab-nih-temp-73-3-r-us-west-2/ s3://francislab-backup-73-3-r-us-west-2.sec.ucsf.edu/nih-20220303-sync/
+```
+
+
+How big is my bucket or folder?
+```
+aws s3 ls s3://francislab-backup-73-3-r-us-west-2.sec.ucsf.edu/nih-20220303-sync/  --recursive --human-readable --summarize
+```
+
+
+
 ##	EC2
 
 
@@ -233,7 +251,7 @@ Ensure SSM Session manager Extension is installed. Without it, you will be unabl
 
 https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html
 
-https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-sessions-start.html 
+https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-sessions-start.html
 
 I install it locally.
 
@@ -260,7 +278,7 @@ sudo yum install -y session-manager-plugin.rpm
 
 ```
 sudo rm -rf /usr/local/sessionmanagerplugin /usr/local/bin/session-manager-plugin
-/bin/rm -rf .local/sessionmanagerplugin/ .local/bin/session-manager-plugin 
+/bin/rm -rf .local/sessionmanagerplugin/ .local/bin/session-manager-plugin
 
 sudo yum erase session-manager-plugin -y
 ```
@@ -301,7 +319,7 @@ aws-adfs login --adfs-host=adfs.ucsf.edu
 
 You will likely need to edit your `~/.aws/config` however.
 
-For some reason, the region set varies. I think that it needs to be `us-west-2`. 
+For some reason, the region set varies. I think that it needs to be `us-west-2`.
 Mine was set to `eu-central-1`. I'm gonna leave it and see.
 If you don't change the region to `us-west-2` you'll get a lot of errors like ...
 
@@ -348,7 +366,7 @@ echo ${instance_id}
 
 #	Tried my name, no name. Name is required, but then ignored by NVMe?
 
-#	seems to use its own naming convention. 
+#	seems to use its own naming convention.
 #	$ lsblk
 #	NAME        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
 #	loop1         7:1    0 55.5M  1 loop /snap/core18/2284
@@ -356,7 +374,7 @@ echo ${instance_id}
 #	loop3         7:3    0 43.6M  1 loop /snap/snapd/14978
 #	loop4         7:4    0 25.1M  1 loop /snap/amazon-ssm-agent/5521
 #	nvme1n1     259:0    0  1.5T  0 disk                             <---
-#	nvme0n1     259:1    0   40G  0 disk 
+#	nvme0n1     259:1    0   40G  0 disk
 #	└─nvme0n1p1 259:2    0   40G  0 part /
 
 #	> tmp_run_instances ???
@@ -372,7 +390,7 @@ echo ${instance_id}
 
 #	These two things actually happen automatically on creation.
 
-#Metadata version 
+#Metadata version
 #V2 (token required)
 #For V2 requests, you must include a session token in all instance metadata requests. Applications or agents that use V1 for instance metadata access will break.
 #	This may be the default setting.
@@ -459,7 +477,7 @@ aws s3 ls s3://francislab-backup-73-3-r-us-west-2.sec.ucsf.edu
 
 
 
-#sudo apt-get -y install python3-setuptools bash python3 git wget gcc g++ make bzip2 libbz2-dev zlib1g-dev libncurses5-dev libncursesw5-dev liblzma-dev libcurl4-openssl-dev 
+#sudo apt-get -y install python3-setuptools bash python3 git wget gcc g++ make bzip2 libbz2-dev zlib1g-dev libncurses5-dev libncursesw5-dev liblzma-dev libcurl4-openssl-dev
 
 #python3 -m pip install --upgrade --user pip
 
@@ -485,20 +503,47 @@ aws ec2 describe-instances | jq -r '.Reservations[].Instances[].State.Name'
 
 
 
+##	EBS
+
+
+On an instance, if you didn't request enough storage initially, you can add storage like EBS.
+
+You should be able to describe, create, attach, mount, unmount, detach, destroy volumes.
+
+```
+sudo apt-get install -y jq
+
+TOKEN=$( curl -sX PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
+instance_id=$( curl -H "X-aws-ec2-metadata-token: $TOKEN" -v http://169.254.169.254/latest/meta-data/instance-id 2> /dev/null )
+echo $instance_id
+az=$( curl -H "X-aws-ec2-metadata-token: $TOKEN" -v http://169.254.169.254/latest/meta-data/placement/availability-zone 2> /dev/null )
+echo $az
+region=$( curl -H "X-aws-ec2-metadata-token: $TOKEN" -v http://169.254.169.254/latest/meta-data/placement/region 2> /dev/null )
+echo $region
+
+
+# in GB (what is max?)
+ebs_size=400
 
 
 
+command="aws ec2 describe-volumes --region ${region}"
+echo $command
+response=$( $command )
+echo "$response"
 
+
+command="aws ec2 create-volume --region ${region} --availability-zone ${az} --volume-type gp2 --size ${ebs_size}"
+echo $command
+response=$( $command )
+echo "$response"
 
 
 
 
 ```
+Currently failing even after asking for and being given permissions to do this.
 
-aws s3 sync --exclude server-access-logging/* --sse aws:kms --sse-kms-key-id alias/managed-s3-key s3://francislab-nih-temp-73-3-r-us-west-2/ s3://francislab-backup-73-3-r-us-west-2.sec.ucsf.edu/nih-20220303-sync/
 
-aws s3 ls s3://francislab-backup-73-3-r-us-west-2.sec.ucsf.edu/nih-20220303-sync/  --recursive --human-readable --summarize
-
-```
 
 
