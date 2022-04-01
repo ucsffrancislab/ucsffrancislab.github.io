@@ -1,14 +1,13 @@
 
 
-#	Cancer Genomics Cloud (CGC)
+#	dbGaP
 
 
+https://dbgap.ncbi.nlm.nih.gov
 
-https://www.cancergenomicscloud.org/
 
 
 ##	Access
 
 Uses [eRA Commons](docs/eRACommons) credentials?
-
 
