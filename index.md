@@ -40,7 +40,7 @@ Pseudo Pipeline and Topic Notes
   * [TEtranscripts](docs/TEtranscripts)
 * Cloud Services and Data
   * [eRA Commons](docs/eRACommons)
-  * [UK Biobank RAP](docs/UKBiobankRAP)
+  * [UK BioBank RAP](docs/UKBioBankRAP)
   * [SGDP](docs/SGDP)
   * [CGC](docs/CGC)
   * [St Jude](docs/StJude)
