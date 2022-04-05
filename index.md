@@ -74,6 +74,7 @@ Pseudo Pipeline and Topic Notes
 * [hervQuant](docs/hervQuant)
 * [Sleuth](docs/Sleuth)
 * [DESeq](docs/DESeq)
+* [Long Read / ONT](docs/LongReads)
 * HPC
   * [C4](docs/C4)
   * [TIPCC](docs/TIPCC)
