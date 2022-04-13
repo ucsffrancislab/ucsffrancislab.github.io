@@ -523,7 +523,7 @@ echo $region
 
 
 # in GB (what is max?)
-ebs_size=400
+ebs_size=100
 
 
 
@@ -533,16 +533,63 @@ response=$( $command )
 echo "$response"
 
 
-command="aws ec2 create-volume --region ${region} --availability-zone ${az} --volume-type gp2 --size ${ebs_size}"
+command="aws ec2 create-volume --encrypted --kms-key-id alias/aws/ebs --region ${region} --availability-zone ${az} --volume-type gp2 --size ${ebs_size}"
 echo $command
 response=$( $command )
 echo "$response"
+volume_id=$( echo $response | jq -r '.VolumeId' )
+echo ${volume_id}
+
+
+#	I still don't get device names. How do I locate this new volume?
+#	There is no sdf
+aws ec2 attach-volume --region ${region} --device /dev/sdf --instance-id ${instance_id} --volume-id ${volume_id}
+
+{
+    "AttachTime": "2022-04-13T15:43:48.784Z",
+    "Device": "/dev/sdf",
+    "InstanceId": "i-0a4b3df7aa0e14095",
+    "State": "attaching",
+    "VolumeId": "vol-06181d4fb21c119e9"
+}
+ssm-user@ip-10-90-179-177:~$ lsblk
+NAME        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+loop1         7:1    0 43.6M  1 loop /snap/snapd/14978
+loop2         7:2    0 25.1M  1 loop /snap/amazon-ssm-agent/5656
+loop3         7:3    0 55.5M  1 loop /snap/core18/2284
+loop4         7:4    0 25.1M  1 loop /snap/amazon-ssm-agent/5688
+loop5         7:5    0 43.6M  1 loop /snap/snapd/15177
+loop6         7:6    0 55.5M  1 loop /snap/core18/2344
+nvme0n1     259:0    0   40G  0 disk 
+└─nvme0n1p1 259:1    0   40G  0 part /
+nvme1n1     259:2    0  100G  0 disk 
+
+#	Not helpful
+
+
+#	Think this would work programmatically
+new_volume=$( ls -dltr /dev/ | grep disk | tail -n 1 | awk '{print $NF}' )
+echo ${new_volume}
+
+#/dev/nvme1n1
 
 
 
+sudo file -s /dev/nvme1n1
+sudo mkfs -t ext4 /dev/nvme1n1
+sudo file -s /dev/nvme1n1
+sudo mkdir /data
+sudo mount /dev/nvme1n1 /data
+sudo chmod 777 /data
+
+
+
+
+aws ec2 detach-volume --region ${region} --volume-id ${volume_id}
+
+aws ec2 delete-volume --region ${region} --volume-id ${volume_id}
 
 ```
-Currently failing even after asking for and being given permissions to do this.
 
 
 
