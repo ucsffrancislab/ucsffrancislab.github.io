@@ -1,7 +1,7 @@
 
 #	xTea
 
-[xTea](https://github.com/VistaSohrab/TEfinder)
+[xTea](https://github.com/parklab/xTea)
 
 
 Given the limitations and difficulties, I've been creating Singularity containers for these new pipelines.
@@ -97,6 +97,16 @@ drwxr-x--- 8 gwendt francislab       14 Feb 21 23:16 tmp
 Those chrs are in the clip file by not the disc file. Doesn't really look like a problem.
 
 Somehow the filtering isn't keeping anything. Expected? Or fail?
+
+
+
+
+
+So this really only works on DNA.
+Ran on NA12878 DNA `/.../CEPH-ENA-PRJEB3381/20220406-xTea-Demo/`  for HERV, Alu, SVA, and L1.
+Seemed to work fine.
+
+
 
 
 
