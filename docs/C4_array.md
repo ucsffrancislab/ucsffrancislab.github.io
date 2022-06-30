@@ -10,6 +10,10 @@ Nothing really special other than that.
 
 
 
+DO NOT `scancel 733558_26`.
+I think that the script parses off the first numeric part and cancels everything!
+
+
 
 
 
