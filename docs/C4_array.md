@@ -12,8 +12,11 @@ Nothing really special other than that.
 
 DO NOT `qdel 733558_26`.
 I think that the script parses off the first numeric part and cancels the entire array job!
-`qdel 733795_2`
+
+```
+qdel 733795_2
 Argument "733795_2" isn't numeric in subroutine entry at /usr/bin/qdel line 96, <DATA> line 602.
+```
 
 I think that `scancel 733558_26` is OK.
 
