@@ -3,6 +3,10 @@
 
 Command line access to box from UCSF.
 
+WebDAV is no longer supported.
+
+
+
 
 ##	Credentials
 
@@ -22,7 +26,8 @@ Add your username and new password to your `~/.netrc`.
 This file may or may not exist already.
 
 ```
-machine dav.box.com login George.Wendt@ucsf.edu password XXXXXXXX
+#machine dav.box.com login George.Wendt@ucsf.edu password XXXXXXXX
+machine ftp.box.com login George.Wendt@ucsf.edu password XXXXXXXX
 ```
 
 You may also want to change its permissions ...
@@ -34,15 +39,19 @@ chmod 600 ~/.netrc
 
 ##	Example upload
 
-Because the box "path" includes a space it MUST by parenthesed or perhaps escaped.
+Because the box "path" includes a space it MUST by parenthesesed or perhaps escaped.
+
+With FTP instead of DAV, the dirs can be created during the upload command.
 
 ```
-BOX="https://dav.box.com/dav/Francis _Lab_Share/CLI_TEST"
+#BOX="https://dav.box.com/dav/Francis _Lab_Share/CLI_TEST"
+BOX="ftps://ftp.box.com/Francis _Lab_Share/CLI_TEST"
 
-curl -netrc -X MKCOL "${BOX}/"
+#	Unnecessary
+curl --ftp-create-dirs -netrc -X MKCOL "${BOX}/"
 
 echo "Testing" > test_file.txt
-curl -netrc -T test_file.txt "${BOX}/"
+curl --ftp-create-dirs -netrc -T test_file.txt "${BOX}/"
 ```
 
 Note that the trailing "/" is essential.
@@ -60,9 +69,10 @@ them.
 
 
 ```
-BOX="https://dav.box.com/dav/Francis _Lab_Share/CLI_TEST"
+#BOX="https://dav.box.com/dav/Francis _Lab_Share/CLI_TEST"
+BOX="ftps://ftp.box.com/Francis _Lab_Share/CLI_TEST"
 
-curl -netrc "${BOX}/test_file.txt" --output ./test_file.txt.download
+curl --ftp-create-dirs -netrc "${BOX}/test_file.txt" --output ./test_file.txt.download
 
 cat test_file.txt.download 
 Testing
