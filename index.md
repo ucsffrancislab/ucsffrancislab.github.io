@@ -22,6 +22,7 @@ Pseudo Pipeline and Topic Notes
   * [Kraken](docs/Kraken)
   * [Kallisto](docs/Kallisto)
   * [Salmon](docs/Salmon)
+* [VCF](docs/VCF)
 * [K-mer Analysis](docs/Kmer)
   * [iMOKA](docs/iMOKA)
   * [GECKO](docs/GECKO)
