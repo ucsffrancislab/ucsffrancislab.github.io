@@ -208,3 +208,24 @@ echo "rollup.R \
 
 
 
+
+
+
+I started rolling up in smaller chunks and then merging.
+This alleviates memory issues.
+
+`20220303-FluPaper/20220707-REdiscoverTE/REdiscoverTE_rollup.bash`
+
+`20220303-FluPaper/20220707-REdiscoverTE/REdiscoverTE_rollup_merge.bash`
+
+
+And I am running the rmarkdown EdgeR script.
+
+
+`20220303-FluPaper/20220707-REdiscoverTE/REdiscoverTE_EdgeR_rmarkdown.bash`
+
+
+
+
+
+
