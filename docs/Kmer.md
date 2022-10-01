@@ -2,14 +2,12 @@
 #	K-mer
 
 
-K-mer counters
+##	K-mer counters
 
 * jellyfish (memory intensive if I remember correctly)
 * dsk (prefered i think)
 * kmc (used by iMOKA, so possibly new fave?)
   * kmc2 or kmc3?
-
-
 
 
 ##	Tumor / Normal Comparisons
@@ -23,5 +21,12 @@ K-mer counters
 
 
 
+
+##	[K-mer Analysis](docs/Kmer)
+
+* [iMOKA](docs/iMOKA) - favored at the moment
+* [GECKO](docs/GECKO) - SLOW
+* [HAWK](docs/HAWK) - SLOW
+* [MetaGO](docs/MetaGO)
 
 
