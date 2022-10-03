@@ -38,7 +38,10 @@ Pseudo Pipeline and Topic Notes
   * [TEtools](docs/TEtools)
   * [McClintock](docs/McClintock)
   * [TEtranscripts](docs/TEtranscripts)
-* Cloud Services and Data
+* Computing Resources, Cloud Services and Data
+  * [C4](docs/C4)
+  * [TIPCC](docs/TIPCC)
+  * [AWS](docs/AWS)
   * [eRA Commons](docs/eRACommons)
   * [UK BioBank RAP](docs/UKBioBankRAP)
   * [SGDP](docs/SGDP)
@@ -75,10 +78,8 @@ Pseudo Pipeline and Topic Notes
 * [Sleuth](docs/Sleuth)
 * [DESeq](docs/DESeq)
 * [Long Read / ONT](docs/LongReads)
-* HPC
-  * [C4](docs/C4)
-  * [TIPCC](docs/TIPCC)
-  * [AWS](docs/AWS)
+* [Phage Display](docs/Phage)
+* [UMI](docs/UMI)
 * Notebooks
   * [Jupyter](docs/Jupyter)
   * [Rmarkdown](docs/Rmarkdown)
