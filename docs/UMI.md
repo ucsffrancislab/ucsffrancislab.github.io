@@ -123,3 +123,41 @@ The AAAAAAAAAACAAAAAAAAAA sequence seems to drift through the sequence.
 
 
 
+
+##	Deduplication
+
+
+UMI Tagging / Consolidation
+https://github.com/ucsffrancislab/umi
+
+
+umi_tools
+
+Post alignment deduplication base primarily on position then UMI.
+
+
+picard UMIAware....
+
+Post alignment deduplication base primarily on position then UMI.
+Therefore only works on aligned reads.
+
+
+aryeelab/umi (our modified version)
+
+Pre-alignment so if UMI is duplicated, this results in a lot of lost data
+
+
+my umi_dedup.bash script
+
+Loops over UMIs and keeps the best that aren't similar.
+Kinda slow.
+Not working for paired yet.
+
+
+
+
+
+
+
+
+
