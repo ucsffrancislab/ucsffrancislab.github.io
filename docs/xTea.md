@@ -4,6 +4,9 @@
 [xTea](https://github.com/parklab/xTea)
 
 
+This is for WES and WGS. Not RNA.
+
+
 Given the limitations and difficulties, I've been creating Singularity containers for these new pipelines.
 
 
