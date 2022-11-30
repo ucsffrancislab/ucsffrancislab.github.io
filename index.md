@@ -29,6 +29,7 @@ Pseudo Pipeline and Topic Notes
   * [HAWK](docs/HAWK)
   * [MetaGO](docs/MetaGO)
 * [Repeat / Transposable Elements](docs/RETE)
+  * [MELT](docs/MELT)
   * [REdiscoverTE](docs/REdiscoverTE)
   * [TEfinder](docs/TEfinder)
   * [xTea](docs/xTea)
