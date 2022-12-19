@@ -149,7 +149,7 @@ THAT MUST BE FIRST TO BE USEFUL!
 
 -->
 
-\```{r "Figure Settings", include = FALSE}
+```{r "Figure Settings", include = FALSE}
 knitr::opts_chunk$set(fig.width=12, fig.height=8) 
 \```
 
