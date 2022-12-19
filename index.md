@@ -40,6 +40,7 @@ Pseudo Pipeline and Topic Notes
   * [McClintock](docs/McClintock)
   * [TEtranscripts](docs/TEtranscripts)
 * Computing Resources, Cloud Services and Data
+  * [General Cloud](docs/Cloud)
   * [C4](docs/C4)
   * [TIPCC](docs/TIPCC)
   * [AWS](docs/AWS)
