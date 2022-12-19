@@ -94,3 +94,104 @@ r.args
 
 I still don't get the difference between `=` and `<-` in R. I've used them interchangeably with no obvious issues.
 
+
+
+##	Rmarkdown example
+
+```
+#!/usr/bin/env Rscript
+
+args <- commandArgs()
+fname <- normalizePath(sub("--file=", "", args[grepl("--file=", args)]))
+thisfile <- readLines(fname)
+newfname <- paste0(tempdir(), "/", basename(fname))
+writeLines(thisfile[-1:-which(thisfile == "q(\"no\")")], newfname)
+
+args = commandArgs(trailingOnly=TRUE)
+#output_file = paste(basename(fname),basename(args[2]),"html", sep=".")
+output_file = paste(basename(fname),"html", sep=".")
+print(output_file)
+
+rmarkdown::render(newfname, output_dir = dirname(fname), output_file = output_file )
+q("no")
+
+
+---
+title: RMD TEST
+author: Jake
+date: 20221122
+output: 
+  html_document:
+    toc: true # table of content true
+    toc_depth: 3  # upto three depths of headings (specified by #, ## and ###)
+    number_sections: true  ## if you want number sections at each table header
+    theme: united  # many options for theme, this one is my favorite.
+    highlight: tango
+---
+
+
+#	Description
+
+This Rmd is self executed.
+
+Take command line arguments.
+
+Build a Table of Contents.
+
+And demonstrates tab sets.
+
+
+# Load libraries and read data {.tabset .tabset-fade .tabset-pills}
+
+<!--
+
+THAT MUST BE FIRST TO BE USEFUL!
+
+-->
+
+\```{r "Figure Settings", include = FALSE}
+knitr::opts_chunk$set(fig.width=12, fig.height=8) 
+\```
+
+
+# Tabset example {.tabset .tabset-fade .tabset-pills}
+
+##	One
+\```{r setup}
+library('reticulate')
+\```
+
+##	Two
+\```{r python}
+use_python('/opt/local/bin/python')
+\```
+
+##	Three
+\```{r args}
+args
+\```
+
+##	Four
+\```{python pyargs}
+r.args
+\```
+
+
+# Another different style {.tabset .tabset-fade}
+
+##	One
+
+Content for One
+
+##	Two
+
+Content for Two
+
+##	Three
+
+Content for Three
+
+
+```
+
+
