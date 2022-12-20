@@ -56,37 +56,6 @@ ifile=args[1]
 ```
 
 
-
-
-###	Python use in an rmarkdown script
-
-
-```{r setup}
-library('reticulate')
-```
-
-```{r python}
-use_python('/opt/local/bin/python')
-```
-
-Access the args from R
-
-```{r args}
-args
-```
-
-Or from python ...
-
-```{python pyargs}
-r.args
-```
-
-
-
-
-
-
-
 I still don't get the difference between `=` and `<-` in R. I've used them interchangeably with no obvious issues.
 
 
@@ -94,10 +63,11 @@ I still don't get the difference between `=` and `<-` in R. I've used them inter
 ##	Rmarkdown example
 
 
-Complete example or self executing script that could take command line arguments,
+Complete example of self executing script that takes command line arguments,
 that could be used to control the output file,
 includes a table of contents, 
-and 2 different tab sets.
+2 different tab sets
+and could use python.
 
 
 
