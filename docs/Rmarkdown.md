@@ -98,6 +98,10 @@ I still don't get the difference between `=` and `<-` in R. I've used them inter
 
 ##	Rmarkdown example
 
+
+Complete example with escaped code blocks
+
+
 ```
 #!/usr/bin/env Rscript
 
@@ -151,7 +155,7 @@ THAT MUST BE FIRST TO BE USEFUL!
 
 ```{r "Figure Settings", include = FALSE}
 knitr::opts_chunk$set(fig.width=12, fig.height=8) 
-```
+\```
 
 
 # Tabset example {.tabset .tabset-fade .tabset-pills}
@@ -159,22 +163,22 @@ knitr::opts_chunk$set(fig.width=12, fig.height=8)
 ##	One
 ```{r setup}
 library('reticulate')
-```
+\```
 
 ##	Two
 ```{r python}
 use_python('/opt/local/bin/python')
-```
+\```
 
 ##	Three
 ```{r args}
 args
-```
+\```
 
 ##	Four
 ```{python pyargs}
 r.args
-```
+\```
 
 
 # Another different style {.tabset .tabset-fade}
