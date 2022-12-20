@@ -36,15 +36,10 @@ thisfile <- readLines(fname)
 newfname <- paste0(tempdir(), "/", basename(fname))
 writeLines(thisfile[-1:-which(thisfile == "q(\"no\")")], newfname)
 
-
-
 args = commandArgs(trailingOnly=TRUE)
-
-output_file = paste(basename(fname),basename(args[2]),"html", sep=".")
+#output_file = paste(basename(fname),basename(args[2]),"html", sep=".")
+output_file = paste(basename(fname),"html", sep=".")
 print(output_file)
-
-
-
 
 rmarkdown::render(newfname, output_dir = dirname(fname), output_file = output_file )
 q("no")
@@ -61,9 +56,9 @@ ifile=args[1]
 ```
 
 
-###	Python
 
 
+###	Python use in an rmarkdown script
 
 
 ```{r setup}
@@ -99,7 +94,12 @@ I still don't get the difference between `=` and `<-` in R. I've used them inter
 ##	Rmarkdown example
 
 
-Complete example with escaped code blocks
+Complete example or self executing script that could take command line arguments,
+that could be used to control the output file,
+includes a table of contents, 
+and 2 different tab sets.
+
+
 
 
 ````
