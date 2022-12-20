@@ -151,15 +151,15 @@ THAT MUST BE FIRST TO BE USEFUL!
 
 ```{r "Figure Settings", include = FALSE}
 knitr::opts_chunk$set(fig.width=12, fig.height=8) 
-\```
+```{}
 
 
 # Tabset example {.tabset .tabset-fade .tabset-pills}
 
 ##	One
-\```{r setup}
+```{r setup}
 library('reticulate')
-\```
+```{}
 
 ##	Two
 \```{r python}
