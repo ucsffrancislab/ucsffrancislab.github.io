@@ -14,6 +14,19 @@ https://genome.cshlp.org/content/31/12/2225.long
 https://github.com/Scott-Devine/CloudMELT
 
 
+CloudMELT currently requires that the files be accessible via wget/curl on http/https.
+This means that it would NOT work with data on Amazon S3 (which is odd given that this was designed for running on AWS).
+Nor would it work directly with TCGA/TARGET data on the GDC Data Portal.
+Both would require downloading locally first so would at minimum require a modification to their pipeline.
+
+Not sure exactly what advantage CloudMELT provides over just running MELT.
+It is not multithreaded so perhaps larger data sets would reveal something. 
+I'm gonna try the 3 different versions that I have to see if the group processing steps (2 and 4 I think) are any faster in their version.
+
+
+
+
+
 ##	Trial run
 
 Trial run of the standard version of MELT.
