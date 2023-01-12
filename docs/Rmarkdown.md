@@ -51,8 +51,8 @@ This also allows for the use of positional arguments.
 In this case, I use one in the initial script and later on I ...
 
 ```{r}
-meta=args[0]
-ifile=args[1]
+meta=args[1]
+ifile=args[2]
 ```
 
 
@@ -167,5 +167,12 @@ Content for Three
 
 
 ````
+
+
+
+Note that using the self-executing script will require that file parameters include a full path
+as it will be run in the temp dir and a file in the current directory won't be in the current directory
+when executed.
+
 
 
