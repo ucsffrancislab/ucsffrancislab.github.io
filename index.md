@@ -87,6 +87,7 @@ Pseudo Pipeline and Topic Notes
   * [Rmarkdown](docs/Rmarkdown)
 * Tools
   * [Singularity](docs/Singularity)
+  * [Docker](docs/Docker)
 
 General
 * [UCSF Github Repos](https://github.com/ucsffrancislab)
