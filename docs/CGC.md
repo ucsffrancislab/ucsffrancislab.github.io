@@ -11,6 +11,8 @@ https://cgc.sbgenomics.com/
 
 
 
+https://docs.cancergenomicscloud.org/
+
 
 
 
@@ -94,7 +96,37 @@ Click ... Developer > Docker registry to see your images
 
 
 
-###	New App
+###	New Tools
+
+
+
+Create a new tool using your Docker image
+
+
+Can be very tricky
+
+
+
+Expression editor. Language? JSON?
+```
+$(
+
+)
+
+or
+
+${
+
+	return value
+}
+```
+
+
+DOES NOT PRESERVE TEST VALUES WHICH KINDA SUCKS.
+
+
+
+
 
 
 
