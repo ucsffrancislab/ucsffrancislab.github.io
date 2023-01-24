@@ -128,7 +128,12 @@ DOES NOT PRESERVE TEST VALUES WHICH KINDA SUCKS.
 
 
 
+Redirect stdout to job.out.log and make that an output port.
+I tried this with Preprocess.out. Not sure what happened. Case? .log? Now it does?
 
+
+java outputs to stderr
+java -jar outputs to stdout which is not captured?
 
 
 
