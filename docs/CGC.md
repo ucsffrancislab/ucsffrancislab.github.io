@@ -129,13 +129,11 @@ DOES NOT PRESERVE TEST VALUES WHICH KINDA SUCKS.
 
 
 
-
-
 Redirect stdout to job.out.log and make that an output port.
 I tried this with Preprocess.out. Not sure what happened. Case? .log? Now it does?
 
-
 java outputs to stderr
+
 java -jar outputs to stdout which is not captured?
 
 
@@ -150,7 +148,7 @@ java -jar outputs to stdout which is not captured?
 
 
 
-##	Python API Upload
+##	Python API File Uploading
 
 ```
 python3 -m pip install --upgrade --user sevenbridges-python
@@ -255,6 +253,21 @@ Memory optimized usually have 8:1 ratio (r5.2xlarge	8	64)
 Choose appropriately.
 
 
+| Instance Size | vCPU | Memory (GiB) | Cost per hour (nonSPOT) |
+| - | - | - | - |
+| m5.2xlarge | 8 | 32 |
+| m5.4xlarge | 16 | 64 |
+| m5.8xlarge | 32 | 128 | $1.536 |
+| m5.12xlarge | 48 | 192 |
+| m5.16xlarge | 64 | 256 |
+| m5.24xlarge | 96 | 384 |
+| r5.4xlarge | 16 | 128 | $1.008 |
+| c5.large | 2 | 4 | $0.085 |
+| c5.18xlarge | 72 | 144 | $3.06 |
+| c5.24xlarge | 96 | 192 | $4.08 |
+
+Not sure if all AWS instance types are available on CGC
+
 
 
 
@@ -267,6 +280,21 @@ Several times tried SPOT instances which got killed. Irritating. Worth it?
 Do failed SPOT instances restart as another SPOT instance?
 Can this SPOT instance be canceled just like the first?
 Or a standard instance?
+
+
+
+Use preemptible instances - By default, instances use on-demand pricing. However, they can also be configured to use “spot” instances. These are preemptible based on bid price and demand. Their pricing does fluctuate, however, it is typically much cheaper than on-demand pricing. There is very little downside to using them on the CGC, as there is a built-in retry mechanism. If your job or a portion of your workflow) is interrupted, it will be retried at on-demand pricing.
+
+
+
+
+
+
+
+
+Example: You have 5 TB of derived data stored in a project with the location set to AWS-us-east-1. Seven Bridges data incurs $0.021 per GB per month in storage costs for the AWS-us-east-1 cloud location. Therefore, you would expect 5000 GB x $0.021 = $105 to be your monthly storage price.
+
+
 
 
 
@@ -322,7 +350,7 @@ Aligns to index in tar file, sorts, indexes, checks pipline output.
 
 
 
-Testing on 2 SGDP fastq pairs from previous step.
+Testing on SGDP fastq pairs from previous step.
 
 
 
@@ -409,20 +437,7 @@ $0.16 / GB BAM
 
 Both of these had their initial SPOT instances fail.
 
-
-Good instances with this step depending on file size.
-
-
-| Instance Size | vCPU | Memory (GiB) |
-| - | - | - |
-| m5.2xlarge | 8 | 32 |
-| m5.4xlarge | 16 | 64 |
-| m5.8xlarge | 32 | 128 |
-| m5.12xlarge | 48 | 192 |
-| m5.16xlarge | 64 | 256 |
-| m5.24xlarge | 96 | 384 |
-
-Not sure if all are available on CGC
+Good instances with this step depending on file size m5.8x
 
 
 
@@ -435,16 +450,13 @@ If maxes out at 90/95GB, file size biggest predictor.
 If half that, thread count has major impact.
 
 ```
-r5.4xlarge (16/128)
+r5.4xlarge (16/128) ($1.008/hr)
 
 BAM / 16 / 110
 
 LP6005592-DNA_C05.srt.aln_1.fq.gz - 52.2 GB
 LP6005592-DNA_C05.srt.aln_2.fq.gz - 52.1 GB
 ```
-
-
-
 
 
 
