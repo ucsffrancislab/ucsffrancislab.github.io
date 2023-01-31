@@ -4,6 +4,70 @@
 https://melt.igs.umaryland.edu
 
 
+
+##	Problems
+
+Putting this first since its kinda important.
+
+
+###	Genotyping Failure
+
+When analyzing MELT-SPLIT, sometimes the Genotyping step fails on some samples.
+
+
+```
+Performing MELT analysis...
+Failed at genotyping of file FG-6689-01A-11D-1891...
+Exiting!
+
+
+-------------------JAVA STACK TRACE-------------------
+java.lang.NullPointerException
+        at MELT.utilities.MELTSequenceUtilities.qualityString(MELTSequenceUtilities.java:33)
+        at MELT.MELTIllumina.confirmAndCompare.ConfirmMethods.decidePairs(ConfirmMethods.java:344)
+        at MELT.MELTIllumina.confirmAndCompare.ConfirmMethods.call(ConfirmMethods.java:100)
+        at MELT.MELTIllumina.confirmAndCompare.ConfirmMain.doWork(ConfirmMain.java:161)
+        at MELT.MELTIllumina.runtimes.StepThree.RunStepThree(StepThree.java:17)
+        at MELT.MELTImplement.main(MELTImplement.java:81)
+        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.lang.reflect.Method.invoke(Method.java:498)
+        at org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader.main(JarRsrcLoader.java:61)
+
+MELT version: 2.2.2
+-------------------END STACK TRACE!-------------------
+```
+
+It results in a geno file which is short and then I have to move the sample out of that directory so that I can create a VCF without it.
+
+Results are the same when rerunning.
+
+
+
+###	VCF REF column inaccurate
+
+When analyzing MELT-SPLIT, roughly 50% of the REFs in the VCF and not the bases in the actual reference.
+On many occasions it isn't even what is in the bam files.
+
+When running MELT-SINGLE, it always seems to be the same as the reference.
+
+This makes it difficult to fabricate a prior list which has to be a valid VCF.
+
+It also makes me not trust this tool.
+
+Being that it is no longer maintained and supported, we can't even really discuss it.
+
+
+
+
+
+
+
+
+
+
+
 ##	CloudMELT
 
 Cloud MELT is a modified version of MELT designed to be run on AWS.
