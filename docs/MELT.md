@@ -50,13 +50,66 @@ Results are the same when rerunning.
 When analyzing MELT-SPLIT, roughly 50% of the REFs in the VCF and not the bases in the actual reference.
 On many occasions it isn't even what is in the bam files.
 
-When running MELT-SINGLE, it always seems to be the same as the reference.
+When running MELT-SINGLE, it always seems to be the same as the reference. (Not true)
 
 This makes it difficult to fabricate a prior list which has to be a valid VCF.
 
 It also makes me not trust this tool.
 
 Being that it is no longer maintained and supported, we can't even really discuss it.
+
+
+
+```
+grep 175906272 MELT-2.2.2-SINGLE-bwa-06-0125-10A-01D-1490.SVA.final_comp.vcf
+chr3	175906272	.	a	<INS:ME:SVA>	.	ac0	TSD=null;ASSESS=1;INTERNAL=null,null;SVTYPE=SVA;SVLEN=394;MEINFO=SVA,921,1315,+;DIFF=0:n1-920,g938a,c945a,g947a,n954-955,t957c,c984a,g995a,c999t,g1005a,n1008-1316;LP=2;RP=4;RA=-1;PRIOR=false;SR=0	GT:GL:DP:AD	0/0:-0.05,-22.88,-338.1:38:0
+
+grep 35176560 MELT-2.2.2-SINGLE-bwa-06-0125-10A-01D-1490.SVA.final_comp.vcf
+chr5	35176560	.	t	<INS:ME:SVA>	.	ac0	TSD=null;ASSESS=1;INTERNAL=NM_000949,INTRONIC;SVTYPE=SVA;SVLEN=413;MEINFO=SVA,902,1315,-;DIFF=0.07:n1-901,a906g,g910a,g914t,g918a,c920t,g938a,c945a,g947a,n954-955,t957c,n995-1059,g1063a,g1067a,a1079g,g1082t,n1100,a1102g,t1124c,n1136,n1161-1316;LP=3;RP=2;RA=0.585;PRIOR=false;SR=0	GT:GL:DP:AD	0/0:-2.45,-34.92,-508.3:58:0
+
+grep 4918078 MELT-2.2.2-SINGLE-bwa-06-0125-10A-01D-1490.SVA.final_comp.vcf
+chr18	4918078	.	t	<INS:ME:SVA>	.	ac0	TSD=null;ASSESS=1;INTERNAL=null,null;SVTYPE=SVA;SVLEN=357;MEINFO=SVA,958,1315,+;DIFF=0:n1-957,g995a,c999t,g1005a,g1009t,g1010a,t1029c,n1047-1139,c1177a,g1183a,t1197a,a1213g,n1218-1316;LP=3;RP=2;RA=0.585;PRIOR=false;SR=0	GT:GL:DP:AD	0/0:-1.01,-28.3,-364.9:47:0
+
+grep 37630672 MELT-2.2.2-SINGLE-bwa-06-0125-10A-01D-1490.SVA.final_comp.vcf
+chr19	37630672	.	a	<INS:ME:SVA>	.	ac0	TSD=null;ASSESS=1;INTERNAL=NM_014898,TERMINATOR;SVTYPE=SVA;SVLEN=425;MEINFO=SVA,890,1315,+;DIFF=0.07:n1-889,a899c,t900a,t901a,a906g,g910a,g914t,g918a,c920t,g938a,c945a,g947a,n954-955,t957c,n995-1038,a1053g,c1056a,g1063a,g1067a,n1076,a1079g,n1108-1316;LP=1;RP=4;RA=-2;PRIOR=false;SR=0	GT:GL:DP:AD	0/0:-1.12,-19.27,-256:32:0
+
+```
+
+The reference values and the values in the bam files for these positions are the same (C, A, G, G) and not those.
+No idea where the a,t,t,a values are coming from.
+I've looked in the raw data and the bam.disc data. The disc data is just less.
+
+
+```
+samtools_bases_at_position.bash -c chr3 -p 175906272 -b 06-0125-10A-01D-1490.bam | sort | uniq -c
+     50 C
+      1 G
+samtools_bases_at_position.bash -c chr5 -p 35176560 -b 06-0125-10A-01D-1490.bam | sort | uniq -c
+     59 A
+      1 T
+samtools_bases_at_position.bash -c chr18 -p 4918078 -b 06-0125-10A-01D-1490.bam | sort | uniq -c
+     45 G
+samtools_bases_at_position.bash -c chr19 -p 37630672 -b 06-0125-10A-01D-1490.bam | sort | uniq -c
+     36 G
+```
+
+```
+samtools faidx /francislab/data1/refs/sources/hgdownload.cse.ucsc.edu/goldenPath/hg38/bigZips/20180810/hg38.chrXYM_alts.fa chr3:175906272-175906272
+>chr3:175906272-175906272
+c
+
+samtools faidx /francislab/data1/refs/sources/hgdownload.cse.ucsc.edu/goldenPath/hg38/bigZips/20180810/hg38.chrXYM_alts.fa chr5:35176560-35176560
+>chr5:35176560-35176560
+a
+
+samtools faidx /francislab/data1/refs/sources/hgdownload.cse.ucsc.edu/goldenPath/hg38/bigZips/20180810/hg38.chrXYM_alts.fa chr18:4918078-4918078
+>chr18:4918078-4918078
+g
+
+samtools faidx /francislab/data1/refs/sources/hgdownload.cse.ucsc.edu/goldenPath/hg38/bigZips/20180810/hg38.chrXYM_alts.fa chr19:37630672-37630672
+>chr19:37630672-37630672
+g
+```
 
 
 
