@@ -410,10 +410,11 @@ LP6005441-DNA_D11.srt.aln_2.fq.gz - 30.6 GB
 Price: $13.59  Duration:  9 hours, 41 minutes
 
 Maxed out at about 70GB memory.
-```
 
 $0.22 / GB FQ
 $0.18 / GB BAM
+```
+
 
 
 ```
@@ -429,10 +430,10 @@ Price: $33.62  Duration:  20 hours, 24 minutes
 Maxed out at about 122 GB memory.
 Not sure what the 110GB memory option that I passed is used for.
 122GB is memory used by all, 110 is not part of the command line.
-```
 
 $0.20 / GB FQ
 $0.16 / GB BAM
+```
 
 
 Both of these had their initial SPOT instances fail.
@@ -456,7 +457,16 @@ BAM / 16 / 110
 
 LP6005592-DNA_C05.srt.aln_1.fq.gz - 52.2 GB
 LP6005592-DNA_C05.srt.aln_2.fq.gz - 52.1 GB
+
+Price: $32.48  Duration:  1 day, 13 hours, 18 minutes 
+
+Failed SPOT instance after 15 hours
+Rerun took 21 hours
+Maxed out memory at 76GB
+$0.311 / GB FQ
+$0.256 / GB BAM
 ```
+
 
 
 
