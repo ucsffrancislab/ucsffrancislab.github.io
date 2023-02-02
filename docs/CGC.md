@@ -81,14 +81,14 @@ https://docs.sevenbridges.com/docs/upload-your-docker-image-1
 Tag it to mesh with CGC's rules
 
 ```
-docker tag melt cgc-images.sbgenomics.com/wendt2017/melt:20230116
+docker tag melt cgc-images.sbgenomics.com/wendt2017/melt
 ```
 
 
 Upload it
 
 ```
-docker push cgc-images.sbgenomics.com/wendt2017/melt:20230116
+docker push cgc-images.sbgenomics.com/wendt2017/melt
 ```
 
 
