@@ -477,3 +477,87 @@ $0.256 / GB BAM
 
 
 
+
+
+###	MELT SPLIT
+
+####	MELT SPLIT PREPROCESS
+
+Done on each individual sample.
+
+####	MELT SPLIT INDIVIDUAL ANALYSIS
+
+Done on each individual sample.
+
+Could Preprocess and IndivAnalysis be merged in a workflow and would it matter?
+
+####	MELT SPLIT GROUP ANALYSIS
+
+Done as a group
+
+####	MELT SPLIT GENOTYPING
+
+Done on each individual sample.
+
+####	MELT SPLIT VCF
+
+Done as a group
+
+
+
+
+
+
+
+
+
+
+
+
+
+##	Questions
+
+
+
+What dictates whether a file input port is accessed by the path to your project or the path to the workspace?
+
+Most, like biobambam2, my MELT's, have the input port reference the project path
+
+```
+biobambam2-bamtofastq-2-0-183-cwl1-2
+/opt/biobambam2-2.0.183/bin/bamtofastq filename=/sbgenomics/Projects/423a27ba-1083-4d9f-9093-da3b466edc32/LP6005441-DNA_D11.srt.aln.bam gz=1  F=LP6005441-DNA_D11.srt.aln_1.fq.gz F2=LP6005441-DNA_D11.srt.aln_2.fq.gz S=LP6005441-DNA_D11.srt.aln_s.fq.gz O=LP6005441-DNA_D11.srt.aln_o1.fq.gz O2=LP6005441-DNA_D11.srt.aln_o2.fq.gz
+```
+
+While bwa-mem-bundle-0-7-17-cwl-1-2
+
+```
+/bin/bash -c " export REF_CACHE=${PWD} &&  tar -tvf hg38.chrXYM_alts.tar 1>&2 && tar -xf hg38.chrXYM_alts.tar &&  bwa mem -R '@RG\tLB:LP6005441-DNA_D11\tPL:Illumina\tID:1\tSM:HGDP01078' -t 32 $(tar -tf hg38.chrXYM_alts.tar --wildcards '*.bwt' | rev | cut -c 5- | rev) /sbgenomics/workspaces/423a27ba-1083-4d9f-9093-da3b466edc32/tasks/509c8720-9660-4ae3-9aca-da56dc418a69/bwa-mem-bundle-0-7-17-cwl-1-2/LP6005441-DNA_D11.srt.aln_1.fq.gz /sbgenomics/workspaces/423a27ba-1083-4d9f-9093-da3b466edc32/tasks/509c8720-9660-4ae3-9aca-da56dc418a69/bwa-mem-bundle-0-7-17-cwl-1-2/LP6005441-DNA_D11.srt.aln_2.fq.gz  | bamsort index=1 threads=32 level=1 tmplevel=-1 inputformat=sam outputformat=bam SO=coordinate indexfilename=HGDP01078.bam.bai M=HGDP01078.sormadup_metrics.log > HGDP01078.bam ;declare -i pipe_statuses=(\${PIPESTATUS[*]});len=\${#pipe_statuses[@]};declare -i tot=0;echo \${pipe_statuses[*]};for (( i=0; i<\${len}; i++ ));do if [ \${pipe_statuses[\$i]} -ne 0 ];then tot=\${pipe_statuses[\$i]}; fi;done;if [ \$tot -ne 0 ]; then >&2 echo Error in piping. Pipe statuses: \${pipe_statuses[*]};fi; if [ \$tot -ne 0 ]; then false;fi"
+```
+
+has the input port reference a workspace. The only difference I can find is that BWA's input reads port is an array.
+There is also some processing to ensure the R1 and R2 are in the right order.
+
+
+Does it matter?
+
+It may be due to BWA's preprocessing value transformation function that ensures that the 2 files are in the correct order.
+
+
+
+##	SGDP
+
+https://gatk.broadinstitute.org/hc/en-us/articles/360035890711-GRCh37-hg19-b37-humanG1Kv37-Human-Reference-Discrepancies
+
+CGC Previewer suggests to be aligned to Human g1k v37 (a version of hg19)
+
+Header shows hs37d5
+
+MELT documentation suggests excluding hs37d5/NC_007605 with -b
+
+
+
+
+
+
+
+
