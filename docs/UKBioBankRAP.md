@@ -1,5 +1,7 @@
 #	UKBioBankRAP
 
+https://www.ukbiobank.ac.uk/
+
 ##	Usage
 
 
@@ -12,10 +14,17 @@ https://dnanexus.gitbook.io/uk-biobank-rap/getting-started/platform-overview
 ##	Access
 
 
+There are 2 different login systems.
 
 
+Project access ...
+
+https://ukbiobank.dnanexus.com/login
 
 
+Account info ...
+
+https://bbams.ndph.ox.ac.uk/ams/
 
 
 
