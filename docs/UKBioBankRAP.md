@@ -28,6 +28,10 @@ https://bbams.ndph.ox.ac.uk/ams/
 
 
 
+Can't seem to do much of anything without submitting an application defining what you are going to do.
+Seems like that makes it tough to learn how to use the platform.
+
+
 
 
 ##	Questions and Answers
