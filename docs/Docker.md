@@ -31,6 +31,21 @@ du -sh ~/Library/Containers/com.docker.docker/Data/vms/
 Still a bit left behind.
 
 
+
+
+https://stackoverflow.com/questions/39878939/docker-filling-up-storage-on-macos
+
+These three commands clear down anything not being used:
+
+docker rm $(docker ps -f status=exited -aq) - remove stopped containers
+
+docker rmi $(docker images -f "dangling=true" -q) - remove image layers that are not used in any images
+
+docker volume rm $(docker volume ls -qf dangling=true) - remove volumes that are not used by any containers.
+
+
+
+
 ##	How to start a simple docker container?
 
 docker run -ti ubuntu
