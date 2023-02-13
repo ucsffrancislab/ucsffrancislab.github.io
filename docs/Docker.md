@@ -5,6 +5,32 @@
 Sadly, C4 uses Singularity and the CGC uses Docker.
 
 
+
+##	How to cleanup everything
+
+
+Even after stopping and deleting all containers and removing all images ...
+
+```
+docker rm $( docker ps -qa )
+
+docker rmi -f $( docker images -q )
+```
+... there is still stuff taking up space.
+
+```
+du -sh ~/Library/Containers/com.docker.docker/Data/vms/
+31G	~/Library/Containers/com.docker.docker/Data/vms/
+
+docker system prune -a --volumes
+
+du -sh ~/Library/Containers/com.docker.docker/Data/vms/
+3.7G	/Users/jake/Library/Containers/com.docker.docker/Data/vms/
+```
+
+Still a bit left behind.
+
+
 ##	How to start a simple docker container?
 
 docker run -ti ubuntu
