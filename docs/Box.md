@@ -7,6 +7,20 @@ WebDAV is no longer supported.
 
 
 
+##	NOTES
+
+The max file size limitation is stated to be 50GB but we've found it to be much less,
+at least when using curl to upload from the command line.
+
+```
+29949918869 - CS-4941-01A-01D-1465.bam - Succeeded
+32556286377 - DU-5854-01A-11D-1703.bam - Succeeded
+34011562949 - DB-5276-10A-01D-1465.bam - Succeeded
+34553253061 - DH-5143-10A-01D-1465.bam - Failed
+36992859467 - DU-5847-01A-11D-1703.bam - Failed 
+```
+
+
 
 ##	Credentials
 
