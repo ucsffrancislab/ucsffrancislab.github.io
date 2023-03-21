@@ -54,21 +54,42 @@ if [ -n "${SLURM_ARRAY_TASK_ID}" ] ; then
 	echo $args
 
 
-
-
-	dir=${PWD}/out
-	bam=${dir}/${args}.quality.umi.t1.t3.hg38.bam
+	outdir=${PWD}/vcf
+	mkdir -p ${outdir}
+	bam=${PWD}/in/${args}
 	basename=$( basename ${bam} .bam )
 
-	bcftools mpileup -Ou -f /francislab/data1/refs/sources/hgdownload.cse.ucsc.edu/goldenPath/hg38/bigZips/latest/hg38.chrXYM_alts.fa ${bam} | bcftools call -mv -Oz -o ${dir}/${basename}.vcf.gz
+	#ref=/francislab/data1/refs/sources/hgdownload.cse.ucsc.edu/goldenPath/hg38/bigZips/latest/hg38.chrXYM_alts.fa
+	ref=/francislab/data1/refs/sources/hgdownload.cse.ucsc.edu/goldenPath/hg19/bigZips/latest/hg19.chrXYMT_alts.fa
 
-	chmod a-w ${dir}/${basename}.vcf.gz
 
+	ntasks=${SLURM_NTASKS:-2}
 
-	bcftools index ${dir}/${basename}.vcf.gz
+	#	should probably add -q 60
 
-	chmod a-w ${dir}/${basename}.vcf.gz.csi
+	f=${outdir}/${basename}.vcf.gz
+	if [ -f $f ] && [ ! -w $f ] ; then
+		echo "Write-protected $f exists. Skipping."
+	else
+		bcftools mpileup --threads $[ntasks/2] -q 60 -Ou -f ${ref} ${bam} \
+			| bcftools call --threads $[ntasks/2] -m -Oz -o ${f}	#${outdir}/${basename}.vcf.gz
 
+		#	want all positions. This is just variants.
+		#		| bcftools call -mv -Oz -o ${outdir}/${basename}.vcf.gz
+
+		chmod a-w ${f}	#${outdir}/${basename}.vcf.gz
+	fi
+
+	f=${outdir}/${basename}.vcf.gz.csi
+	if [ -f $f ] && [ ! -w $f ] ; then
+		echo "Write-protected $f exists. Skipping."
+	else
+		bcftools index --threads ${ntasks} ${outdir}/${basename}.vcf.gz
+
+		chmod a-w ${f}	#	${outdir}/${basename}.vcf.gz.csi
+	fi
+
+	echo "Complete"
 
 else
 
