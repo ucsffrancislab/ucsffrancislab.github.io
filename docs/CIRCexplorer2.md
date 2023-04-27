@@ -157,15 +157,16 @@ Apparently uses environment variable BOWTIE2_INDEXES to locate bowtie2 index and
 
 
 
-First failed. Trying 32 thread
+
+64 failed. Trying 32 thread. Failed. Trying 16. 16 works. Guess all the extra threads results in too many open files.
 
 ```
 
 sbatch --mail-user=$(tail -1 ~/.forward)  --mail-type=FAIL --job-name="STAR" \
---time=20160 --nodes=1 --ntasks=32 --mem=240G --output=${PWD}/STAR-align.out.log \
+--time=20160 --nodes=1 --ntasks=16 --mem=120G --output=${PWD}/STAR-align.out.log \
 --wrap "module load star/2.7.7a; \
 STAR --chimSegmentMin 10 --runMode alignReads \
---runThreadN 32 \
+--runThreadN 16 \
 --readFilesCommand zcat \
 --readFilesIn /francislab/data1/working/20200720-TCGA-GBMLGG-RNA_bam/20200803-bamtofastq/out/02-0047-01A-01R-1849-01+1_R1.fastq.gz \
 /francislab/data1/working/20200720-TCGA-GBMLGG-RNA_bam/20200803-bamtofastq/out/02-0047-01A-01R-1849-01+1_R2.fastq.gz \
@@ -187,6 +188,12 @@ Apr 27 11:34:38 ...... FATAL ERROR, exiting
 
 
 
+```
+sbatch --mail-user=$(tail -1 ~/.forward)  --mail-type=FAIL --job-name="CIRC-Parse" \
+--time=20160 --nodes=1 --ntasks=16 --mem=120G --output=${PWD}/CIRCexplorer2-parse.out.log \
+--wrap "CIRCexplorer2 parse -t STAR 02-0047-01A.Chimeric.out.junction"
+
+```
 
 
 
@@ -194,6 +201,34 @@ Apr 27 11:34:38 ...... FATAL ERROR, exiting
 
 
 
+
+```
+sbatch --mail-user=$(tail -1 ~/.forward)  --mail-type=FAIL --job-name="CIRC-Anno" \
+--time=20160 --nodes=1 --ntasks=16 --mem=120G --output=${PWD}/CIRCexplorer2-annotate.out.log \
+--wrap "CIRCexplorer2 annotate --ref ${PWD}/hg38_ref_all.txt --genome ${PWD}/hg38.fa --bed ${PWD}/back_spliced_junction.bed --output ${PWD}/circularRNA_known.txt"
+
+```
+
+
+
+
+```
+sbatch --mail-user=$(tail -1 ~/.forward)  --mail-type=FAIL --job-name="CIRC-Ass" \
+--time=20160 --nodes=1 --ntasks=16 --mem=120G --output=${PWD}/CIRCexplorer2-assemble.out.log \
+--wrap "CIRCexplorer2 assemble -ref ${PWD}/hg38_ref_all.txt --tophat ${PWD}/tophat --output ${PWD}/assemble"
+
+```
+
+
+
+
+
+```
+sbatch --mail-user=$(tail -1 ~/.forward)  --mail-type=FAIL --job-name="CIRC-denovo" \
+--time=20160 --nodes=1 --ntasks=16 --mem=120G --output=${PWD}/CIRCexplorer2-denovo.out.log \
+--wrap "CIRCexplorer2 denovo --ref ${PWD}/hg38_ref_all.txt --genome ${PWD}/hg38.fa --bed ${PWD}/back_spliced_junction.bed --abs abs --as as --tophat ${PWD}/tophat --pAplus pAplus_tophat --output ${PWD}/denovo"
+
+```
 
 
 
