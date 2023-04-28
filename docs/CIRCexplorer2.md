@@ -212,10 +212,16 @@ sbatch --mail-user=$(tail -1 ~/.forward)  --mail-type=FAIL --job-name="CIRC-Anno
 
 
 
+
+Can't quite figure out how to "assemble" when aligned with STAR
+
+
+
+
 ```
 sbatch --mail-user=$(tail -1 ~/.forward)  --mail-type=FAIL --job-name="CIRC-Ass" \
 --time=20160 --nodes=1 --ntasks=16 --mem=120G --output=${PWD}/CIRCexplorer2-assemble.out.log \
---wrap "CIRCexplorer2 assemble -ref ${PWD}/hg38_ref_all.txt --tophat ${PWD}/tophat --output ${PWD}/assemble"
+--wrap "module load cufflinks; CIRCexplorer2 assemble --ref ${PWD}/hg38_ref_all.txt --tophat ${PWD}/tophat --output ${PWD}/assemble"
 
 ```
 
