@@ -9,6 +9,7 @@ Pseudo Pipeline and Topic Notes
 * [Preprocessing](docs/Preprocessing)
 * [DNASeq](docs/DNASeq)
 * [RNASeq](docs/RNASeq)
+* [RNAStrandedness](docs/RNAStrandedness)
 * [miRNA](docs/miRNA)
 * [APOBEC](docs/APOBEC)
 * [Aligners](docs/Aligners)
@@ -39,6 +40,7 @@ Pseudo Pipeline and Topic Notes
   * [TEtools](docs/TEtools)
   * [McClintock](docs/McClintock)
   * [TEtranscripts](docs/TEtranscripts)
+  * [TEProF2](docs/TEProF2)
 * Computing Resources, Cloud Services and Data
   * [General Cloud](docs/Cloud)
   * [C4](docs/C4)
