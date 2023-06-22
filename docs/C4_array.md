@@ -183,3 +183,48 @@ SFHH011BO
 fi
 ```
 
+There are many ways to do this and I have expanded on this since its writing.
+
+
+
+
+
+
+
+
+
+##	Too large
+
+
+There are limits on how many jobs can be in your array job.
+Not sure why, but there is.
+Perhaps there is an additional limit on the number of total jobs that can be submitted.
+If you cross that line, you'll see something like ...
+
+```
+sbatch: error: QOSMaxSubmitJobPerUserLimit
+sbatch: error: Batch job submission failed: Job violates accounting/QOS policy (job submit limit, user's size and/or time limits)
+```
+
+
+If this is expected to be common, one could create a single job with ample resources and run all of their "jobs" with parallel.
+This clearly won't be as flexible once started as it is effectively just 1 slurm job.
+
+Something like ...
+
+```
+echo Command1 > commands.txt
+echo Command2 >> commands.txt
+echo Command3 >> commands.txt
+#etc.
+
+parallel -j ${SLURM_NTASKS:-32} < commands.txt
+
+```
+
+These are 2 completely different job submission types so you'd need to write 2 different scripts.
+
+
+
+
+
