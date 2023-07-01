@@ -55,7 +55,7 @@ All bams without XS have produced empty intermediate files.
 
 
 
-Our of curiousity, I also used the awk script to add the XS tag to an bam file that had an XS tag added during alignment.
+Out of curiousity, I also used the awk script to add the XS tag to an bam file that had an XS tag added during alignment.
 
 ```
 samtools view -c gtf_xs_then_xs_again.Aligned.sortedByCoord.out.bam
