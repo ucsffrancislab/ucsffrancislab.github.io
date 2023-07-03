@@ -9,7 +9,7 @@ This data turns out to have been prepared "strand specific".
 When running TEProF2, stringtie more specifically, not specify the strandedness or specifying the 
 wrong strandedness results in empty data files after which the pipeline effectively fails. 
 Specifying the correct strandedness results in success. 
-Not quite sure why, but its all or nothing. Not some, most or half.
+Not quite sure why, but it's all or nothing. Not some, most or half.
 
 Strandedness can be determined using tools like RseQC, sadly post-alignment.
 RseQC produces percentages of reads that are one strandedness or the other.
