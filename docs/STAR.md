@@ -7,13 +7,85 @@ The preferred aligner for RNA, given that its reference is built from sequence a
 
 
 
-A standardized pipeline
+##	A standardized pipeline
 
 https://docs.gdc.cancer.gov/Data/Bioinformatics_Pipelines/Expression_mRNA_Pipeline/#rna-seq-alignment-workflow
 
 
+Create standard reference
+```
+STAR
+--runMode genomeGenerate
+--genomeDir <star_index_path>
+--genomeFastaFiles <reference>
+--sjdbOverhang 100 - this is default. why bother specifying?
+--sjdbGTFfile <gencode.v36.annotation.gtf>
+--runThreadN 8
+```
 
-Recommended options ...
+Align sample but don't create bam file? Just the sample_name.SJ.out.tag
+```
+STAR
+--genomeDir <star_index_path>
+--readFilesIn <fastq_left_1>,<fastq_left2>,... <fastq_right_1>,<fastq_right_2>,...
+--runThreadN <runThreadN>
+--outFilterMultimapScoreRange 1
+--outFilterMultimapNmax 20
+--outFilterMismatchNmax 10
+--alignIntronMax 500000
+--alignMatesGapMax 1000000
+--sjdbScore 2
+--alignSJDBoverhangMin 1
+--genomeLoad NoSharedMemory
+--readFilesCommand <bzcat|cat|zcat>
+--outFilterMatchNminOverLread 0.33
+--outFilterScoreMinOverLread 0.33
+--sjdbOverhang 100
+--outSAMstrandField intronMotif
+--outSAMtype None
+--outSAMmode None
+```
+
+Create a reference for each sample using said SJ.out.tab?
+```
+STAR
+--runMode genomeGenerate
+--genomeDir <output_path>
+--genomeFastaFiles <reference>
+--sjdbOverhang 100 - this is default. why bother specifying?
+--runThreadN <runThreadN>
+--sjdbFileChrStartEnd <SJ.out.tab from previous step>
+```
+
+Align again creating actual bam
+```
+STAR
+--genomeDir <output_path from previous step>
+--readFilesIn <fastq_left_1>,<fastq_left2>,... <fastq_right_1>,<fastq_right_2>,...
+--runThreadN <runThreadN>
+--outFilterMultimapScoreRange 1
+--outFilterMultimapNmax 20
+--outFilterMismatchNmax 10
+--alignIntronMax 500000
+--alignMatesGapMax 1000000
+--sjdbScore 2
+--alignSJDBoverhangMin 1
+--genomeLoad NoSharedMemory
+--limitBAMsortRAM 0
+--readFilesCommand <bzcat|cat|zcat>
+--outFilterMatchNminOverLread 0.33
+--outFilterScoreMinOverLread 0.33
+--sjdbOverhang 100
+--outSAMstrandField intronMotif
+--outSAMattributes NH HI NM MD AS XS
+--outSAMunmapped Within
+--outSAMtype BAM SortedByCoordinate
+--outSAMheaderHD @HD VN:1.4
+--outSAMattrRGline <formatted RG line provided by wrapper>
+```
+
+
+##	Recommended options ...
 
 ```
 --runMode alignReads \
