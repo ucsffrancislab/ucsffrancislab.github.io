@@ -282,3 +282,20 @@ done | sort | uniq -c
 
 
 
+
+
+
+
+##	Questions
+
+
+Does stringtie use the XS attribute or the `--rf/--fr` flag when both are present?
+
+TEProF2 works with or without the XS tag. Stranded or Unstranded. From alignment or afterward.
+
+
+
+
+
+
+
