@@ -71,6 +71,7 @@ Pseudo Pipeline and Topic Notes
 * [GWAS](docs/GWAS)
 * [GuideSeq](docs/GuideSeq)
 * [HLA](docs/HLA)
+* [Illumina](docs/Illumina)
 * [Imputation](docs/Imputation)
 * [Manta_Strelka](docs/Manta_Strelka)
 * [Masking](docs/Masking)
