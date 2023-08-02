@@ -5,8 +5,6 @@
 
 
 
-
-
 My scratch version of the pipeline
 
 ```
@@ -171,10 +169,21 @@ ${sbatch} --job-name=IDH --time=20160 --nodes=1 --ntasks=64 --mem=499G --gres=sc
 date=$( date "+%Y%m%d%H%M%S" )
 sbatch="sbatch --mail-user=George.Wendt@ucsf.edu --mail-type=FAIL "
 ${sbatch} --job-name=IDH_1p19q_status --time=20160 --nodes=1 --ntasks=64 --mem=499G --gres=scratch:1500G --output=${PWD}/31.IDH_1p19q_status/iMOKA_scratch.${date}.txt ${PWD}/iMOKA_scratch.bash --dir ${PWD}/31.IDH_1p19q_status --step create
-
-
-
-
 ```
 
+
+
+
+
+##	20230802 Note
+
+Not sure what the repercussions of doing or not doing this is.
+```
+If the data is stranded paired end sequencing, the user can reverse complement one or both the files using SeqKit
+```
+As iMOKA is a kmer analysis, pairedness is irrelevant, however, I think that it does treat kmers as unique even if they are reverse complements. (There's a word for this. Starts with a c? )
+
+Unlike MetaGO and jellyfish where `The reverse complements of reads were taken into consideration. A k-mer and its reverse complement were considered as the same object`.
+
+Seems that passing both files, semicolon separated, is the way to go. The above is irrelevant and likely applied to older version.
 
