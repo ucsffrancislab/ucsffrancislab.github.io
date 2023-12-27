@@ -91,3 +91,10 @@ pepsyn clip \
 ```
 
 
+
+
+##	20231227 - I've created an entire repo for this project
+
+https://github.com/ucsffrancislab/PhIP-Seq
+
+
