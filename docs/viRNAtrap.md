@@ -70,6 +70,24 @@ Last step taking a very long time. Almost 24 hours now. Not sure which option wo
 
 
 
+```
+
+
+sbatch --job-name="virna" --ntasks=64 --mem=495G --time=10-0 --export=NONE --wrap="module load WitteLab python3/3.9.1 && virnatrap-predict --multi_proc 16 --num_threads 64 --input /francislab/data1/working/20230628-Costello/20231005-STAR/virnatrap-test2/input_fastq/ --output /francislab/data1/working/20230628-Costello/20231005-STAR/virnatrap-test2/output_contigs/"
+
+```
+
+Doesn't really seem to multithread so that was a real waste of resources. Not real sure what you get from the multi_proc or num_threads.
+
+```
+
+
+sbatch --job-name="blastn2" --ntasks=16 --mem=120G --time=10-0 --export=NONE --wrap="module load blast && blastn -db nt -outfmt '6 qaccver saccver scomname pident length mismatch gapopen qstart qend sstart send' -query  /francislab/data1/working/20230628-Costello/20231005-STAR/virnatrap-test2/output_contigs/p559SF13507-v1_S78_contigs.txt -out /francislab/data1/working/20230628-Costello/20231005-STAR/virnatrap-test2/output_contigs/p559SF13507-v1_S78_contigs.blastn_nt.tsv"
+
+```
+
+
+
 
 
 

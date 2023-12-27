@@ -32,3 +32,9 @@ sbatch --job-name="abyss" --ntasks=16 --mem=120G --time=10-0 --export=NONE --wra
 ```
 
 
+```
+sbatch --job-name="blastnabyss" --ntasks=16 --mem=120G --time=10-0 --export=NONE --wrap="module load blast && blastn -db nt -outfmt '6 qaccver saccver scomname pident length mismatch gapopen qstart qend sstart send' -query  /francislab/data1/working/20230628-Costello/20231005-STAR/abyss-test/test-8.fa -out /francislab/data1/working/20230628-Costello/20231005-STAR/abyss-test/test-8.blastn_nt.tsv"
+
+```
+
+
