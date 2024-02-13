@@ -70,11 +70,68 @@ What other options exist?
 
 
 
+
+
+
 ```
 
-model.fit(x_train, y_train, epochs=100)
+model.fit(x_train, y_train, batch_size=64, epochs=100)
+
+```
+
+
+
+
+
+```
 
 model.evaluate(x_test, y_test)
 
 ```
+
+
+
+
+
+
+
+##	Found Questions and Answers (not sure of the credibility)
+
+
+
+What should batch size be TensorFlow?
+
+Default value = 32
+
+But we are limited to using the batch sizes with the power of 2 starting from 16 until 1024. This is because the batch size needs to fit the memory requirements of the GPU and the architecture of the CPU. So, the acceptable values for the batch size are 16, 32, 64, 128, 256, 512 and 1024!
+model.fit(x_train, y_train, epochs=100)
+
+
+
+
+
+What is the best number of neurons in a neural network?
+
+The number of hidden neurons should be between the size of the input layer and the size of the output layer. 
+The number of hidden neurons should be 2/3 the size of the input layer, plus the size of the output layer. 
+The number of hidden neurons should be less than twice the size of the input layer.
+
+That last statement doesn't seem to be necessary given the first 2 statements.
+
+
+
+Followup: What is a hidden neuron?
+
+Followup: What is a hidden layer?
+
+A hidden layer in the context of artificial neural networks refers to a layer of neurons that is neither the input nor the output layer. 
+Hidden layers are what make neural networks "deep" and enable them to learn complex data representations. 
+They are the computational workhorse of deep learning models, allowing neural networks to approximate functions and capture patterns from input data.
+
+So, not the first nor the last layer? Or just not the last layer?
+
+
+
+
+
 
