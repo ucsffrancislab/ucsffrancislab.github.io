@@ -85,6 +85,7 @@ Pseudo Pipeline and Topic Notes
 * [Long Read / ONT](docs/LongReads)
 * [Phage Display](docs/Phage)
 * [TensorFlow](docs/TensorFlow)
+* [KMC](docs/KMC)
 * [UMI](docs/UMI)
 * Notebooks
   * [Jupyter](docs/Jupyter)
