@@ -48,7 +48,6 @@ What are alternatives?
 
 Why is the last layer 1? Does it depend on the activation function?
 
-```
 
 
 ```
