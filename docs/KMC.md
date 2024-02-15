@@ -36,23 +36,29 @@ done
 
 
 
+Normalize by rescaling by the total number of kmers
 
 ```
 for kmer_len in 11 21 31 ; do
 echo $kmer_len
 for id in SFHH005aa SFHH005ab SFHH005ac SFHH005ad SFHH005ae ; do
-id=${id}.${kmer_len}
+#id=${id}.${kmer_len}
 echo $id
 ./bin/kmc_tools transform kmc_dir/${id} dump -s kmc_dir/${id}.raw.tsv
-cat kmc_dir/${id}.raw.tsv | datamash sum 2 > kmc_dir/${id}.total_kmer_count
-total_kmer_count=$( cat kmc_dir/${id}.total_kmer_count )
-awk -v sample=${id} -v total_kmer_count=${total_kmer_count} 'BEGIN{FS=OFS="\t";print "kmer",sample}{$2=$2*1000000000/total_kmer_count;print}' kmc_dir/${id}.raw.tsv > kmc_dir/${id}.normalized.tsv
+cat kmc_dir/${id}.${kmer_len}.raw.tsv | datamash sum 2 > kmc_dir/${id}.${kmer_len}.total_kmer_count
+total_kmer_count=$( cat kmc_dir/${id}.${kmer_len}.total_kmer_count )
+awk -v sample=${id} -v total_kmer_count=${total_kmer_count} 'BEGIN{FS=OFS="\t";print "kmer",sample}{$2=$2*1000000000/total_kmer_count;print}' kmc_dir/${id}.${kmer_len}.raw.tsv > kmc_dir/${id}.${kmer_len}.normalized.tsv
 done
 done
 
 ```
 
 
+
+Merge all into a single giant matrix.
+
+Each join can take between 5 and 45 minutes at k=18
+so while this is great at not requiring memory, it does take time
 
 ```
 for kmer_len in 11 21 31 ; do
@@ -74,6 +80,14 @@ done
 
 
 
+
+May want to try to implement something in c explicitly designed for this task
+
+Do one thing and do it well.
+
+```
+./data/20200603-TCGA-GBMLGG-WGS/20210923-iMOKA-tumor-normal-test/merge.c
+```
 
 
 
