@@ -87,6 +87,7 @@ Pseudo Pipeline and Topic Notes
 * [TensorFlow](docs/TensorFlow)
 * [KMC](docs/KMC)
 * [UMI](docs/UMI)
+* [Cutadapt](docs/Cutadapt)
 * Notebooks
   * [Jupyter](docs/Jupyter)
   * [Rmarkdown](docs/Rmarkdown)
