@@ -74,7 +74,7 @@ cut -c4- /francislab/data1/refs/sources/igv.org.genomes/hg38/rmsk/hg38_rmsk_LTR.
 awk -F '\t' '{print $9}' hg38_rmsk_LTR.gtf  | awk -F '"' '{print $2}' | sort | uniq | grep HERVK  > hg38_rmsk_LTR.txt
 
 date=$( date "+%Y%m%d%H%M%S" )
-sbatch --mail-user=George.Wendt@ucsf.edu --mail-type=FAIL --job-name=TEfinder --time=20160 --nodes=1 --ntasks=16 --mem=120G --output=${dir}/TEfinder.${date}.txt --wrap "singularity exec --bind /francislab ~/github/ucsffrancislab/genomics/singularity/TEfinder.img TEfinder -intermed yes -threads 16 -alignment /francislab/data1/raw/20200909-TARGET-ALL-P2-RNA_bam/bam/10-PAUCDY-09A-01R.bam -fa ${dir}/hg38.sorted.fa -gtf ${dir}/hg38_rmsk_LTR.gtf -te ${dir}/hg38_rmsk_LTR.txt"
+sbatch --mail-user=$(tail -1 ~/.forward) --mail-type=FAIL --job-name=TEfinder --time=20160 --nodes=1 --ntasks=16 --mem=120G --output=${dir}/TEfinder.${date}.txt --wrap "singularity exec --bind /francislab ~/github/ucsffrancislab/genomics/singularity/TEfinder.img TEfinder -intermed yes -threads 16 -alignment /francislab/data1/raw/20200909-TARGET-ALL-P2-RNA_bam/bam/10-PAUCDY-09A-01R.bam -fa ${dir}/hg38.sorted.fa -gtf ${dir}/hg38_rmsk_LTR.gtf -te ${dir}/hg38_rmsk_LTR.txt"
 ```
 
 

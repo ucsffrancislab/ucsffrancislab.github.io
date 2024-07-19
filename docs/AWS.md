@@ -59,7 +59,7 @@ It should then do a Duo Push to your phone.
 ```
 aws-adfs login --adfs-host=adfs.ucsf.edu --profile=ucsf
 2021-03-10 14:08:19,355 [authenticator authenticator.py:authenticate] [7846-MainProcess] [4669504960-MainThread] - ERROR: Cannot extract saml assertion. Re-authentication needed?
-Username: George.Wendt@ucsf.edu
+Username: XXXXXXXXXXXXXx@ucsf.edu
 Password:
 Sending request for authentication
 Waiting for additional authentication
@@ -418,7 +418,7 @@ echo ${instance_id}
 
 aws ssm start-session --target ${instance_id}
 
-Starting session with SessionId: George.Wendt@ucsf.edu-.......
+Starting session with SessionId: XXXXXXXXXX@ucsf.edu-.......
 This session is encrypted using AWS KMS.
 
 

@@ -60,7 +60,7 @@ singularity exec --bind /francislab ${HOME}/github/ucsffrancislab/genomics/singu
 chmod +x /c4/home/gwendt/github/ucsffrancislab/genomics/singularity/xTeaClusterTest/tmp/10-PAUCDY-09A-01R/HERV/run_xTEA_pipeline.sh
 
 date=$( date "+%Y%m%d%H%M%S" )
-sbatch --mail-user=George.Wendt@ucsf.edu --mail-type=FAIL --job-name=xTEA-HERV --time=20160 --nodes=1 --ntasks=16 --mem=120G --output=${dir}/xTea.${date}.txt --wrap "singularity exec --bind /francislab ~/github/ucsffrancislab/genomics/singularity/xTea-python3.6.img /c4/home/gwendt/github/ucsffrancislab/genomics/singularity/xTeaClusterTest/tmp/10-PAUCDY-09A-01R/HERV/run_xTEA_pipeline.sh"
+sbatch --mail-user=$(tail -1 ~/.forward) --mail-type=FAIL --job-name=xTEA-HERV --time=20160 --nodes=1 --ntasks=16 --mem=120G --output=${dir}/xTea.${date}.txt --wrap "singularity exec --bind /francislab ~/github/ucsffrancislab/genomics/singularity/xTea-python3.6.img /c4/home/gwendt/github/ucsffrancislab/genomics/singularity/xTeaClusterTest/tmp/10-PAUCDY-09A-01R/HERV/run_xTEA_pipeline.sh"
 ```
 
 Don't know what's going on here. 

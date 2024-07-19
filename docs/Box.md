@@ -40,8 +40,8 @@ Add your username and new password to your `~/.netrc`.
 This file may or may not exist already.
 
 ```
-#machine dav.box.com login George.Wendt@ucsf.edu password XXXXXXXX
-machine ftp.box.com login George.Wendt@ucsf.edu password XXXXXXXX
+#machine dav.box.com login XXXXXXXXX@ucsf.edu password XXXXXXXX
+machine ftp.box.com login XXXXXXXX@ucsf.edu password XXXXXXXX
 ```
 
 You may also want to change its permissions ...
@@ -109,7 +109,7 @@ Use wget / ftp
 Add this slightly different line to your `.netrc`
 
 ```
-machine ftp.box.com login George.Wendt@ucsf.edu password XXXXXXXX
+machine ftp.box.com login XXXXXXXXXXXX@ucsf.edu password XXXXXXXX
 ```
 
 Note that the path is a bit different here.

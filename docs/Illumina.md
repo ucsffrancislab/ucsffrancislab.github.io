@@ -30,7 +30,7 @@ Open that URL in the browser ...
 
 
 ```
-Welcome, George Wendt
+Welcome, XXXXXXXXXXXX
 
 bs list projects
 ```
