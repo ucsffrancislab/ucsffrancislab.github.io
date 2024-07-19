@@ -84,7 +84,10 @@ Pseudo Pipeline and Topic Notes
 * [DESeq](docs/DESeq)
 * [Long Read / ONT](docs/LongReads)
 * [Phage Display](docs/Phage)
+* [TensorFlow](docs/TensorFlow)
+* [KMC](docs/KMC)
 * [UMI](docs/UMI)
+* [Cutadapt](docs/Cutadapt)
 * Notebooks
   * [Jupyter](docs/Jupyter)
   * [Rmarkdown](docs/Rmarkdown)
