@@ -253,3 +253,50 @@ sudo chmod o+r /usr/local/etc/singularity/capability.json
 
 singularity --version
 ```
+
+
+
+
+
+##	20240912 - Install Singularity on Mac
+
+
+https://docs.sylabs.io/guides/latest/admin-guide/installation.html#installation-on-windows-or-mac
+
+https://docs.sylabs.io/guides/4.2/admin-guide/installation.html#installation-on-windows-or-mac
+
+
+```
+bash -c "$( curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh )"
+
+
+(echo; echo 'eval "$(/usr/local/bin/brew shellenv)"') >> $HOME/.bash_profile
+eval "$(/usr/local/bin/brew shellenv)"
+
+
+brew install lima
+
+wget https://raw.githubusercontent.com/sylabs/singularity/main/examples/lima/singularity-ce.yml
+
+limactl start ./singularity-ce.yml
+
+
+
+limactl shell singularity-ce
+
+#	Or
+
+limactl shell singularity-ce singularity run library://alpine
+
+
+
+
+
+limactl stop singularity-ce
+
+limactl delete singularity-ce
+
+
+```
+
+
