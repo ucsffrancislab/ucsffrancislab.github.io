@@ -64,9 +64,18 @@ RUN conda install -y -c conda-forge ncurses openmm=8.0.0 pdbfixer \
     && conda clean --all --force-pkgs-dirs --yes
 ```
 
-#	I added ncurses to possibly fix ...
+I added ncurses to possibly fix ...
+```
 #/bin/bash: /opt/conda/lib/libtinfo.so.6: no version information available (required by /bin/bash)
+```
 
+
+
+I modified the lima singularity yaml file to mount the tmp dir as writable
+```
+- location: "/tmp/lima"
+  writable: true
+```
 
 
     
@@ -129,7 +138,7 @@ limactl shell singularity-ce
 
 
 
-singularity build alphafold233.sif docker-archive://alphafold233_docker.tar
+singularity build /tmp/lima/alphafold233.sif docker-archive://alphafold233_docker.tar
 
 #FATAL:   While performing build: while creating SIF: while creating container: open /Users/jake/github/google-deepmind/alphafold/alphafold233.sif: read-only file system
 
