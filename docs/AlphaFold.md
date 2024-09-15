@@ -35,7 +35,7 @@ The AlphaFold github repository has scripts to build a Docker image for running 
 The UCSF Wynton cluster does not support Docker and does not allow building singularity images since both require root privileges. So I do these steps on a desktop Ubuntu 20.04 system where I have root access.
 
 
-Jake - For some reason I had to pull the nvidia docker image first
+Jake - For some reason I had to pull the nvidia docker image first. Just the first try though. 
 
 
 Also, gotta modify the Dockerfile
@@ -71,6 +71,31 @@ I added ncurses to possibly fix ...
 
 
 
+
+
+ADD MOCK PYTHON PACKAGE SO CAN TEST
+
+```
+
+RUN pip3 install mock
+
+```
+
+Add easier testing script
+
+```
+RUN echo $'#!/bin/bash\n\
+ldconfig\n\
+python /app/alphafold/run_alphafold_test.py "$@"' > /app/run_alphafold_test.sh \
+  && chmod +x /app/run_alphafold_test.sh
+```
+
+
+I should create my own Dockerfile
+
+
+
+
 I modified the lima singularity yaml file to mount the tmp dir as writable
 ```
 - location: "/tmp/lima"
@@ -82,7 +107,10 @@ I modified the lima singularity yaml file to mount the tmp dir as writable
 ```
 git clone git@github.com:deepmind/alphafold.git
 cd alphafold
-docker pull nvidia/cuda:12.2.2-cudnn8-runtime-ubuntu20.04
+
+
+#	First time I had to pull this image first.
+#	docker pull nvidia/cuda:12.2.2-cudnn8-runtime-ubuntu20.04
 
 #	Not sure if its still version 220. After 2.3.2, but no real number. 2.3.3?
 #	Not sure if this needs to be sudo either. 
@@ -95,7 +123,6 @@ docker build -f docker/Dockerfile -t alphafold233 .
 #	Test
 #
 #	docker run -ti alphafold233
-#	/bin/bash: /opt/conda/lib/libtinfo.so.6: no version information available (required by /bin/bash)
 #	FATAL Flags parsing error:
 #	  flag --fasta_paths=None: Flag --fasta_paths must have a value other than None.
 #	  flag --output_dir=None: Flag --output_dir must have a value other than None.
@@ -108,39 +135,58 @@ docker build -f docker/Dockerfile -t alphafold233 .
 #	  flag --use_gpu_relax=None: Flag --use_gpu_relax must have a value other than None.
 #	Pass --helpshort or --helpfull to see help on flags.
 
+#	docker run -ti --entrypoint bash alphafold233
+
+#	docker run -ti --entrypoint run_alphafold_test.py alphafold233
+
+#docker run -v /home/ec2-user/:/mnt -itd python /app/alphafold/run_alphafold_test.py
+
+
+#	Test
+
+docker run -it --entrypoint bash alphafold233 /app/run_alphafold_test.sh
 
 
 
-
-
-
+# Delete ALL instances
+#	docker rm $( docker ps -qa )
 
 docker save alphafold233 -o alphafold233_docker.tar
 
 
 
-
-
-
-
-
+#	Create a VM if not existant already
+#	limactl start ./singularity-ce.yml
 
 limactl shell singularity-ce
 
 #	where is the HOME DIR so that files can be shared with outside the VM?
+# /tmp/lima is set to writable in the yml
 
 
 
 
+#singularity build alphafold233.sif docker-archive://alphafold233_docker.tar
 
-
-
-
+#FATAL:   While performing build: while creating SIF: while creating container: open /Users/jake/github/google-deepmind/alphafold/alphafold233.sif: read-only file system
 
 
 singularity build /tmp/lima/alphafold233.sif docker-archive://alphafold233_docker.tar
 
-#FATAL:   While performing build: while creating SIF: while creating container: open /Users/jake/github/google-deepmind/alphafold/alphafold233.sif: read-only file system
+
+#	Test
+singularity exec /tmp/lima/alphafold233.sif /app/run_alphafold_test.sh
+
+
+
+
+
+Traceback (most recent call last):
+  File "/app/alphafold/run_alphafold_test.py", line 23, in <module>
+    import mock
+ModuleNotFoundError: No module named 'mock'
+
+
 
 
 
@@ -148,6 +194,10 @@ singularity build /tmp/lima/alphafold233.sif docker-archive://alphafold233_docke
 rsync -av alphafold233.sif plato.cgl.ucsf.edu:alphafold_singularity
 #Script to run AlphaFold singularity image on Wynton
 ```
+
+
+
+
 
 The AlphaFold github code repository contains a run_docker.py script for running the AlphaFold Docker image. I wrote a similar script run_alphafold220.py for running the AlphaFold Singularity image.
 
