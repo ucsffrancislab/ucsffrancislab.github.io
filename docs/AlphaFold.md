@@ -117,7 +117,7 @@ cd alphafold
 #	ERROR: open /Users/jake/.docker/buildx/activity/desktop-linux: permission denied
 #	fails without sudo if tried with sudo already
 
-docker build -f docker/Dockerfile -t alphafold233 .
+docker build -f ~/github/ucsffrancislab/genomics/docker/AlphaFold-2.3.3.Dockerfile -t alphafold233 .
 
 
 #	Test
@@ -135,29 +135,24 @@ docker build -f docker/Dockerfile -t alphafold233 .
 #	  flag --use_gpu_relax=None: Flag --use_gpu_relax must have a value other than None.
 #	Pass --helpshort or --helpfull to see help on flags.
 
-#	docker run -ti --entrypoint bash alphafold233
-
-#	docker run -ti --entrypoint run_alphafold_test.py alphafold233
-
-#docker run -v /home/ec2-user/:/mnt -itd python /app/alphafold/run_alphafold_test.py
 
 
 #	Test
 
-docker run -it --entrypoint bash alphafold233 /app/run_alphafold_test.sh
+docker run --rm --entrypoint bash alphafold233 /app/run_alphafold_test.sh
+#OpenBLAS WARNING - could not determine the L2 cache size on this system, assuming 256k
+#OpenBLAS WARNING - could not determine the L2 cache size on this system, assuming 256k
 
 
-
-# Delete ALL instances
-#	docker rm $( docker ps -qa )
-
-docker save alphafold233 -o alphafold233_docker.tar
+#	DON'T SAVE THIS TO THIS DIR OR NEXT TIME THE IMAGE WILL BE HUGER!
+docker save alphafold233 -o ~/alphafold233_docker.tar
 
 
 
 #	Create a VM if not existant already
 #	limactl start ./singularity-ce.yml
 
+cd ~
 limactl shell singularity-ce
 
 #	where is the HOME DIR so that files can be shared with outside the VM?
@@ -176,22 +171,24 @@ singularity build /tmp/lima/alphafold233.sif docker-archive://alphafold233_docke
 
 #	Test
 singularity exec /tmp/lima/alphafold233.sif /app/run_alphafold_test.sh
+#/sbin/ldconfig.real: Can't create temporary cache file /etc/ld.so.cache~: Read-only file system
+#OpenBLAS WARNING - could not determine the L2 cache size on this system, assuming 256k
+#OpenBLAS WARNING - could not determine the L2 cache size on this system, assuming 256k
+
+
+
+
+#Traceback (most recent call last):
+#  File "/app/alphafold/run_alphafold_test.py", line 23, in <module>
+#    import mock
+#ModuleNotFoundError: No module named 'mock'
 
 
 
 
 
-Traceback (most recent call last):
-  File "/app/alphafold/run_alphafold_test.py", line 23, in <module>
-    import mock
-ModuleNotFoundError: No module named 'mock'
 
-
-
-
-
-
-rsync -av alphafold233.sif plato.cgl.ucsf.edu:alphafold_singularity
+#rsync -av alphafold233.sif plato.cgl.ucsf.edu:alphafold_singularity
 #Script to run AlphaFold singularity image on Wynton
 ```
 
