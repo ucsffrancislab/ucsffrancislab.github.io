@@ -67,6 +67,8 @@ cd alphafold
 #	fails without sudo if tried with sudo already
 
 docker build -f ~/github/ucsffrancislab/genomics/docker/AlphaFold-2.3.3.Dockerfile -t alphafold233 .
+#retrying original (that includes the run_alphafold_test.sh addition)
+#docker build -f docker/Dockerfile -t alphafold233 .
 
 
 #	Test
@@ -89,6 +91,7 @@ docker build -f ~/github/ucsffrancislab/genomics/docker/AlphaFold-2.3.3.Dockerfi
 #	Test
 
 docker run --rm --entrypoint bash alphafold233 /app/run_alphafold_test.sh
+
 #OpenBLAS WARNING - could not determine the L2 cache size on this system, assuming 256k
 #OpenBLAS WARNING - could not determine the L2 cache size on this system, assuming 256k
 
@@ -102,21 +105,12 @@ docker run --rm --entrypoint bash alphafold233 /app/run_alphafold_test.sh
 #	python3 docker/run_docker.py --data_dir=/tmp/lima/  --max_template_date=2020-05-14  --model_preset=monomer  --fasta_paths=/tmp/lima/SPELLARDPYGPAVDIWSAGIVLFEMATGQ.faa  --output_dir=/tmp/lima/
 
 
-python3 run_alphafold.py
-  --bfd_database_path=/tmp/lima/ \
-  --uniref30_database_path=/tmp/lima/ \
-  --pdb70_database_path=/tmp/lima/ \
-  --uniref90_database_path=/tmp/lima/uniref90.fasta \
-  --mgnify_database_path=/tmp/lima/mgy_clusters_2022_05.fa \
-  --template_mmcif_dir=/tmp/lima/ \
-  --obsolete_pdbs_path=/tmp/lima/obsolete.dat \
-  --use_gpu_relax \
-  --data_dir=/tmp/lima/ \
-  --max_template_date=2020-05-14 \
-  --model_preset=monomer \
-  --fasta_paths=/tmp/lima/SPELLARDPYGPAVDIWSAGIVLFEMATGQ.faa \
-  --output_dir=/tmp/lima/
+#	FOR THE RECORD. run_docker.py is supposed to be run from OUTSIDE THE CONTAINER!
 
+#	Same with the run_alphafold220.py script!
+
+
+#	The HHSearch PDB70 "path" has to include also the common prefix for all of the db files in the directory. I.e. in your case the path should be /cluster/projects/chanlab/pdb70/pdb70.
 
 
 
@@ -149,25 +143,6 @@ singularity exec /tmp/lima/alphafold233.sif /app/run_alphafold_test.sh
 #/sbin/ldconfig.real: Can't create temporary cache file /etc/ld.so.cache~: Read-only file system
 #OpenBLAS WARNING - could not determine the L2 cache size on this system, assuming 256k
 #OpenBLAS WARNING - could not determine the L2 cache size on this system, assuming 256k
-
-
-singularity exec --bind /francislab,/scratch \
->  /francislab/data1/refs/alphafold/alphafold233.sif \
->  /app/run_alphafold.sh \
->  --bfd_database_path=/francislab/data1/refs/alphafold/databases/bfd/ \
->  --uniref30_database_path=/francislab/data1/refs/alphafold/databases/uniref30/ \
->  --pdb70_database_path=/francislab/data1/refs/alphafold/databases/pdb70/ \
->  --uniref90_database_path=/francislab/data1/refs/alphafold/databases/uniref90/uniref90.fasta \
->  --mgnify_database_path=/francislab/data1/refs/alphafold/databases/mgnify/mgy_clusters_2022_05.fa \
->  --template_mmcif_dir=/francislab/data1/refs/alphafold/databases/pdb_mmcif/ \
->  --obsolete_pdbs_path=/francislab/data1/refs/alphafold/databases/pdb_mmcif/obsolete.dat \
->  --use_gpu_relax \
->  --data_dir=/francislab/data1/refs/alphafold/databases/ \
->  --max_template_date=2020-05-14 \
->  --model_preset=monomer \
->  --fasta_paths=/francislab/data1/refs/SPELLARDPYGPAVDIWSAGIVLFEMATGQ.faa \
->  --output_dir=/francislab/data1/refs/alphafold/
-
 
 
 
