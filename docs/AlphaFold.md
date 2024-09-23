@@ -2,6 +2,20 @@
 #	AlphaFold
 
 
+##	20240923
+
+
+singularity building is now possible on C4 making the chore much faster and simpler.
+
+I also found a number of singularity definition files that make the docker method unnecessary.
+
+However, confirming access to the GPU on c4-devgpu is not working.
+And the cluster queue for using a GPU is very long.
+
+
+##	Main
+
+
 Install Docker and Singularity locally
 
 Docker is very straight forward.
@@ -197,6 +211,7 @@ docker_image_name. Default changed to alphafold220 instead of alphafold. Use ver
 max_template_date. Default to year 2100 instead of being a required option.
 model_preset. Default to monomer_ptm instead of monomer so PAE error estimates are produced.
 num_multimer_predictions_per_model. Default changed to 1 instead of 5.
+
 
 
 
