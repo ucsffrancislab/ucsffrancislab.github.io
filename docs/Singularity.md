@@ -300,3 +300,30 @@ limactl delete singularity-ce
 ```
 
 
+Lima looks like it can also be installed with MacPorts, which is my favored package manager.
+I have yet to try this, but it should only change the initial portion of this install.
+
+
+
+
+##	Extract the definition file used to create the singularity image
+
+
+If it was originally a singularity image, it is helpful. 
+If it was originally a docker image, it isn't.
+
+```
+
+cat /.singularity.d/Singularity 
+
+```
+
+
+
+Even with the definition file, it may not be rebuildable.
+Too many external entities.
+
+
+
+
+
