@@ -266,6 +266,19 @@ https://docs.sylabs.io/guides/latest/admin-guide/installation.html#installation-
 https://docs.sylabs.io/guides/4.2/admin-guide/installation.html#installation-on-windows-or-mac
 
 
+Install Lima
+
+with MacPorts ( doesn't seem to actually work )
+
+```
+sudo port install lima
+
+```
+
+
+or Homebrew
+
+
 ```
 bash -c "$( curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh )"
 
@@ -275,10 +288,36 @@ eval "$(/usr/local/bin/brew shellenv)"
 
 
 brew install lima
+```
+
+
+```
 
 wget https://raw.githubusercontent.com/sylabs/singularity/main/examples/lima/singularity-ce.yml
 
+
+
+#	Enable ssh. System Preferences > Sharing > Remote Login
+
+#	This all worked on my newest mac but I can't get passed the ssh test on my older mac
+
+#	Not entirely sure why, but the macports version always fails 
+#	INFO[0024] [hostagent] Starting QEMU (hint: to watch the boot progress, see "/Users/jake/.lima/singularity-ce/serial*.log") 
+#	INFO[0024] SSH Local Port: 51582                        
+#	INFO[0024] [hostagent] Waiting for the essential requirement 1 of 4: "ssh" 
+#	INFO[0034] [hostagent] Waiting for the essential requirement 1 of 4: "ssh" 
+#	INFO[0122] [hostagent] Waiting for the essential requirement 1 of 4: "ssh" 
+#	INFO[0210] [hostagent] Waiting for the essential requirement 1 of 4: "ssh" 
+#	INFO[0298] [hostagent] Waiting for the essential requirement 1 of 4: "ssh" 
+#	INFO[0385] [hostagent] Waiting for the essential requirement 1 of 4: "ssh" 
+#	INFO[0473] [hostagent] Waiting for the essential requirement 1 of 4: "ssh" 
+#	INFO[0560] [hostagent] Waiting for the essential requirement 1 of 4: "ssh" 
+#	FATA[0623] did not receive an event with the "running" status 
+
 limactl start ./singularity-ce.yml
+
+
+
 
 
 

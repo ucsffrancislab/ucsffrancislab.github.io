@@ -2,6 +2,20 @@
 #	AlphaFold
 
 
+##	20240923
+
+
+singularity building is now possible on C4 making the chore much faster and simpler.
+
+I also found a number of singularity definition files that make the docker method unnecessary.
+
+However, confirming access to the GPU on c4-devgpu is not working.
+And the cluster queue for using a GPU is very long.
+
+
+##	Main
+
+
 Install Docker and Singularity locally
 
 Docker is very straight forward.
@@ -35,39 +49,13 @@ The AlphaFold github repository has scripts to build a Docker image for running 
 The UCSF Wynton cluster does not support Docker and does not allow building singularity images since both require root privileges. So I do these steps on a desktop Ubuntu 20.04 system where I have root access.
 
 
-Jake - For some reason I had to pull the nvidia docker image first
+Jake - For some reason I had to pull the nvidia docker image first. Just the first try though. 
 
-
-Also, gotta modify the Dockerfile
 
 https://github.com/google-deepmind/alphafold/issues/945
 
-Change 
+I created my own Dockerfile
 
-```
-ENV PATH="/opt/conda/bin:$PATH"
-ENV LD_LIBRARY_PATH="/opt/conda/lib:$LD_LIBRARY_PATH"
-RUN conda install -qy conda==24.1.2 pip python=3.11 \
-    && conda install -y -c nvidia cuda=${CUDA_VERSION} \
-    && conda install -y -c conda-forge openmm=8.0.0 pdbfixer \
-    && conda clean --all --force-pkgs-dirs --yes
-```
-
-to
-
-```
-ENV PATH="/opt/conda/bin:$PATH"
-ENV LD_LIBRARY_PATH="/opt/conda/lib:$LD_LIBRARY_PATH"
-RUN conda install -qy conda==24.5.0 pip python=3.11 \
- && conda install -y -c nvidia cuda=12.2.2 cuda-tools=12.2.2 cuda-toolkit=12.2.2 cuda-version=12.2 cuda-command-line-tools=12.2.2 cuda-compiler=12.2.2 cuda-runtime=12.2.2
-RUN conda install -y -c conda-forge ncurses openmm=8.0.0 pdbfixer \
-    && conda clean --all --force-pkgs-dirs --yes
-```
-
-I added ncurses to possibly fix ...
-```
-#/bin/bash: /opt/conda/lib/libtinfo.so.6: no version information available (required by /bin/bash)
-```
 
 
 
@@ -82,20 +70,24 @@ I modified the lima singularity yaml file to mount the tmp dir as writable
 ```
 git clone git@github.com:deepmind/alphafold.git
 cd alphafold
-docker pull nvidia/cuda:12.2.2-cudnn8-runtime-ubuntu20.04
+
+
+#	First time I had to pull this image first.
+#	docker pull nvidia/cuda:12.2.2-cudnn8-runtime-ubuntu20.04
 
 #	Not sure if its still version 220. After 2.3.2, but no real number. 2.3.3?
 #	Not sure if this needs to be sudo either. 
 #	ERROR: open /Users/jake/.docker/buildx/activity/desktop-linux: permission denied
 #	fails without sudo if tried with sudo already
 
-docker build -f docker/Dockerfile -t alphafold233 .
+docker build -f ~/github/ucsffrancislab/genomics/docker/AlphaFold-2.3.3.Dockerfile -t alphafold233 .
+#retrying original (that includes the run_alphafold_test.sh addition)
+#docker build -f docker/Dockerfile -t alphafold233 .
 
 
 #	Test
 #
 #	docker run -ti alphafold233
-#	/bin/bash: /opt/conda/lib/libtinfo.so.6: no version information available (required by /bin/bash)
 #	FATAL Flags parsing error:
 #	  flag --fasta_paths=None: Flag --fasta_paths must have a value other than None.
 #	  flag --output_dir=None: Flag --output_dir must have a value other than None.
@@ -110,44 +102,72 @@ docker build -f docker/Dockerfile -t alphafold233 .
 
 
 
+#	Test
+
+docker run --rm --entrypoint bash alphafold233 /app/run_alphafold_test.sh
+
+#OpenBLAS WARNING - could not determine the L2 cache size on this system, assuming 256k
+#OpenBLAS WARNING - could not determine the L2 cache size on this system, assuming 256k
 
 
 
+#docker run -v /tmp:/tmp -it --rm --entrypoint bash alphafold233 /app/run_docker.sh  --data_dir=/tmp/lima/  --max_template_date=2020-05-14  --model_preset=monomer  --fasta_paths=/tmp/lima/SPELLARDPYGPAVDIWSAGIVLFEMATGQ.faa  --output_dir=/tmp/lima/
 
 
-docker save alphafold233 -o alphafold233_docker.tar
+#		/app/run_docker.sh  --data_dir=/tmp/lima/  --max_template_date=2020-05-14  --model_preset=monomer  --fasta_paths=/tmp/lima/SPELLARDPYGPAVDIWSAGIVLFEMATGQ.faa  --output_dir=/tmp/lima/
+
+#	python3 docker/run_docker.py --data_dir=/tmp/lima/  --max_template_date=2020-05-14  --model_preset=monomer  --fasta_paths=/tmp/lima/SPELLARDPYGPAVDIWSAGIVLFEMATGQ.faa  --output_dir=/tmp/lima/
+
+
+#	FOR THE RECORD. run_docker.py is supposed to be run from OUTSIDE THE CONTAINER!
+
+#	Same with the run_alphafold220.py script!
+
+
+#	The HHSearch PDB70 "path" has to include also the common prefix for all of the db files in the directory. I.e. in your case the path should be /cluster/projects/chanlab/pdb70/pdb70.
 
 
 
+#	DON'T SAVE THIS TO THIS DIR OR NEXT TIME THE IMAGE WILL BE HUGER!
+docker save alphafold233 -o ~/alphafold233_docker.tar
 
 
 
+#	Create a VM if not existant already
+#	limactl start ./singularity-ce.yml
 
-
-
+cd ~
 limactl shell singularity-ce
 
 #	where is the HOME DIR so that files can be shared with outside the VM?
+# /tmp/lima is set to writable in the yml
 
 
 
 
-
-
-
-
+#singularity build alphafold233.sif docker-archive://alphafold233_docker.tar
+#FATAL:   While performing build: while creating SIF: while creating container: open /Users/jake/github/google-deepmind/alphafold/alphafold233.sif: read-only file system
 
 
 singularity build /tmp/lima/alphafold233.sif docker-archive://alphafold233_docker.tar
 
-#FATAL:   While performing build: while creating SIF: while creating container: open /Users/jake/github/google-deepmind/alphafold/alphafold233.sif: read-only file system
+
+#	Test
+singularity exec /tmp/lima/alphafold233.sif /app/run_alphafold_test.sh
+#/sbin/ldconfig.real: Can't create temporary cache file /etc/ld.so.cache~: Read-only file system
+#OpenBLAS WARNING - could not determine the L2 cache size on this system, assuming 256k
+#OpenBLAS WARNING - could not determine the L2 cache size on this system, assuming 256k
 
 
 
 
-rsync -av alphafold233.sif plato.cgl.ucsf.edu:alphafold_singularity
+#rsync -av alphafold233.sif plato.cgl.ucsf.edu:alphafold_singularity
 #Script to run AlphaFold singularity image on Wynton
 ```
+
+
+
+
 
 The AlphaFold github code repository contains a run_docker.py script for running the AlphaFold Docker image. I wrote a similar script run_alphafold220.py for running the AlphaFold Singularity image.
 
@@ -191,6 +211,7 @@ docker_image_name. Default changed to alphafold220 instead of alphafold. Use ver
 max_template_date. Default to year 2100 instead of being a required option.
 model_preset. Default to monomer_ptm instead of monomer so PAE error estimates are produced.
 num_multimer_predictions_per_model. Default changed to 1 instead of 5.
+
 
 
 
