@@ -2,6 +2,41 @@
 #	AlphaFold
 
 
+##	Container creation
+
+I recently found that a Docker recipe can be directly converted to a Singularity recipe.
+
+And C4 now allows the creation of container so Docker is no longer necessary.
+
+
+
+##	Data download
+
+
+
+
+##	Folding
+
+
+
+
+
+
+--nv
+
+--usegpu-something
+
+
+
+
+
+
+
+
+
+
+---
+
 ##	20240923
 
 
@@ -9,7 +44,7 @@ singularity building is now possible on C4 making the chore much faster and simp
 
 I also found a number of singularity definition files that make the docker method unnecessary.
 
-However, confirming access to the GPU on c4-devgpu is not working.
+However, confirming access to the GPU on c4-gpudev1 is not working.
 And the cluster queue for using a GPU is very long.
 
 

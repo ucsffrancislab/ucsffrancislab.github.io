@@ -1,6 +1,32 @@
 
 #	Singularity
 
+Previously, I had to build Docker images and then convert them to Singularity images on my Mac then transfer them to C4. 
+For large images, clearly this too a while.
+Recently, the cluster has been modified to allow the creation of images without `--remote`.
+In addition, I have found a script that allows the creation of a singularity recipe from a docker recipe.
+
+```
+pip install spython
+spython recipe docker2singularity Dockerfile > Singularity.def
+```
+
+With these new bits of knowledge, singularity images became much more useable.
+
+Much, but not all, of what is noted below is now irrelevant.
+
+
+
+
+
+
+
+
+
+---
+
+#	Archive
+
 
 If you have a singularity image, it is pretty straight forward. iMOKA is run solely through an image.
 
@@ -361,8 +387,5 @@ cat /.singularity.d/Singularity
 
 Even with the definition file, it may not be rebuildable.
 Too many external entities.
-
-
-
 
 
