@@ -7,6 +7,8 @@ Pseudo Pipeline and Topic Notes
 * Current
   * [AWS](docs/AWS)
   * [C4](docs/C4)
+  * [Cutadapt](docs/Cutadapt)
+  * [Bowtie2](docs/Bowtie2)
   * [AlphaFold](docs/AlphaFold)
   * [Foldseek](docs/Foldseek)
   * [PhIPseq / Phage Display](docs/Phage)
