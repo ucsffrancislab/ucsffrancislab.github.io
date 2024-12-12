@@ -8,6 +8,14 @@ I recently found that a Docker recipe can be directly converted to a Singularity
 
 And C4 now allows the creation of container so Docker is no longer necessary.
 
+```
+cd ~/github/google-deepmind/
+git clone https://github.com/google-deepmind/alphafold3.git
+cd alphafold3/
+python3 -m pip install --upgrade --user spython
+spython recipe docker/Dockerfile > docker/Singularity.def
+singularity build alphafold3.sif docker/Singularity.def
+```
 
 
 ##	Data download
@@ -15,16 +23,55 @@ And C4 now allows the creation of container so Docker is no longer necessary.
 
 
 
+
+
+
+
 ##	Folding
 
 
+```
+singularity exec --nv --writable-tmpfs --bind /francislab,/scratch alphafold3.sif run_alphafold_test.py 
+```
+
+
+
+To use a GPU ...
+
+Add `--nv` to singularity params 
+
+Change `--use_gpu_relax=True` to `run_alphafold.sh` - ( this will cause a failure if no GPU present )
+
+
+```
+export DBS=/diazlab/data3/abhinav/resource/alphafold_database
+
+singularity exec --writable-tmpfs \
+--bind /diazlab,/francislab,/scratch \
+${DBS}/AlphaFold.sif \
+/app/run_alphafold.sh \
+--use_gpu_relax=False \
+--bfd_database_path=${DBS}/bfd/bfd_metaclust_clu_complete_id30_c90_final_seq.sorted_opt \
+--uniref30_database_path=${DBS}/uniref30/UniRef30_2021_03 \
+--pdb70_database_path=${DBS}/pdb70/pdb70 \
+--uniref90_database_path=${DBS}/uniref90/uniref90.fasta \
+--mgnify_database_path=${DBS}/mgnify/mgy_clusters_2022_05.fa \
+--template_mmcif_dir=${DBS}/pdb_mmcif/mmcif_files/ \
+--obsolete_pdbs_path=${DBS}/pdb_mmcif/obsolete.dat \
+--data_dir=${DBS}/ \
+--max_template_date=3000-01-01 \
+--model_preset=monomer \
+--output_dir=${PWD}/out/ \
+--fasta_paths=test.fasta
+```
+
+
+If you run this on the cluster, be sure to exclude c4-n10.
 
 
 
 
---nv
 
---usegpu-something
 
 
 
