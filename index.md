@@ -7,6 +7,7 @@ Pseudo Pipeline and Topic Notes
 * Current
   * [AWS](docs/AWS)
   * [C4](docs/C4)
+  * [UCSF](docs/UCSF)
   * [Cutadapt](docs/Cutadapt)
   * [Bowtie2](docs/Bowtie2)
   * [AlphaFold](docs/AlphaFold)
