@@ -156,31 +156,3 @@ Cancer diagnosis dataset: Train a neural network using Keras from TensorFlow
 
 
 
-TensorFlow 2.0 Tutorial for Beginners 10 - Breast Cancer Detection Using CNN in Python
-
-[Tutorial](https://www.youtube.com/watch?v=Y6UDeGRyNZk)
-
-
-
-I tried building an ML Cancer Segmentation API in 15 Minutes
-
-
-[Tutorial](https://www.youtube.com/watch?v=aMldpZF6GBU)
-
-
-
-
-Tensorflow Tutorial for Python in 10 Minutes
-
-[Tutorial](https://www.youtube.com/watch?v=6_2hzRopPbQ)
-
-
-
-
-
-TensorFlow in 5 Minutes (tutorial)
-
-[Tutorial](https://www.youtube.com/watch?v=2FmcHiLCwTU)
-
-
-
