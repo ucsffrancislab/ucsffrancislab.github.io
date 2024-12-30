@@ -76,6 +76,8 @@ Note that the trailing "/" is essential.
 ##	Example download
 
 
+###	curl
+
 If not told otherwise, curl writes the received data to stdout. It can be instructed to instead save
 that  data  into a local file, using the -o, --output or -O, --remote-name options. If curl is given
 multiple URLs to transfer on the command line, it similarly needs multiple options for where to save
@@ -102,6 +104,13 @@ Their tutorial is a bit different.
 
 
 
+
+
+###	wget
+
+Apparently wget will look in .netrc automatically.
+
+
 To download say a whole directory ...
 
 Use wget / ftp
@@ -118,6 +127,18 @@ Note that the path is a bit different here.
 BOX="ftps://ftp.box.com/Francis _Lab_Share/Mayo-FrancisLab/Mayo/Observed"
 wget --recursive "${BOX}"
 ```
+
+
+
+
+
+
+###	rsync
+
+I have yet to find a way to get rsync to use the .netrc credentials.
+
+
+
 
 
 
