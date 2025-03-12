@@ -123,8 +123,21 @@ THAT MUST BE FIRST TO BE USEFUL!
 
 -->
 
+
 ```{r "Figure Settings", include = FALSE}
 knitr::opts_chunk$set(fig.width=12, fig.height=8) 
+```
+
+USE THIS TO SET ALL DEFAULTS
+
+```{r defaults, include=FALSE}
+    knitr::opts_chunk$set(
+error=TRUE, # my new favorite, will let the script run and create html so you could debug
+      comment = '', # Remove comments from the output
+      fig.width = 6, # Set default plot width
+      fig.height = 6, # Set default plot height
+      echo = TRUE # Echo code by default
+    )   
 ```
 
 
