@@ -38,7 +38,8 @@ writeLines(thisfile[-1:-which(thisfile == "q(\"no\")")], newfname)
 
 args = commandArgs(trailingOnly=TRUE)
 #output_file = paste(basename(fname),basename(args[2]),"html", sep=".")
-output_file = paste(basename(fname),"html", sep=".")
+#output_file = paste(basename(fname),"html", sep=".")
+output_file = paste(fs::path_ext_remove(basename(fname)),"html", sep=".")
 print(output_file)
 
 rmarkdown::render(newfname, output_dir = dirname(fname), output_file = output_file )
