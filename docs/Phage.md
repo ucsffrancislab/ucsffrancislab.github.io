@@ -1,15 +1,30 @@
 
-#	Phage Display
+#	Phage Display / PhIPseq
+
+
+## Sequencing analysis
 
 
 
+https://github.com/ucsffrancislab/PhIP-Seq
+
+
+```
+
+phip_seq_process.bash
+
+
+```
+
+
+
+
+
+##	Creating tile sequences
 
 PhIP-Seq Characterization of Serum Antibodies Using Oligonucleotide Encoded Peptidomes
 
 Divya Mohan, Daniel L. Wansley, Brandon M. Sie, Muhammad S. Noon, Alan N. Baer, Uri Laserson, and H. Benjamin Larman
-
-
-
 
 My implementation script
 
@@ -91,10 +106,5 @@ pepsyn clip \
 ```
 
 
-
-
-##	20231227 - I've created an entire repo for this project
-
-https://github.com/ucsffrancislab/PhIP-Seq
 
 

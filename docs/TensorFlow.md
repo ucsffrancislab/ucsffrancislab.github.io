@@ -134,3 +134,25 @@ So, not the first nor the last layer? Or just not the last layer?
 
 
 
+
+##	References
+
+
+Make Your First AI in 15 Minutes with Python
+
+[Tutorial](https://www.youtube.com/watch?v=z1PGJ9quPV8)
+
+[Notebook](https://colab.research.google.com/drive/15SjXH0xObngJdB9T_xvjEVYUx61mbKYM)
+
+[Dataset](https://gist.github.com/adameubanks/35a6beea49e5b9ba62797e595a9626c0)
+
+
+
+Cancer diagnosis dataset: Train a neural network using Keras from TensorFlow
+
+[Tutorial](https://www.youtube.com/watch?v=nv1kp6HIGeA)
+
+[Github Repo](https://github.com/kcncell/Cancer_diagnosis_dataset)
+
+
+
