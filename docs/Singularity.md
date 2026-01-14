@@ -17,6 +17,21 @@ Much, but not all, of what is noted below is now irrelevant.
 
 
 
+```bash
+refs/Imputation/PGSCatalog/README.md:  --wrap="singularity exec --writable-tmpfs --bind /francislab,/scratch /francislab/data1/refs/singularity/quay.io-genepi-imputationserver2-v2.0.7.img pgs-calc create-collection --out=hg19.0001-0999.singularity.txt.gz PGS000???.txt.gz;tabix -S 5 -p vcf hg19.0001-0999.singularity.txt.gz;chmod -w hg19.0001-0999.singularity.txt.gz*"
+
+20230726-Illumina-CystEV/20230824-iMOKA/README.md:echo "export SINGULARITY_BINDPATH=/francislab; export APPTAINER_BINDPATH=/francislab; export OMP_NUM_THREADS=8; export IMOKA_MAX_MEM_GB=50; singularity exec ${img} iMOKA_core create -i ${PWD}/all/${k}/create_matrix.tsv -o ${PWD}/all/${k}/create_matrix.json; singularity exec ${img} iMOKA_core extract -s ${PWD}/all/${k}/create_matrix.json -i ${PWD}/all/${k}/select_kmers.txt -o ${PWD}/all/${k}/select_kmers.tsv" >> iMOKA_commands
+```
+
+How to set a single location for singularity to download, store and get local images?
+
+Which of my pipelines are using containers? Docker? Singularity?
+
+VIRTUS with cwltool
+OHDSI/Broadsea
+AlphaFold
+
+
 
 
 

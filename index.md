@@ -16,6 +16,7 @@ Pseudo Pipeline and Topic Notes
   * [TEProF2](docs/TEProF2)
   * [Singularity](docs/Singularity)
   * [MHC](docs/MHC)
+  * [Nextflow](docs/Nextflow)
 * ---
 * Archive
   * [MHC](docs/MHC)
