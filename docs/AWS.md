@@ -6,9 +6,90 @@ Command line access and usage of UCSF managed AWS resources.
 Must be connected to UCSF VPN.
 
 
+##	Installation
+
+###	UCSF Cluster
+
+```bash
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+
+unzip awscliv2.zip
+
+./aws/install -i ~/.local/aws-cli -b ~/.local/bin
+```
+
+###	Local Mac
+
+```bash
+python3 -m pip uninstall awscli
+hash -r
+
+curl "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg"
+
+sudo installer -pkg AWSCLIV2.pkg -target /
+```
+
+---
+
+###	Test
+
+```bash
+
+cat ~/.aws/config 
+#	[profile default]
+#	sso_start_url = https://d-9267f2ea39.awsapps.com/start/#
+#	sso_region = us-west-2
+#	sso_account_id = XXXXXXX
+#	sso_role_name = managed-projectuser-XXXXXXX
+#	region = us-west-2
+#	output = json
+```
+
+
+
+```bash
+aws --version
+#	aws-cli/2.34.5 Python/3.13.11 Linux/4.18.0-553.69.1.el8_10.x86_64 exe/x86_64.rocky.8
+
+aws sso login
+#	Attempting to open your default browser.
+#	If the browser does not open or you wish to use a different device to authorize this request, open the following URL:
+#	
+#	https://d-9267f2ea39.awsapps.com/start/#/device
+#	
+#	Then enter the code:
+#	
+#	XXXX-XXXX
+#	Successfully logged into Start URL: https://d-9267f2ea39.awsapps.com/start/#
+
+
+aws s3 ls
+#	2025-11-03 17:23:58 XXXXXXXXXXXX-us-west-2.sec.ucsf.edu
+#	2025-11-03 18:06:46 managed-XXXXXXXXx-server-access-logs
+
+
+echo "testing" > testfile
+
+aws s3 cp testfile s3://XXXXXXXXXXXX-us-west-2.sec.ucsf.edu/ --sse aws:kms --sse-kms-key-id alias/managed-s3-key
+#	upload: testfile to s3://francislab-backup-73-3-r-us-west-2.sec.ucsf.edu/testfile
+```
+
+Sadly, can't add those 2 non-optional options to a config file.
+
+
+
+
+
+
+
+
+
+
+---
+
+# Outdated
+
 To login to the web console, https://adfs.ucsf.edu/adfs/ls/idpinitiatedSignon.aspx
-
-
 
 ##	From UCSF SEC
 
